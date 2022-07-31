@@ -2,6 +2,7 @@
 - Added a recipe to make vanilla Metal Parts (Helps if you also have R&R installed)
 - Added sawmill 1 log -> 16 planks (temp graphics same as log splitter)
 - Machines should now show proper input and output sides automatically
+- removed heat requirement for "hard screw press"
 - to do:
     
     - assembling machines

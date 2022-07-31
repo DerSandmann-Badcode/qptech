@@ -148,7 +148,7 @@
 			"animation": "process",
 			"runAnimationSpeed": 1,
 			"processingTime": 4000,
-			"heatRequirement": 1000,
+			
 			"materials": [ "brass","steel" ]
 
 		}
