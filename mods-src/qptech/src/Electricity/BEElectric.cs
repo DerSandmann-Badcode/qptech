@@ -483,8 +483,20 @@ namespace qptech.src
         
         public override void GetBlockInfo(IPlayer forPlayer, StringBuilder dsc)
         {
-            base.GetBlockInfo(forPlayer, dsc);
             
+            string iface = Block.Attributes["inputFace"].AsString("up");
+            string oface = Block.Attributes["outputFace"].AsString("down");
+            string instring = "";
+            string outstring = "";
+            if (iface == "west") { instring = "Inputs from LEFT Side."; }
+            else if (iface == "up") { instring = "Inputs from TOP."; }
+
+            if (oface == "east") { outstring = "Outputs to RIGHT Side."; }
+            else if (oface == "down") { outstring = "Outputs to BOTTOM."; }
+            if (instring != "" || outstring != "")
+            {
+                dsc.AppendLine(instring + " " + outstring);
+            }
             if (networkID == Guid.Empty) { dsc.AppendLine("not connected to any network"); }
             else { 
                 
@@ -524,7 +536,7 @@ namespace qptech.src
                 dsc.AppendLine("MemberID  " + memberID);
                 dsc.AppendLine("NetworkID " + networkID);
             }
-            
+            base.GetBlockInfo(forPlayer, dsc);
             //dsc.AppendLine("IN:" + inputConnections.Count.ToString() + " OUT:" + outputConnections.Count.ToString());
         }
 

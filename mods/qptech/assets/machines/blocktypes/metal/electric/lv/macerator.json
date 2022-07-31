@@ -38,7 +38,9 @@
 			"processingTime": 1000,
 			"runsound": "sounds/washplant",
 			"soundlevel": 1,
-			"loopsound": true
+			"loopsound": true,
+			"inputFace": "up",
+			"outputFace": "east"
 		}
 	},
 

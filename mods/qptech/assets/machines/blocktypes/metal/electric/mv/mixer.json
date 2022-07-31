@@ -33,10 +33,11 @@
 		"*-mv-*": {
 			"genFlux": 0,"useFlux": 20,
 			"recipegroups": [ "Temporal Steel", "Concrete","Industrial Glass","Rubber" ],
-			"inputFace": "up","outputFace": "down",
+			"inputFace": "west","outputFace": "east",
 			"animationCode": "run","animation": "run","runAnimationSpeed": 1,
 			"processingTime": 2000,
 			"dummylocations": [0,1,0]
+			
 		}
 	},
 	

@@ -379,15 +379,7 @@ namespace qptech.src
             tree.SetInt("internalQuantity", internalQuantity);
             
         }
-        public override void GetBlockInfo(IPlayer forPlayer, StringBuilder dsc)
-        {
-            base.GetBlockInfo(forPlayer, dsc);
-            
-            //dsc.AppendLine("RM   :" + internalQuantity.ToString() + "/" + inputQuantity.ToString());
-            
-            //dsc.AppendLine(" [MAKES :" + recipe+"]");
-            //dsc.AppendLine("______________________");
-        }
+        
         public override int ReceiveItemOffer(ItemSlot offerslot, BlockFacing onFace)
         {
             if (!IsOn) { return 0; }

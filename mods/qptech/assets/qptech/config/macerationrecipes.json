@@ -173,6 +173,15 @@
 			"outputquantity": 10,
 			"odds": 50,
 			"type": "PARTIAL"
+		},
+		{
+			"clearcodeparts":["placed-","-ne-ud"],
+			"outputmaterial": "planks",
+			"outputquantity": 16,
+			"odds": 100,
+			"type": "SWAP",
+			"machinename": "sawmill",
+			"suffix": "-hor"
 		}
 		
 	],

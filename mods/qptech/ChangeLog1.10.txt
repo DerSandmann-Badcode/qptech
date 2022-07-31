@@ -1,6 +1,7 @@
 ﻿1.10.4
 - Added a recipe to make vanilla Metal Parts (Helps if you also have R&R installed)
 - Added sawmill 1 log -> 16 planks (temp graphics same as log splitter)
+- Machines should now show proper input and output sides automatically
 - to do:
     
     - assembling machines

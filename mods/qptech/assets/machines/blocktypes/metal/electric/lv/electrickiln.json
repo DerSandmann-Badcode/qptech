@@ -28,8 +28,9 @@
 		"*-lv-*": {
 			"genFlux": 0,
 			"useFlux": 16,
-			"receptionFaces": [ "north" ]
-
+			"receptionFaces": [ "north" ],
+			"inputFace": "west",
+			"outputFace": "east"
 		}
 
 	},
