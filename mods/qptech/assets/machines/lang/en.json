@@ -272,6 +272,10 @@
 	"item-vacuum-tube": "Vacuum Tube",
 	"itemdesc-vacuum-tube": "A useful early electronic part. Made from a casing, solider, and copper.",
 	"block-sawmill-*": "Saw Mill",
-	"blockdesc-sawmill-*": "Efficient plank production."
+	"blockdesc-sawmill-*": "Efficient plank production.",
+	"inputtop": "Inputs from the TOP",
+	"inputleft": "Inputs from LEFT Side.",
+	"outputbottom": "Outputs to the BOTTOM.",
+	"outputright": "Outputs to the RIGHT Side."
 
 }

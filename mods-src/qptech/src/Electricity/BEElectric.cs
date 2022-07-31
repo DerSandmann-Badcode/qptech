@@ -13,6 +13,7 @@ using Vintagestory.API.Util;
 using Vintagestory.API.Client;
 using qptech.src.networks;
 using System.Collections;
+using Vintagestory.API.Config;
 
 namespace qptech.src
 {
@@ -488,11 +489,11 @@ namespace qptech.src
             string oface = Block.Attributes["outputFace"].AsString("down");
             string instring = "";
             string outstring = "";
-            if (iface == "west") { instring = "Inputs from LEFT Side."; }
-            else if (iface == "up") { instring = "Inputs from TOP."; }
-
-            if (oface == "east") { outstring = "Outputs to RIGHT Side."; }
-            else if (oface == "down") { outstring = "Outputs to BOTTOM."; }
+            if (iface == "west") { instring = Lang.Get("machines:inputleft"); }
+            else if (iface == "up") { instring = Lang.Get("machines:inputtop"); }
+            
+            if (oface == "east") { outstring = Lang.Get("machines:outputright"); }
+            else if (oface == "down") { outstring = Lang.Get("machines:outputbottom"); }
             if (instring != "" || outstring != "")
             {
                 dsc.AppendLine(instring + " " + outstring);

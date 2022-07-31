@@ -9,15 +9,19 @@ Phase 2:
   - distallation tower
   - gas power plant
   - mining machines
+  - farming
  
 Phase 3:
 - focus on construction enhancements
   - excavation machines
+  - item storage
 
 Phase 4:
 - ? Future tech ?
 
 1.10.3-pre.5
+- adding language entries for input/output, hopefully will figure out how to use them
+
 
 1.10.3-pre.4
 - Added a recipe to make vanilla Metal Parts (Helps if you also have R&R installed)
