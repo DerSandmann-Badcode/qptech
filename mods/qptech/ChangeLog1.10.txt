@@ -1,6 +1,7 @@
 ﻿Phase 1 Roadmap:
 - need an assembly (crafting) machine
 - need an auto-smithing machine
+- electric oven, hob - maybe combination? Maybe stainless steel?
 - dejank
 
 Phase 2:
@@ -21,8 +22,11 @@ Phase 4:
 
 1.10.3-pre.5
 - added some language entries for phrases, instead of hardcoding (will improve over time)
-- added recipe - can now make hardened screw press from a soft screw press plus an iron machine block
-- added molybdochalkos plates to the plate presses
+  - fixed Liquid Rubber in tank name
+- added recipes
+   - can now make hardened screw press from a soft screw press plus an iron machine block
+   - can now make steel fluid tank from industrial glass and steel channels
+   - added molybdochalkos plates to the plate presses
 
 
 1.10.3-pre.4
