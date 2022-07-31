@@ -20,7 +20,9 @@ Phase 4:
 - ? Future tech ?
 
 1.10.3-pre.5
-- adding language entries for input/output, hopefully will figure out how to use them
+- added some language entries for phrases, instead of hardcoding (will improve over time)
+- added recipe - can now make hardened screw press from a soft screw press plus an iron machine block
+- added molybdochalkos plates to the plate presses
 
 
 1.10.3-pre.4

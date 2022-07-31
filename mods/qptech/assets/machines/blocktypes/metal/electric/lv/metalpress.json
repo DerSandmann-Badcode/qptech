@@ -43,7 +43,7 @@
 			"runAnimationSpeed": 1,
 			"processingTime": 3000,
 			"heatRequirement": 800,
-			"materials": [ "copper", "brass", "gold", "silver", "tin", "lead", "bismuth", "zinc", "tinbronze", "bismuthbronze", "blackbronze" ]
+			"materials": [ "copper", "brass", "gold", "silver", "tin", "lead", "bismuth", "zinc", "tinbronze", "bismuthbronze", "blackbronze","molybdochalkos" ]
 			
 		},
 		"*-lvhardmetalplate-*": {
@@ -61,7 +61,7 @@
 			"runAnimationSpeed": 1,
 			"processingTime": 3000,
 			"heatRequirement": 1000,
-			"materials": [ "copper", "brass", "gold", "silver", "tin", "lead", "bismuth", "zinc", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel","temporalsteel" ]
+			"materials": [ "copper", "brass", "gold", "silver", "tin", "lead", "bismuth", "zinc", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel","temporalsteel","molybdochalkos" ]
 
 		},
 		"*-lvpunch-*": {
