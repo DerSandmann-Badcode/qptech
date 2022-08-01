@@ -32,7 +32,7 @@
 
 		"*-mv-*": {
 			"genFlux": 0,"useFlux": 20,
-			"recipegroups": [ "Temporal Steel", "Concrete","Industrial Glass","Rubber" ],
+			"recipegroups": [ "Temporal Steel", "Concrete","Industrial Glass","Mixer Rubber","Lime from Bonemeal","Pink Concrete","Gray Concrete","Orange Concrete","Green Concrete","Brown Concrete","Purple Concrete","Black Concrete","White Concrete","Yellow Concrete","Blue Concrete","Red Concrete"],
 			"inputFace": "west","outputFace": "east",
 			"animationCode": "run","animation": "run","runAnimationSpeed": 1,
 			"processingTime": 2000,

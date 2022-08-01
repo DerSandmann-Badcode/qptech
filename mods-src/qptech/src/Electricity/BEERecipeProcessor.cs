@@ -53,7 +53,7 @@ namespace qptech.src
                     {
                         foreach (string re in recipegroups)
                         {
-                            if (mr.name.Contains(re))
+                            if (mr.name==re)
                             {
                                 recipes.Add(mr);break;
                             }
@@ -330,9 +330,9 @@ namespace qptech.src
                 foreach (MachineRecipe mr in Recipes)
                 {
                     statustext += "<br><font color=\"#aaffaa\">";
-                    statustext += "<strong>";// +mr.name ;
+                    statustext += "<strong>"+mr.name+" ";// +mr.name ;
                     //statustext += " makes ";
-                    foreach (MachineRecipeItems mri in mr.output)
+                    /*foreach (MachineRecipeItems mri in mr.output)
                     {
                         statustext += mri.quantity + " ";
                         int vi = mri.validitems.Count();
@@ -353,8 +353,8 @@ namespace qptech.src
                         }
                         if (vi > 1) { statustext += ")"; }
 
-                    }
-                    if (Recipes.Count < 3)
+                    }*/
+                    /*if (Recipes.Count < 3)
                     {
                         statustext += " from</strong></font><br><font color=\"#ffffff\">";
                         foreach (MachineRecipeItems mri in mr.ingredients)
@@ -388,7 +388,7 @@ namespace qptech.src
                                 c++;
                             }
                         }
-                    }
+                    }*/
                 }
                 statustext += "</font></strong><br>";
 

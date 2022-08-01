@@ -571,7 +571,7 @@
 
   },
   {
-    "name": "Rubber",
+    "name": "Mixer Rubber",
 
     "processingTime": 3000,
     "processingsteps": {
@@ -654,6 +654,14 @@
     "processingTime": 20000,
     "ingredients": [{"validitems": [ "game:glassslab-plain-down-free" ],"quantity": 1}],
     "output": [{"validitems": [ "machines:vacuum-casing" ],"quantity": 1}],
+    "noattributes": false
+  },
+  {
+    "name": "Lime from Bonemeal",
+    "processingsteps": {"heating": 1000},
+    "processingTime": 20000,
+    "ingredients": [{"validitems": [ "game:bonemeal" ],"quantity": 1}],
+    "output": [{"validitems": [ "game:lime" ],"quantity": 1}],
     "noattributes": false
   }
   
