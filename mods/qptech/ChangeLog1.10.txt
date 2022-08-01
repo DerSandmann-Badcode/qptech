@@ -27,6 +27,7 @@ Phase 4:
    - can now make hardened screw press from a soft screw press plus an iron machine block
    - can now make steel fluid tank from industrial glass and steel channels
    - added molybdochalkos plates to the plate presses
+   - can make cable with a bucket of liquid rubber and braided copper cable (wastes a lot of rubber)
 
 
 1.10.3-pre.4
