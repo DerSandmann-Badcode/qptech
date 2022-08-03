@@ -35,6 +35,7 @@
     <Content Include="qptech\assets\machines\textures\block\shinyiron.png" />
     <Content Include="qptech\assets\machines\textures\item\temporalcircuitboard.png" />
     <Content Include="qptech\ChangeLog1.10.txt" />
+    <Content Include="qptech\tovintagstory.py" />
     <Content Include="rustandrails\assets\rustandrails\textures\block\chevrons.png" />
     <Content Include="rustandrails\assets\rustandrails\textures\block\copperspool.png" />
     <Content Include="rustandrails\assets\rustandrails\textures\block\metal\darkiron.png" />
@@ -139,7 +140,9 @@
     <None Include="qptech\assets\machines\recipes\grid\part\machineryblock-iron.json" />
     <None Include="qptech\assets\machines\shapes\block\cuttingmachine.obj" />
     <None Include="qptech\assets\machines\shapes\block\cuttingmachineblade.obj" />
+    <None Include="qptech\assets\machines\shapes\block\exportedtext.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\electric\charcoalkiln.json" />
+    <None Include="qptech\assets\machines\shapes\block\simplecubefortests.json" />
     <None Include="qptech\assets\machines\shapes\block\testobj.obj" />
     <None Include="qptech\assets\machines\shapes\block\vacuumtube.obj" />
     <None Include="rustandrails\assets\rustandrails\blocktypes\detectorrails.json" />

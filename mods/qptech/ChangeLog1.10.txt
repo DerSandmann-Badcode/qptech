@@ -3,6 +3,8 @@
 - need an auto-smithing machine
 - electric oven, hob - maybe combination? Maybe stainless steel?
 - dejank
+   - need more UIs like to select recipes
+   - Mixer is messed up in terms of purging & recipe selection
 
 
 Phase 2:
