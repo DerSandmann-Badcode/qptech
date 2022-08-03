@@ -10,38 +10,24 @@
 },
 "elements": [
  {
-  "name" : "Cube.20",
-  "from": [ 1.007124, 5.487023, 1.007124 ],
-  "to": [ 14.992876, 6.976781, 14.992876 ],
-  "rotationOrigin": [ 8.0, 8.0, 8.0 ],
-  "rotationY": 50.000018,
+  "name" : "Cube.30",
+  "from": [ 9.755334, 2.075073, 0.852030 ],
+  "to": [ 13.755334, 6.075073, 1.901424 ],
+  "rotationOrigin": [ 11.755334, 4.075073, 1.376727 ],
+  "rotationY": 90.000032,
   "faces": {
-    "north": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "east": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "south": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "west": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "up": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "down": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
+    "north": { "texture": "#chevrons", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+    "east": { "texture": "#chevrons", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+    "south": { "texture": "#chevrons", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+    "west": { "texture": "#chevrons", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+    "up": { "texture": "#chevrons", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+    "down": { "texture": "#chevrons", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
    }
   }, {
-  "name" : "Cube.11",
-  "from": [ 0.000000, -0.126989, 0.000000 ],
-  "to": [ 16.000000, 2.873011, 16.000000 ],
-  "rotationOrigin": [ 8.0, 8.0, 8.0 ],
-  "rotationY": 0.000000,
-  "faces": {
-    "north": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "east": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "south": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "west": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "up": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "down": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
-   }
-  }, {
-  "name" : "Cube2",
+  "name" : "Cube1",
   "from": [ 3.468000, 2.468000, 3.468000 ],
   "to": [ 12.532000, 6.027163, 12.532000 ],
-  "rotationOrigin": [ 8.0, 8.0, 8.0 ],
+  "rotationOrigin": [ 8.000000, 8.000000, 8.000000 ],
   "rotationY": 0.000000,
   "faces": {
     "north": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
