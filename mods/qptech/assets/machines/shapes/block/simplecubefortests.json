@@ -8,7 +8,6 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"castiron" :"block/castiron",
 		"cable": "block/cable"
 	},
 	"elements": [
@@ -16,6 +15,8 @@
 			"name": "Cube1",
 			"from": [ 0.0, 0.0, 0.0 ], 
 			"to": [ 16.0, 16.0, 16.0 ], 
+			"rotationOrigin": [ 8.0, 8.0, 8.0 ],
+			"rotationY": 45.0,
 			"faces": {
 				"north": { "texture": "#cable", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
 				"east": { "texture": "#cable", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },

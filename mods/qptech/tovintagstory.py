@@ -24,7 +24,7 @@ def getfromv(points):
     sizex=maxx-minx
     sizey=maxy-miny
     sizez=maxz-minz
-    retvector=c4d.Vector(minx+sizex,miny+sizey,minz+sizez)
+    retvector=c4d.Vector(minx,miny,minz)
     return retvector
 def gettov(points):
     minx=9999
@@ -43,9 +43,10 @@ def gettov(points):
     sizex=maxx-minx
     sizey=maxy-miny
     sizez=maxz-minz
-    retvector=c4d.Vector(maxx+sizex,maxy+sizey,maxz+sizez)
+    retvector=c4d.Vector(maxx,maxy,maxz)
     return retvector
 def main():
+    radtodeg=57.2958
     #start of json and header
     json="{\n"
     json+='"editor": {"allAngles": false,"entityTextureMode": false},\n'
@@ -53,7 +54,7 @@ def main():
 
     #material definition
     json+='"textures": {\n'
-    actmat = c4d.documents.GetActiveDocument().GetActiveMaterials()
+    actmat = c4d.documents.GetActiveDocument().GetMaterials()
     listctr=0;
     for x in actmat:
       fullname=x.GetName()
@@ -67,40 +68,60 @@ def main():
 
     #elements - will have to also go thru each sub element
     json+='"elements": [\n'
-
+    objectnumber=0
     actsel = c4d.documents.GetActiveDocument().GetObjects()
     listctr=0;
     for c in actsel:
-       
+        if c.GetName()=="scene": continue
+        if type(c)!=c4d.PolygonObject: continue
+        #setup each object as a cuboid
         json+=' {\n'
-        json+='  "name" : "'+c.GetName()+'",\n'
+        json+='  "name" : "%s%i",\n'%(c.GetName(),objectnumber)
+        objectnumber+=1
+        #find all the coordinates information (sort of a bounding box)
         startpos=c.GetAbsPos()
         startpos.x=startpos.x/10
         startpos.y=startpos.y/10
         startpos.z=startpos.z/10
         tov = c4d.Vector(0,0,0)
         fromv = c4d.Vector(0,0,0)
-        if type(c)==c4d.PolygonObject:
-            points=c.GetAllPoints()
-            fromv = getfromv(points)
-            fromv.x=fromv.x/10+startpos.x
-            fromv.y=fromv.y/10+startpos.y
-            fromv.z=fromv.z/10+startpos.z
-            tov = gettov(points)
-            tov.x=tov.x/10+startpos.x
-            tov.y=tov.y/10+startpos.y
-            tov.z=tov.z/10+startpos.z
+        points=c.GetAllPoints()
+        fromv = getfromv(points)
+        fromv.x=fromv.x/10+startpos.x+8
+        fromv.y=fromv.y/10+startpos.y+8
+        fromv.z=fromv.z/10+startpos.z+8
+        tov = gettov(points)
+        tov.x=tov.x/10+startpos.x+8
+        tov.y=tov.y/10+startpos.y+8
+        tov.z=tov.z/10+startpos.z+8
+        #handle rotation information
+        rotation=c.GetAbsRot()
+        rotation.x*=radtodeg
+        rotation.y*=radtodeg
+        rotation.z*=radtodeg
+        origin=c4d.Vector(8,8,8)
+        origin.x+=startpos.x
+        origin.y+=startpos.y
+        origin.z+=startpos.z
+        #find texture information
+        tags=c.GetTags()
+        texture =''
+        for tag in tags:
+            if type(tag)==c4d.TextureTag:
+                texture=tag.GetMaterial().GetName()
+                texture=texture.split("/",1)[1]
 
         json+=('  "from": [ %f, %f, %f ],\n'%(fromv.x,fromv.y,fromv.z))
         json+='  "to": [ %f, %f, %f ],\n'%(tov.x,tov.y,tov.z)
-
+        json+='  "rotationOrigin": [ %f, %f, %f ],\n'%(origin.x,origin.y,origin.z)
+        json+='  "rotationY": %f,\n'%rotation.x
         json+='  "faces": {\n'
-        json+='    "north": { "texture": "#cable", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'
-        json+='    "east": { "texture": "#cable", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'
-        json+='    "south": { "texture": "#cable", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'
-        json+='    "west": { "texture": "#cable", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'
-        json+='    "up": { "texture": "#cable", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'
-        json+='    "down": { "texture": "#cable", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }\n'
+        json+='    "north": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%texture
+        json+='    "east": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%texture
+        json+='    "south": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%texture
+        json+='    "west": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%texture
+        json+='    "up": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%texture
+        json+='    "down": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }\n'%texture
         json+='   }\n'
         json+='  }'
         listctr+=1
