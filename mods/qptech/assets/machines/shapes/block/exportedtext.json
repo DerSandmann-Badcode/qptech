@@ -10,11 +10,29 @@
 },
 "elements": [
  {
-  "name" : "Cube.30",
-  "from": [ 9.755334, 2.075073, 0.852030 ],
-  "to": [ 13.755334, 6.075073, 1.901424 ],
-  "rotationOrigin": [ 11.755334, 4.075073, 1.376727 ],
-  "rotationY": 90.000032,
+  "name" : "Cube.10",
+  "from": [ 3.000000, 11.125236, 12.540326 ],
+  "to": [ 13.000000, 11.856352, 17.540326 ],
+  "rotationOrigin": [ 8.000000, 11.490794, 15.040326 ],
+  "rotationY": 0.000000,
+  "rotationX": 45.000016,
+  "rotationZ": -0.000000,
+  "faces": {
+    "north": { "texture": "#cable", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+    "east": { "texture": "#cable", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+    "south": { "texture": "#cable", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+    "west": { "texture": "#cable", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+    "up": { "texture": "#cable", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+    "down": { "texture": "#cable", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
+   }
+  }, {
+  "name" : "Cube1",
+  "from": [ 3.000000, 3.000000, 3.000000 ],
+  "to": [ 13.000000, 13.000000, 13.000000 ],
+  "rotationOrigin": [ 8.000000, 8.000000, 8.000000 ],
+  "rotationY": 0.000000,
+  "rotationX": -0.000000,
+  "rotationZ": -0.000000,
   "faces": {
     "north": { "texture": "#chevrons", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
     "east": { "texture": "#chevrons", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
@@ -22,20 +40,6 @@
     "west": { "texture": "#chevrons", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
     "up": { "texture": "#chevrons", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
     "down": { "texture": "#chevrons", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
-   }
-  }, {
-  "name" : "Cube1",
-  "from": [ 3.468000, 2.468000, 3.468000 ],
-  "to": [ 12.532000, 6.027163, 12.532000 ],
-  "rotationOrigin": [ 8.000000, 8.000000, 8.000000 ],
-  "rotationY": 0.000000,
-  "faces": {
-    "north": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "east": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "south": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "west": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "up": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "down": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
    }
   },
 ]

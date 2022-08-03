@@ -80,6 +80,7 @@
     <None Include="qptech\assets\machines\blocktypes\indev\multiblock\powerhatch.json" />
     <None Include="qptech\assets\machines\blocktypes\indev\multiblock\heaterblock.json" />
     <None Include="qptech\assets\machines\blocktypes\indev\inputhatch.json" />
+    <None Include="qptech\assets\machines\blocktypes\indev\exportest.json" />
     <None Include="qptech\assets\machines\blocktypes\itemfilterexit.json" />
     <None Include="qptech\assets\machines\blocktypes\itemtransport\itemsplitter.json" />
     <None Include="qptech\assets\machines\blocktypes\itemtransport\itempipe.json" />

@@ -2,7 +2,7 @@
 from c4d import gui
 from c4d import documents
 #Welcome to the world of Python
-
+#Cinema4d -> VSMC model file exporter by Quentin P
 
 def test(texty):
     gui.MessageDialog(texty)
@@ -96,9 +96,9 @@ def main():
         tov.z=tov.z/10+startpos.z+8
         #handle rotation information
         rotation=c.GetAbsRot()
-        rotation.x*=radtodeg
-        rotation.y*=radtodeg
-        rotation.z*=radtodeg
+        rotation.x*=-radtodeg #H or y rotation in VS
+        rotation.y*=-radtodeg #P or x rotation in VS
+        rotation.z*=-radtodeg #B or z rotation in VS
         origin=c4d.Vector(8,8,8)
         origin.x+=startpos.x
         origin.y+=startpos.y
@@ -115,6 +115,8 @@ def main():
         json+='  "to": [ %f, %f, %f ],\n'%(tov.x,tov.y,tov.z)
         json+='  "rotationOrigin": [ %f, %f, %f ],\n'%(origin.x,origin.y,origin.z)
         json+='  "rotationY": %f,\n'%rotation.x
+        json+='  "rotationX": %f,\n'%rotation.y
+        json+='  "rotationZ": %f,\n'%rotation.z
         json+='  "faces": {\n'
         json+='    "north": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%texture
         json+='    "east": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%texture
