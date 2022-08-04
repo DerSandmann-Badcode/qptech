@@ -39,7 +39,7 @@ def gettov(points):
         if p.z>maxz: maxz=p.z
     retvector=c4d.Vector(maxx,maxy,maxz)
     return retvector
-def addelement(c,parentvec,ischild):
+def addelement(c):
     global objectnumber
     global radtodeg
     json=""
@@ -48,36 +48,27 @@ def addelement(c,parentvec,ischild):
     objectnumber+=1
     #find all the coordinates information (sort of a bounding box)
     startpos=c.GetRelPos()
-    startpos.x=startpos.x/10
-    startpos.y=startpos.y/10
-    startpos.z=startpos.z/10
+    startpos.x=startpos.x
+    startpos.y=startpos.y
+    startpos.z=startpos.z
     tov = c4d.Vector(0,0,0)
     fromv = c4d.Vector(0,0,0)
     points=c.GetAllPoints()
     fromv = getfromv(points)
-    fromv.x=fromv.x/10+startpos.x+parentvec.x/10
-    fromv.y=fromv.y/10+startpos.y+parentvec.y/10
-    fromv.z=fromv.z/10+startpos.z+parentvec.z/10
+    fromv.x=fromv.x+startpos.x
+    fromv.y=fromv.y+startpos.y
+    fromv.z=fromv.z+startpos.z
     tov = gettov(points)
-    tov.x=tov.x/10+startpos.x+parentvec.x/10
-    tov.y=tov.y/10+startpos.y+parentvec.y/10
-    tov.z=tov.z/10+startpos.z+parentvec.z/10
-    if ischild:
-        shift=tov-fromv
-        print (shift)
-        tov-=shift
-        fromv-=shift
-        print (tov)
-        print (fromv)
+    tov.x=tov.x+startpos.x
+    tov.y=tov.y+startpos.y
+    tov.z=tov.z+startpos.z
+
     #handle rotation information
     rotation=c.GetAbsRot()
     rotation.x*=-radtodeg #H or y rotation in VS
     rotation.y*=-radtodeg #P or x rotation in VS
     rotation.z*=-radtodeg #B or z rotation in VS
-    origin=c4d.Vector(parentvec.x,parentvec.y,parentvec.z)
-    origin.x+=startpos.x
-    origin.y+=startpos.y
-    origin.z+=startpos.z
+    origin=startpos
     #find texture information
     tags=c.GetTags()
     texture =''
@@ -105,8 +96,8 @@ def addelement(c,parentvec,ischild):
     if len(children)>0:
         json+=',"children": ['
         for child in children:
-            if child.GetName()=="scene": continue 
-            json+=addelement(child,c.GetRelPos()+c4d.Vector(80),True)
+            if child.GetName()=="scene": continue
+            json+=addelement(child)
         json +="]"
     json+='  }'
     json+=","
@@ -136,10 +127,10 @@ def main():
     json+='"elements": [\n'
     actsel = c4d.documents.GetActiveDocument().GetObjects()
     listctr=0;
-    zerovec=c4d.Vector(80)
+
     for c in actsel:
         if c.GetName()=="scene": continue
-        json+=addelement(c,zerovec,False)
+        json+=addelement(c)
 
         #setup each object as a cuboid
 

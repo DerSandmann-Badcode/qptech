@@ -8,35 +8,34 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"cable": "block/cable"
 	},
 	"elements": [
 		{
 			"name": "Cube1",
-			"from": [ 3.0, 0.0, 2.0 ], 
-			"to": [ 13.0, 10.0, 12.0 ], 
-			"rotationOrigin": [ 11.0, 8.0, 10.0 ],
+			"from": [ 1.0, 1.0, 1.0 ], 
+			"to": [ 2.0, 2.0, 2.0 ], 
+			"rotationOrigin": [ 1.0, 1.0, 1.0 ],
 			"faces": {
-				"north": { "texture": "#cable", "uv": [ 0.0, 0.0, 10.0, 10.0 ] },
-				"east": { "texture": "#cable", "uv": [ 0.0, 0.0, 10.0, 10.0 ] },
-				"south": { "texture": "#cable", "uv": [ 0.0, 0.0, 10.0, 10.0 ] },
-				"west": { "texture": "#cable", "uv": [ 0.0, 0.0, 10.0, 10.0 ] },
-				"up": { "texture": "#cable", "uv": [ 0.0, 0.0, 10.0, 10.0 ] },
-				"down": { "texture": "#cable", "uv": [ 0.0, 0.0, 10.0, 10.0 ] }
+				"north": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+				"east": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+				"south": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+				"west": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+				"up": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+				"down": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] }
 			},
 			"children": [
 				{
 					"name": "Cube2",
-					"from": [ 3.0, 10.0, 3.0 ], 
-					"to": [ 7.0, 14.0, 8.0 ], 
-					"rotationOrigin": [ 3.0, 10.0, 3.0 ],
+					"from": [ 1.0, 1.0, 1.0 ], 
+					"to": [ 2.0, 2.0, 2.0 ], 
+					"rotationOrigin": [ 1.0, 1.0, 1.0 ],
 					"faces": {
-						"north": { "texture": "#cable", "uv": [ 0.0, 0.0, 4.0, 4.0 ] },
-						"east": { "texture": "#cable", "uv": [ 0.0, 0.0, 5.0, 4.0 ] },
-						"south": { "texture": "#cable", "uv": [ 0.0, 0.0, 4.0, 4.0 ] },
-						"west": { "texture": "#cable", "uv": [ 0.0, 0.0, 5.0, 4.0 ] },
-						"up": { "texture": "#cable", "uv": [ 0.0, 0.0, 4.0, 5.0 ] },
-						"down": { "texture": "#cable", "uv": [ 0.0, 0.0, 4.0, 5.0 ] }
+						"north": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+						"east": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+						"south": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+						"west": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+						"up": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+						"down": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] }
 					}
 				}
 			]
