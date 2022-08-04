@@ -4,42 +4,29 @@
 "textureHeight": 16,
 "textureSizes": {},
 "textures": {
+ "lightblock-off" :"block/lightblock-off",
+ "lightblock" :"block/lightblock",
+ "copperspool" :"block/copperspool",
  "chevrons" :"block/chevrons",
  "redfabric" :"block/redfabric",
  "cable" :"block/cable"
 },
 "elements": [
  {
-  "name" : "Cube.10",
-  "from": [ 8.000000, 4.129028, 7.979178 ],
-  "to": [ 9.000000, 8.129028, 11.979178 ],
-  "rotationOrigin": [ 8.000000, 6.000000, 10.000000 ],
+  "name" : "Cube0",
+  "from": [ 0.000000, 0.000000, 0.000000 ],
+  "to": [ 16.000000, 16.000000, 16.000000 ],
+  "rotationOrigin": [ 0.000000, 0.000000, 0.000000 ],
   "rotationY": -0.000000,
   "rotationX": -0.000000,
   "rotationZ": -0.000000,
   "faces": {
-    "north": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "east": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+    "north": { "texture": "#copperspool", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+    "east": { "texture": "#cable", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
     "south": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "west": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "up": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "down": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
-   }
-  }, {
-  "name" : "Cube1",
-  "from": [ 8.000000, 8.000000, 8.000000 ],
-  "to": [ 9.000000, 12.000000, 12.000000 ],
-  "rotationOrigin": [ 8.000000, 8.000000, 8.000000 ],
-  "rotationY": -0.000000,
-  "rotationX": -0.000000,
-  "rotationZ": -0.000000,
-  "faces": {
-    "north": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "east": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "south": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "west": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "up": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
-    "down": { "texture": "#redfabric", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
+    "west": { "texture": "#chevrons", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+    "up": { "texture": "#lightblock", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+    "down": { "texture": "#lightblock-off", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
    }
   },
 ]

@@ -72,11 +72,30 @@ def addelement(c):
     #find texture information
     tags=c.GetTags()
     texture =''
-
+    northtexture=''
+    easttexture=''
+    southtexture=''
+    westtexture=''
+    uptexture=''
+    downtexture=''
     for tag in tags:
-        if type(tag)==c4d.TextureTag:
-            texture=tag.GetMaterial().GetName()
-            texture=texture.split("/",1)[1]
+       if type(tag)==c4d.TextureTag:
+           tagname=tag.GetName()
+           t=tag.GetMaterial().GetName()
+           t=t.split("/",1)[1]
+           if tagname=='north':northtexture=t
+           elif tagname=='east':easttexture=t
+           elif tagname=='south':southtexture=t
+           elif tagname=='west':westtexture=t
+           elif tagname=='up':uptexture=t
+           elif tagname=='down':downtexture=t
+           else: texture=t
+       if northtexture=='':northtexture=texture
+       if easttexture=='':easttexture=texture
+       if southtexture=='':southtexture=texture
+       if westtexture=='':westtexture=texture
+       if uptexture=='':uptexture=texture
+       if downtexture=='':downtexture=texture
     json+=('  "from": [ %f, %f, %f ],\n'%(fromv.x,fromv.y,fromv.z))
     json+='  "to": [ %f, %f, %f ],\n'%(tov.x,tov.y,tov.z)
     json+='  "rotationOrigin": [ %f, %f, %f ],\n'%(origin.x,origin.y,origin.z)
@@ -84,12 +103,12 @@ def addelement(c):
     json+='  "rotationX": %f,\n'%rotation.y
     json+='  "rotationZ": %f,\n'%rotation.z
     json+='  "faces": {\n'
-    json+='    "north": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%texture
-    json+='    "east": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%texture
-    json+='    "south": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%texture
-    json+='    "west": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%texture
-    json+='    "up": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%texture
-    json+='    "down": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }\n'%texture
+    json+='    "north": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%northtexture
+    json+='    "east": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%easttexture
+    json+='    "south": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%southtexture
+    json+='    "west": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%westtexture
+    json+='    "up": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%uptexture
+    json+='    "down": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }\n'%downtexture
     json+='   }\n'
     #check for children
     children=c.GetChildren()
