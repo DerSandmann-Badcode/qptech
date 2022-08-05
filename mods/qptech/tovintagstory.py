@@ -46,22 +46,16 @@ def addelement(c,offset):
     json+=' {\n'
     json+='  "name" : "%s%i",\n'%(c.GetName(),objectnumber)
     objectnumber+=1
+
     #find all the coordinates information (sort of a bounding box)
-    print (c.GetAbsPos())
-    print (offset)
-    print ("_")
-    startpos=c.GetAbsPos()+offset/2
+    startpos=c.GetAbsPos()
     tov = c4d.Vector(0,0,0)
     fromv = c4d.Vector(0,0,0)
     points=c.GetAllPoints()
     fromv = getfromv(points)
-    fromv.x=fromv.x+startpos.x
-    fromv.y=fromv.y+startpos.y
-    fromv.z=fromv.z+startpos.z
     tov = gettov(points)
-    tov.x=tov.x+startpos.x
-    tov.y=tov.y+startpos.y
-    tov.z=tov.z+startpos.z
+    fromv+=startpos+offset
+    tov+=startpos+offset
     size=tov-fromv
     #handle rotation information
     rotation=c.GetAbsRot()
@@ -116,7 +110,7 @@ def addelement(c,offset):
         json+=',"children": ['
         for child in children:
             if child.GetName()=="scene": continue
-            childoffset=c.GetAbsPos()+offset
+            childoffset=size/2
             json+=addelement(child,childoffset)
         json +="]"
     json+='  }'
