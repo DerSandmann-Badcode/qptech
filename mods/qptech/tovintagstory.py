@@ -62,7 +62,7 @@ def addelement(c,offset):
     rotation.x*=-radtodeg #H or y rotation in VS
     rotation.y*=-radtodeg #P or x rotation in VS
     rotation.z*=-radtodeg #B or z rotation in VS
-    origin=startpos
+    origin=startpos+offset
     #find texture information
     tags=c.GetTags()
     texture =''
