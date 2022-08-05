@@ -39,7 +39,7 @@ def gettov(points):
         if p.z>maxz: maxz=p.z
     retvector=c4d.Vector(maxx,maxy,maxz)
     return retvector
-def addelement(c):
+def addelement(c,offset):
     global objectnumber
     global radtodeg
     json=""
@@ -47,10 +47,10 @@ def addelement(c):
     json+='  "name" : "%s%i",\n'%(c.GetName(),objectnumber)
     objectnumber+=1
     #find all the coordinates information (sort of a bounding box)
-    startpos=c.GetRelPos()
-    startpos.x=startpos.x
-    startpos.y=startpos.y
-    startpos.z=startpos.z
+    print (c.GetAbsPos())
+    print (offset)
+    print ("_")
+    startpos=c.GetAbsPos()+offset/2
     tov = c4d.Vector(0,0,0)
     fromv = c4d.Vector(0,0,0)
     points=c.GetAllPoints()
@@ -62,7 +62,7 @@ def addelement(c):
     tov.x=tov.x+startpos.x
     tov.y=tov.y+startpos.y
     tov.z=tov.z+startpos.z
-
+    size=tov-fromv
     #handle rotation information
     rotation=c.GetAbsRot()
     rotation.x*=-radtodeg #H or y rotation in VS
@@ -116,7 +116,8 @@ def addelement(c):
         json+=',"children": ['
         for child in children:
             if child.GetName()=="scene": continue
-            json+=addelement(child)
+            childoffset=c.GetAbsPos()
+            json+=addelement(child,childoffset)
         json +="]"
     json+='  }'
     json+=","
@@ -149,7 +150,7 @@ def main():
 
     for c in actsel:
         if c.GetName()=="scene": continue
-        json+=addelement(c)
+        json+=addelement(c,c4d.Vector(0))
 
         #setup each object as a cuboid
 
