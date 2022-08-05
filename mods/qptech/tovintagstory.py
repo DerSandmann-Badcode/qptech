@@ -1,7 +1,14 @@
 ﻿import c4d
 from c4d import gui
 from c4d import documents
-#Welcome to the world of Python
+#Cinema4d -> Vintage Story Model Creator Script v1.0
+#Created by Quentin of QPTech
+#polygon objects will be exported as cuboids, basicaly by there AABB
+#textures are currently assigned by the name of the material tag, note only one directory level is currently accepted (ie just block/mytexture)
+#  uvs not supported yet - but if you name a texture tag a direction (north, east, south, west, up, or down), that material/texture will only be applied to that face in VSMC
+#anything you don't want exported - make sure it is named scene or at least its parent is
+#any non polygon objects will be exported as a zero size, no face cuboid and can be used for grouping
+#results are written to the console and can be pasted into your json file (just remove the >>> from end of file)
 objectnumber=0
 radtodeg=57.2958
 def test(texty):
@@ -65,7 +72,7 @@ def addelement(c,offset):
     tov+=startpos+offset
     size=tov-fromv
     #face information
-    
+
     #handle rotation information
     rotation=c.GetAbsRot()
     rotation.x*=-radtodeg #H or y rotation in VS
