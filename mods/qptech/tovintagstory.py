@@ -49,14 +49,23 @@ def addelement(c,offset):
 
     #find all the coordinates information (sort of a bounding box)
     startpos=c.GetAbsPos()
-    tov = c4d.Vector(0,0,0)
-    fromv = c4d.Vector(0,0,0)
-    points=c.GetAllPoints()
-    fromv = getfromv(points)
-    tov = gettov(points)
+    tov = c4d.Vector(0)+offset
+    fromv = c4d.Vector(0)+offset
+    size = c4d.Vector(0)
+    enabled="false"
+    if type(c)==c4d.PolygonObject:
+        points=c.GetAllPoints()
+        fromv = getfromv(points)
+        tov = gettov(points)
+        enabled="true"
+    else:
+        fromv=0
+        tov=0
     fromv+=startpos+offset
     tov+=startpos+offset
     size=tov-fromv
+    #face information
+    
     #handle rotation information
     rotation=c.GetAbsRot()
     rotation.x*=-radtodeg #H or y rotation in VS
@@ -97,12 +106,12 @@ def addelement(c,offset):
     json+='  "rotationX": %f,\n'%rotation.y
     json+='  "rotationZ": %f,\n'%rotation.z
     json+='  "faces": {\n'
-    json+='    "north": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%northtexture
-    json+='    "east": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%easttexture
-    json+='    "south": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%southtexture
-    json+='    "west": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%westtexture
-    json+='    "up": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },\n'%uptexture
-    json+='    "down": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }\n'%downtexture
+    json+='    "north": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "enabled": %s },\n'%(northtexture,enabled)
+    json+='    "east": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "enabled": %s },\n'%(easttexture,enabled)
+    json+='    "south": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "enabled": %s },\n'%(southtexture,enabled)
+    json+='    "west": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "enabled": %s },\n'%(westtexture,enabled)
+    json+='    "up": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "enabled": %s },\n'%(uptexture,enabled)
+    json+='    "down": { "texture": "#%s", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "enabled": %s }\n'%(downtexture,enabled)
     json+='   }\n'
     #check for children
     children=c.GetChildren()

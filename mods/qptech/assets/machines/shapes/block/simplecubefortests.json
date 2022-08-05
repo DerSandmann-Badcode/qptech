@@ -11,18 +11,33 @@
 	},
 	"elements": [
 		{
-			"name": "Cube1",
-			"from": [ 1.0, 1.0, 1.0 ], 
-			"to": [ 2.0, 2.0, 2.0 ], 
-			"rotationOrigin": [ 1.0, 1.0, 1.0 ],
+			"name": "null",
+			"from": [ 7.5, 7.5, 7.5 ], 
+			"to": [ 8.5, 8.5, 8.5 ], 
+			"rotationOrigin": [ 8.0, 8.0, 8.0 ],
 			"faces": {
-				"north": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
-				"east": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
-				"south": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
-				"west": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
-				"up": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
-				"down": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] }
-			}
+				"north": { "texture": "#null", "uv": [ 1.0, -0.5, 2.0, 0.5 ], "enabled": false },
+				"east": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ], "enabled": false },
+				"south": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ], "enabled": false },
+				"west": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ], "enabled": false },
+				"up": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ], "enabled": false },
+				"down": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ], "enabled": false }
+			},
+			"children": [
+				{
+					"name": "Cube2",
+					"from": [ 0.0, 0.0, 0.0 ], 
+					"to": [ 1.0, 1.0, 1.0 ], 
+					"faces": {
+						"north": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+						"east": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+						"south": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+						"west": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+						"up": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+						"down": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 1.0 ] }
+					}
+				}
+			]
 		}
 	],
 	"animations": [
@@ -36,13 +51,13 @@
 				{
 					"frame": 0,
 					"elements": {
-						"Cube1": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 }
+						"null": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 }
 					}
 				},
 				{
 					"frame": 29,
 					"elements": {
-						"Cube1": { "rotationX": 0.0, "rotationY": 180.0, "rotationZ": 0.0 }
+						"null": { "rotationX": 0.0, "rotationY": 180.0, "rotationZ": 0.0 }
 					}
 				}
 			]
