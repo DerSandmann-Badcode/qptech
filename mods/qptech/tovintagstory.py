@@ -116,7 +116,7 @@ def addelement(c,offset):
         json+=',"children": ['
         for child in children:
             if child.GetName()=="scene": continue
-            childoffset=c.GetAbsPos()
+            childoffset=c.GetAbsPos()+offset
             json+=addelement(child,childoffset)
         json +="]"
     json+='  }'
