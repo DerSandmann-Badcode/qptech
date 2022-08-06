@@ -34,7 +34,9 @@
 		"processingTime": 0.3,
 		"inputFace": "west",
 			"outputFace": "east",
-		"dummylocations": [0,0,-1]
+		"dummylocations": [0,0,-1],
+		"animationCode": "run",
+			"animation": "run"
 	},
 	"blockmaterial": "Metal",
 	"drawtype": "json",
