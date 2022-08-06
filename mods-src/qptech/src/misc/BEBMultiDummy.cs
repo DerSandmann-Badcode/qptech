@@ -16,6 +16,11 @@ using qptech.src.networks;
 
 namespace qptech.src.multiblock
 {
+    /// <summary>
+    /// Will create and link dummy objects to account for multi blocks
+    /// When setting up the locations of your blocks, assume a north facing
+    /// eg: [0,0,-1] would put a dummy block north of the placed block when facing north
+    /// </summary>
     class BEBMultiDummy : BlockEntityBehavior, IDummyParent
     {
         public string dummyblockname => "machines:dummy";
@@ -33,12 +38,61 @@ namespace qptech.src.multiblock
             }
             l1 = be.RegisterDelayedCallback(SetupDummies, 1);
         }
+        int[] GetDummyLocations()
+        {
+            int[] dummylocations = be.Block.Attributes["dummylocations"].AsArray<int>();
+            string pointing = be.Block.LastCodePart();
+            //settings are assuming north to start
+            if (pointing == "east")
+            {    
+                for (int c = 0; c < dummylocations.Length; c += 3)
+                {
+                    if (dummylocations[c] != 0 || dummylocations[c + 2] != 0)
+                    {
+                        int x = dummylocations[c];
+                        int z = dummylocations[c + 2];
+                        dummylocations[c] = z;
+                        dummylocations[c + 2] = x;
+                            
+                    }    
+                }
+            }
+            else if (pointing == "south")
+            {
+                for (int c = 0; c < dummylocations.Length; c += 3)
+                {
+                    if (dummylocations[c] != 0 || dummylocations[c + 2] != 0)
+                    {
+                        int x = dummylocations[c];
+                        int z = dummylocations[c + 2];
+                        dummylocations[c] = -x;
+                        dummylocations[c + 2] = -z;
 
+                    }
+                }
+            }
+            else if (pointing == "west")
+            {
+                for (int c = 0; c < dummylocations.Length; c += 3)
+                {
+                    if (dummylocations[c] != 0 || dummylocations[c + 2] != 0)
+                    {
+                        int x = dummylocations[c];
+                        int z = dummylocations[c + 2];
+                        dummylocations[c] = -z;
+                        dummylocations[c + 2] = -x;
+
+                    }
+                }
+            }
+            return dummylocations;
+        }
         protected virtual void InstantiateDummies()
         {
             if (be.Block.Attributes != null)
             {
-                int[] dummylocations = be.Block.Attributes["dummylocations"].AsArray<int>();
+                int[] dummylocations = GetDummyLocations();
+
                 if (dummylocations != null && dummylocations.Length > 0 && Api is ICoreServerAPI)
                 {
                     dummies = new List<BEDummyBlock>();
@@ -47,8 +101,13 @@ namespace qptech.src.multiblock
                     for (int c = 0; c < dummylocations.Length; c += 3)
                     {
                         BlockPos dpos = new BlockPos(be.Pos.X + dummylocations[c], be.Pos.Y + dummylocations[c + 1], be.Pos.Z + dummylocations[c + 2]);
+                        Block existing = Api.World.BlockAccessor.GetBlock(dpos.X,dpos.Y,dpos.Z,BlockLayersAccess.Default);
+                        if (existing.Id!=0){
+                            Api.World.BlockAccessor.BreakBlock(be.Pos, null);
+                            return;
+                        }
                         Api.World.BlockAccessor.SetBlock(dummyblock.BlockId, dpos);
-                        
+                        //north/south Z east/west X
                     }
                 }
             }
@@ -58,7 +117,7 @@ namespace qptech.src.multiblock
         {
             if (be.Block.Attributes != null)
             {
-                int[] dummylocations = be.Block.Attributes["dummylocations"].AsArray<int>();
+                int[] dummylocations = GetDummyLocations();
                 if (dummylocations != null && dummylocations.Length > 0 && Api is ICoreServerAPI)
                 {
                     dummies = new List<BEDummyBlock>();

@@ -16,14 +16,17 @@
 			"loadFromProperties": "abstract/horizontalorientation"
 		}
 	],
+	"entityBehaviors": [
+		{ "name": "Animatable" },
+		{ "name": "BEBMultiDummy" }
+	],
 	"behaviors": [
 
 		{
 			"name": "HorizontalOrientable",
 			"properties": { "dropBlockFace": "east" }
-		},
-		{ "name": "Animatable" },
-		{ "name": "BEBMultiDummy" }
+		}
+		
 	],
 	"attributes": {
 		"genFlux": 0,
@@ -31,7 +34,7 @@
 		"processingTime": 0.3,
 		"inputFace": "west",
 			"outputFace": "east",
-		"dummylocations": [0,0,1]
+		"dummylocations": [0,0,-1]
 	},
 	"blockmaterial": "Metal",
 	"drawtype": "json",
@@ -40,19 +43,19 @@
 	"shapeByType": {
 		"*-north": {
 			"base": "block/metal/autosmith",
-			"rotateY": 180
+			"rotateY": 0
 		},
 		"*-east": {
 			"base": "block/metal/autosmith",
-			"rotateY": 90
+			"rotateY": 270
 		},
 		"*-west": {
 			"base": "block/metal/autosmith",
-			"rotateY": 270
+			"rotateY": 90
 		},
 		"*-south": {
 			"base": "block/metal/autosmith",
-			"rotateY": 0
+			"rotateY": 180
 		}
 	},
 	
