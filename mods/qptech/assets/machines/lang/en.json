@@ -277,6 +277,8 @@
 	"inputtop": "Inputs from the TOP",
 	"inputleft": "Inputs from LEFT Side.",
 	"outputbottom": "Outputs to the BOTTOM.",
-	"outputright": "Outputs to the RIGHT Side."
+	"outputright": "Outputs to the RIGHT Side.",
+	"block-autosmith-*": "Autosmith",
+	"blockdesc-autosmith-*": "Does the smithing so you don't have to. Crouch plus right click with an appropriate item to set the product output. The input container will need to require the appropriate amount of ingots heated to the metal's temperature"
 
 }

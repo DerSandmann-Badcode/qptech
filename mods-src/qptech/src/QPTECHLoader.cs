@@ -129,6 +129,7 @@ namespace qptech.src
             api.RegisterBlockClass("BlockCannedMeal", typeof(BlockCannedMeal));
             api.RegisterBlockClass("BlockDummy", typeof(BlockDummy));
             api.RegisterCollectibleBehaviorClass("CBTemporalChargeable", typeof(CBTemporalChargeable));
+            api.RegisterBlockClass("BlockAutosmith", typeof(BlockAutosmith));
             
         }
 
@@ -193,6 +194,7 @@ namespace qptech.src
             api.RegisterBlockEntityClass("BEDummyBlock", typeof(BEDummyBlock));
             api.RegisterBlockEntityClass("BEEClayformer", typeof(BEEClayFormer));
             api.RegisterBlockEntityClass("BEETemporalCondenser", typeof(BEETemporalCondenser));
+            api.RegisterBlockEntityClass("BEEAutosmith", typeof(BEEAutosmith));
         }
 
         private void RegisterDefaultItems()

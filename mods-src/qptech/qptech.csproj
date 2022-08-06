@@ -82,7 +82,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\BEEClayFormer.cs" />
+    <Compile Include="src\Electricity\BEEAutosmith.cs" />
+    <Compile Include="src\Electricity\BEEClayFormer.cs" />
     <Compile Include="src\Electricity\BEECrucible.cs" />
     <Compile Include="src\Electricity\BEEIndustrialGenerator.cs" />
     <Compile Include="src\Electricity\BEESolarPlane.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="src\Electricity\BEEProcessingSupplier.cs" />
     <Compile Include="src\Electricity\BEERecipeProcessor.cs" />
     <Compile Include="src\Electricity\BEETemporalCondenser.cs" />
+    <Compile Include="src\Electricity\BlockAutosmith.cs" />
     <Compile Include="src\Electricity\ElectricityAPI.cs" />
     <Compile Include="src\Electricity\BEELightBulb.cs" />
     <Compile Include="src\Electricity\WireRenderer.cs" />
