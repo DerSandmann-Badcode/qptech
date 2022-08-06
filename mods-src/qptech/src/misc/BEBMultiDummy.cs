@@ -33,10 +33,10 @@ namespace qptech.src.multiblock
             base.Initialize(api, properties);
             if (Api is ICoreServerAPI)
             {
-                InstantiateDummies();
                 
+                l1 = be.RegisterDelayedCallback(DelayedDummySetup, 1);
             }
-            l1 = be.RegisterDelayedCallback(SetupDummies, 1);
+            
         }
         int[] GetDummyLocations()
         {
@@ -51,8 +51,8 @@ namespace qptech.src.multiblock
                     {
                         int x = dummylocations[c];
                         int z = dummylocations[c + 2];
-                        dummylocations[c] = z;
-                        dummylocations[c + 2] = x;
+                        dummylocations[c] = -z;
+                        dummylocations[c + 2] = -x;
                             
                     }    
                 }
@@ -79,8 +79,8 @@ namespace qptech.src.multiblock
                     {
                         int x = dummylocations[c];
                         int z = dummylocations[c + 2];
-                        dummylocations[c] = -z;
-                        dummylocations[c + 2] = -x;
+                        dummylocations[c] = z;
+                        dummylocations[c + 2] = x;
 
                     }
                 }
@@ -102,7 +102,7 @@ namespace qptech.src.multiblock
                     {
                         BlockPos dpos = new BlockPos(be.Pos.X + dummylocations[c], be.Pos.Y + dummylocations[c + 1], be.Pos.Z + dummylocations[c + 2]);
                         Block existing = Api.World.BlockAccessor.GetBlock(dpos.X,dpos.Y,dpos.Z,BlockLayersAccess.Default);
-                        if (existing.Id!=0){
+                        if (existing.Id!=0&&existing.Id!=dummyblock.Id){
                             Api.World.BlockAccessor.BreakBlock(be.Pos, null);
                             return;
                         }
@@ -112,7 +112,11 @@ namespace qptech.src.multiblock
                 }
             }
         }
-
+        public virtual void DelayedDummySetup(float dt)
+        {
+            InstantiateDummies();
+            l1 = be.RegisterDelayedCallback(SetupDummies, 1);
+        }
         public virtual void SetupDummies(float dt)
         {
             if (be.Block.Attributes != null)
