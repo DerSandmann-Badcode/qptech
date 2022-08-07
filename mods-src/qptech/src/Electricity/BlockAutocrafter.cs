@@ -17,7 +17,7 @@ namespace qptech.src
     /// </summary>
     class BlockAutocrafter:ElectricalBlock
     {
-        static Dictionary<string, string> variantlist;
+        
         public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
         {
             

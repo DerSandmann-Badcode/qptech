@@ -33,11 +33,12 @@ namespace qptech.src
 
         public static List<GridRecipe> GetRecipeForItem(ICoreAPI api, string recipecode)
         {
-            if (api == null||api.World==null||api.World.GridRecipes==null) { return null; }
-            
-            List<GridRecipe> recipes = api.World.GridRecipes;
+            if (api == null||api.World==null||api.World.GridRecipes==null||recipecode=="") { return null; }
+            var temp = api.World.GridRecipes.Where(x => x.Output.Code.ToString() == recipecode);
+            if (temp == null || temp.Count() == 0) { return null; }
+            List<GridRecipe> recipes = temp.ToList<GridRecipe>();
 
-            return (List<GridRecipe>)recipes.Where(x => x.Output.Code.ToString() == recipecode);
+            return recipes;
         }
         public override void Initialize(ICoreAPI api)
         {
