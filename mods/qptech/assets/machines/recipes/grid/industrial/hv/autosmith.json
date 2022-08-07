@@ -1,0 +1,49 @@
+{
+	ingredientPattern: "AGX	SMT	PC_",
+	ingredients: {
+		"X": {
+			"type": "item",
+			"code": "screw-steel",
+
+			"quantity": 16
+		},
+		"G": {
+			"type": "item",
+			"code": "industrialchannel-rubber",
+			"quantity": 4
+		},
+		"P": {
+			"type": "block",
+			"code": "pipe-core-bluesteel",
+			"quantity": 2
+		},
+		"M": {
+			"type": "item",
+			"code": "motor-mv",
+			"quantity": 2
+		},
+		"A": {
+			"type": "item",
+			"code": "circuitboard-temporal",
+			"quantity": 1
+		},
+		"S": {
+			"type": "block",
+			"code": "machineryblock-steel",
+			"quantity": 2
+		},
+		"T": {
+			"type": "block",
+			"code": "game:metalsheet-steel-down",
+			"quantity": 2
+		},
+		"C": {
+			"type": "item",
+			"code": "cable-copper",
+			"quantity": 2
+		}
+	},
+	width: 3,
+	height: 3,
+	"output": { "type": "block", "code": "autosmith-steel-east", "quantity": 1  }
+}
