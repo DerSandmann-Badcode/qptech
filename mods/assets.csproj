@@ -84,6 +84,7 @@
     <None Include="qptech\assets\machines\blocktypes\itemfilterexit.json" />
     <None Include="qptech\assets\machines\blocktypes\itemtransport\itemsplitter.json" />
     <None Include="qptech\assets\machines\blocktypes\itemtransport\itempipe.json" />
+    <None Include="qptech\assets\machines\blocktypes\metal\electric\ev\autocrafter.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\electric\ev\temporalcondenser.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\electric\mv\autosmith.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\electric\lv\clayformer2.json" />
