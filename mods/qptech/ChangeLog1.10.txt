@@ -26,6 +26,7 @@ Phase 4:
 
 1.10.3-pre.6
 - added autosmith - will smith objects, set by shift+right clicking the desired object
+- added autocrafter - place input hopper on top and it will make the item placed in that slot
 
 1.10.3-pre.5
 - new, less harsh raw concrete texture

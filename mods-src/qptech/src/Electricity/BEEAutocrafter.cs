@@ -17,6 +17,7 @@ namespace qptech.src
         BlockFacing rmInputFace;
         BlockFacing fgOutputFace;
         string currentrecipecode;
+        List<GridRecipe> currentrecipes;
         public List<GridRecipe> CurrentRecipes
         {
             get
@@ -24,7 +25,11 @@ namespace qptech.src
 
                 if (Api != null)
                 {
-                    return GetRecipeForItem(Api, currentrecipecode);
+                    if (currentrecipecode == "") { return null; }
+                    if (currentrecipes!=null&&currentrecipes[0].Output.ResolvedItemstack.Collectible.Code.ToString()==currentrecipecode)
+                    { return currentrecipes; }
+                    currentrecipes= GetRecipeForItem(Api, currentrecipecode);
+                    return currentrecipes;
                 }
                 return null;
             }
@@ -52,13 +57,11 @@ namespace qptech.src
         protected override void DoDeviceStart()
         {
             if (!IsPowered) { deviceState = enDeviceState.POWERHOLD; return; }
-
-            if (CurrentRecipes == null)
-            {
-                deviceState = enDeviceState.IDLE;
-
-            }
-            else
+            if (!IsOn) { currentrecipecode = ""; return; }
+            deviceState = enDeviceState.IDLE;
+            CheckForRecipe();
+            
+            if (currentrecipecode!=""&&CurrentRecipes!=null&&CurrentRecipes.Count<0)
             {
                 bool canstart = TryTakeMaterials();
                 if (canstart)
@@ -84,6 +87,7 @@ namespace qptech.src
             if (!IsOn) { return; }
             if (deviceState == enDeviceState.POWERHOLD && IsPowered) { deviceState = enDeviceState.IDLE; MarkDirty(); return; }
             if (deviceState == enDeviceState.WARMUP) { deviceState = enDeviceState.IDLE; MarkDirty(); return; }
+            if (currentrecipecode == "") { deviceState = enDeviceState.IDLE; }
             if (deviceState == enDeviceState.IDLE) { DoDeviceStart(); return; }
             if (deviceState == enDeviceState.MATERIALHOLD && CurrentRecipes != null && TryTakeMaterials())
             {
@@ -157,7 +161,17 @@ namespace qptech.src
             }
         }
 
-
+        protected virtual bool CheckForRecipe()
+        {
+            BlockPos checkpos = Pos.Copy().Offset(BlockFacing.UP);
+            BlockEntityGenericTypedContainer gtc = Api.World.BlockAccessor.GetBlockEntity(checkpos) as BlockEntityGenericTypedContainer;
+            if (gtc == null||gtc.Inventory==null|| gtc.Inventory.Empty) { return false; }
+            if (gtc.Inventory[0] == null || gtc.Inventory[0].Empty || gtc.Inventory[0].Itemstack == null || gtc.Inventory[0].Itemstack.StackSize == 0) { return false; }
+            currentrecipes= GetRecipeForItem(Api,gtc.Inventory[0].Itemstack.Collectible.Code.ToString());
+            if (currentrecipes == null || currentrecipes.Count() == 0) { return false; }
+            currentrecipecode = gtc.Inventory[0].Itemstack.Collectible.Code.ToString();
+            return true;
+        }
         protected virtual bool TryTakeMaterials()
         {
             return false;
