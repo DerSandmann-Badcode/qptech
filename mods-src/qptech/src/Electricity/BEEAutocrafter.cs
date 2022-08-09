@@ -174,7 +174,79 @@ namespace qptech.src
         }
         protected virtual bool TryTakeMaterials()
         {
-            return false;
+            if (currentrecipecode == "") { return false; }
+            if (CurrentRecipes == null || CurrentRecipes.Count == 0) { return false; }
+            BlockPos checkpos = Pos.Copy().Offset(rmInputFace);
+            //Check for a container at the rminputpos
+            var checkblock = Api.World.BlockAccessor.GetBlockEntity(checkpos) as IBlockEntityContainer;
+            if (checkblock == null) { return false; }
+            if (checkblock.Inventory.Empty) { return false; }
+
+            //TODO
+            //have to iterate every recipe, and ingredient through every available itemslot
+            //will also need to track the source itemslots to see how many where used
+            //then relieve the inventory and return true
+            bool completed = false;
+            
+            foreach (GridRecipe recipe in CurrentRecipes)
+            {
+                bool thiscompleted=true;
+                //need to make a copy of the original inventory in case the recipe fails
+                DummyInventory di = new DummyInventory(Api, checkblock.Inventory.Count());
+                for (int c= 0; c < di.Count(); c++){
+                    if (checkblock.Inventory[c] != null && !checkblock.Inventory[c].Empty && checkblock.Inventory[c].Itemstack != null)
+                    {
+                        di[c].Itemstack = new ItemStack(checkblock.Inventory[c].Itemstack.Collectible, checkblock.Inventory[c].Itemstack.StackSize);
+                    }
+                }
+                //go thru each ingredient of this recipe and check against each slot in our copy, record how much we've used, and stop if we've used enough
+                foreach (GridRecipeIngredient ingredient in recipe.Ingredients.Values)
+                {
+                    int ingredientused = ingredient.Quantity;
+                    foreach (ItemSlot slot in checkblock.Inventory)
+                    {
+                        if (ingredient.SatisfiesAsIngredient(slot.Itemstack))
+                        {
+                            //tools shouldn't be used up
+                            if (ingredient.IsTool)
+                            {
+                                ingredientused = 0;
+                                break;
+                            }
+                            //only use as much as is needed and as much as is available
+                            int amounttouse = Math.Min(ingredientused, slot.Itemstack.StackSize);
+                            slot.Itemstack.StackSize -= amounttouse;
+                            ingredientused -= amounttouse;
+                            if (ingredientused == 0) { break; }
+                        }
+                    }
+                    if (ingredientused>0) { thiscompleted = false;break; }
+                }
+                if (thiscompleted)
+                {
+                    //TODO Mark as ok, relieve actual inventory etc
+                    for (int c = 0; c < di.Count(); c++)
+                    {
+                        if (di[c] == null || di[c].Empty || di[c].Itemstack == null || di[c].Itemstack.StackSize == 0)
+                        {
+                            checkblock.Inventory[c].Itemstack = null;
+                            
+                        }
+                        else
+                        {
+                            checkblock.Inventory[c].Itemstack.StackSize = di[c].Itemstack.StackSize;
+                        }
+                        checkblock.Inventory[c].MarkDirty();
+                    }
+                    
+                    completed = true;
+                    break;
+                }
+                //at this point this recipe has failed and the next recipe will try and run
+            }
+            
+
+            return completed;
         }
 
         protected virtual bool TryOutputProduct()
