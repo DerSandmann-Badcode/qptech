@@ -122,7 +122,13 @@ namespace qptech.src
             deviceState = enDeviceState.WARMUP;
             PlaySound(Api, "sounds/clearfilter", Pos);
         }
-
+        public override void Wrench()
+        {
+            base.Wrench();
+            currentrecipes = null;
+            currentrecipecode = "";
+            inprocessrecipeindex = 0;
+        }
         protected override void DoDeviceComplete()
         {
             if (TryOutputProduct()) { deviceState = enDeviceState.IDLE; }

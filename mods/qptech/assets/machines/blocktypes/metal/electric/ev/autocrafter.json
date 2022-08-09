@@ -31,7 +31,7 @@
 	"attributes": {
 		"genFlux": 0,
 		"useFlux": 32,
-		"processingTime": 5,
+		"processingTime": 0.1,
 		"inputFace": "west",
 			"outputFace": "east",
 		"dummylocations": [0,0,-1],
