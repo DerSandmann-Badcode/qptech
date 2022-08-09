@@ -18,6 +18,7 @@ namespace qptech.src
         BlockFacing fgOutputFace;
         string currentrecipecode;
         List<GridRecipe> currentrecipes;
+        int inprocessrecipeindex = 0;
         public List<GridRecipe> CurrentRecipes
         {
             get
@@ -61,7 +62,7 @@ namespace qptech.src
             deviceState = enDeviceState.IDLE;
             CheckForRecipe();
             
-            if (currentrecipecode!=""&&CurrentRecipes!=null&&CurrentRecipes.Count<0)
+            if (currentrecipecode!=""&&CurrentRecipes!=null&&CurrentRecipes.Count>0)
             {
                 bool canstart = TryTakeMaterials();
                 if (canstart)
@@ -132,14 +133,14 @@ namespace qptech.src
         {
             base.ToTreeAttributes(tree);
             if (CurrentRecipes != null) { tree.SetString("currentRecipe", currentrecipecode); }
-
+            tree.SetInt("inprocessrecipeindex", inprocessrecipeindex);
         }
 
         public override void FromTreeAttributes(ITreeAttribute tree, IWorldAccessor worldAccessForResolve)
         {
             base.FromTreeAttributes(tree, worldAccessForResolve);
             currentrecipecode = tree.GetString("currentRecipe", "");
-
+            inprocessrecipeindex = tree.GetInt("inprocessrecipeindex", 0);
         }
         public override void GetBlockInfo(IPlayer forPlayer, StringBuilder dsc)
         {
@@ -200,11 +201,13 @@ namespace qptech.src
                     }
                 }
                 //go thru each ingredient of this recipe and check against each slot in our copy, record how much we've used, and stop if we've used enough
-                foreach (GridRecipeIngredient ingredient in recipe.Ingredients.Values)
+                foreach (CraftingRecipeIngredient ingredient in recipe.Ingredients.Values)
                 {
                     int ingredientused = ingredient.Quantity;
-                    foreach (ItemSlot slot in checkblock.Inventory)
+                    foreach (ItemSlot slot in di)
                     {
+                        if (slot.Empty || slot.Itemstack == null) { continue; }
+                        if (ingredient.IsTool) { ingredientused = 0;break; }
                         if (ingredient.SatisfiesAsIngredient(slot.Itemstack))
                         {
                             //tools shouldn't be used up
@@ -235,6 +238,10 @@ namespace qptech.src
                         else
                         {
                             checkblock.Inventory[c].Itemstack.StackSize = di[c].Itemstack.StackSize;
+                            if (checkblock.Inventory[c].Itemstack.StackSize == 0)
+                            {
+                                checkblock.Inventory[c].Itemstack = null;
+                            }
                         }
                         checkblock.Inventory[c].MarkDirty();
                     }
@@ -251,7 +258,33 @@ namespace qptech.src
 
         protected virtual bool TryOutputProduct()
         {
-            return false;
+            if (CurrentRecipes == null) { return true; }
+            if (inprocessrecipeindex >= CurrentRecipes.Count) { return true; }
+
+            BlockPos checkpos = Pos.Copy().Offset(fgOutputFace);
+            var checkblock = Api.World.BlockAccessor.GetBlockEntity(checkpos) as IBlockEntityContainer;
+            if (checkblock == null) { return false; }
+            DummyInventory di = new DummyInventory(Api, 1);
+            di[0].Itemstack = CurrentRecipes[inprocessrecipeindex].Output.ResolvedItemstack.Clone();
+            bool outputok = false;
+            foreach (ItemSlot slot in checkblock.Inventory)
+            {
+                int originalmaount = di[0].StackSize;
+                int moved = di[0].TryPutInto(Api.World, slot, di[0].StackSize);
+                if (moved == originalmaount)
+                {
+                    slot.MarkDirty();
+                    PlaySound(Api, "sounds/doorslide", Pos);
+                    outputok=true;
+                    break;
+                }
+            }
+
+            currentrecipecode = "";
+            currentrecipes = null;
+            inprocessrecipeindex = 0;
+            MarkDirty(true);
+            return outputok;
         }
     }
 }
