@@ -171,7 +171,8 @@ namespace qptech.src
         protected virtual bool CheckForRecipe()
         {
             BlockPos checkpos = Pos.Copy().Offset(BlockFacing.UP);
-            BlockEntityGenericTypedContainer gtc = Api.World.BlockAccessor.GetBlockEntity(checkpos) as BlockEntityGenericTypedContainer;
+            
+            BEItemScanner gtc = Api.World.BlockAccessor.GetBlockEntity(checkpos) as BEItemScanner;
             if (gtc == null||gtc.Inventory==null|| gtc.Inventory.Empty) { return false; }
             if (gtc.Inventory[0] == null || gtc.Inventory[0].Empty || gtc.Inventory[0].Itemstack == null || gtc.Inventory[0].Itemstack.StackSize == 0) { return false; }
             currentrecipes= GetRecipeForItem(Api,gtc.Inventory[0].Itemstack.Collectible.Code.ToString());

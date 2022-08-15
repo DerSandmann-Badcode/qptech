@@ -1,6 +1,6 @@
 {
 	"code": "itemscanner",
-	"entityclass": "GenericTypedContainer",
+	"entityclass": "BEItemScanner",
 	"attributes": {
 		"partialAttachable": true,
 		"inventoryClassName": "chest",
@@ -29,11 +29,7 @@
 	"blockmaterial": "Metal",
 	"shape": { "base": "block/itemscanner" },
 	"drawtype": "json",
-	"texturesByType": {
-		"*": {
-			"all": { "base": "block/machinery" }
-		}
-	},
+	
 	"resistance": 1,
 	"sideopaque": {
 		"all": false

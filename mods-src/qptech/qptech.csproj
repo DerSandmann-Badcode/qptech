@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\BEItemScanner.cs" />
     <Compile Include="src\Electricity\BEEAutocrafter.cs" />
     <Compile Include="src\Electricity\BEEAutosmith.cs" />
     <Compile Include="src\Electricity\BEEClayFormer.cs" />
