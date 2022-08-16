@@ -18,7 +18,7 @@
 	],
 	"entityBehaviors": [
 		{ "name": "Animatable" },
-		{ "name": "BEBMultiDummy" }
+		
 	],
 	"behaviors": [
 
@@ -34,7 +34,7 @@
 		"processingTime": 0.1,
 		"inputFace": "west",
 			"outputFace": "east",
-		"dummylocations": [0,0,-1],
+		
 		"animationCode": "run",
 			"animation": "run",
 				"runAnimationSpeed": 0.17,
@@ -42,22 +42,22 @@
 	"blockmaterial": "Metal",
 	"drawtype": "json",
 
-	"shape": { "base": "block/metal/autosmith" },
+	"shape": { "base": "block/autocrafter" },
 	"shapeByType": {
 		"*-north": {
-			"base": "block/metal/autosmith",
+			"base": "block/autocrafter",
 			"rotateY": 0
 		},
 		"*-east": {
-			"base": "block/metal/autosmith",
+			"base": "block/autocrafter",
 			"rotateY": 270
 		},
 		"*-west": {
-			"base": "block/metal/autosmith",
+			"base": "block/autocrafter",
 			"rotateY": 90
 		},
 		"*-south": {
-			"base": "block/metal/autosmith",
+			"base": "block/autocrafter",
 			"rotateY": 180
 		}
 	},

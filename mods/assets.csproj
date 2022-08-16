@@ -146,6 +146,7 @@
     <None Include="qptech\assets\machines\shapes\block\cuttingmachine.obj" />
     <None Include="qptech\assets\machines\shapes\block\cuttingmachineblade.obj" />
     <None Include="qptech\assets\machines\shapes\block\exportedtext.json" />
+    <None Include="qptech\assets\machines\shapes\block\autocrafter.json" />
     <None Include="qptech\assets\machines\shapes\block\itemscanner.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\autosmith.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\electric\charcoalkiln.json" />
