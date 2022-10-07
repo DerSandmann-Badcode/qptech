@@ -18,6 +18,10 @@
 	"item-pantograph-iron": "Iron Pantograph",
 	"item-pantograph-meteoriciron": "Meteoric Iron Pantograph",
 	"itemdesc-pantograph-*": "Allows for copying of another chiseled blocks shape. Press F for options!",
+	"item-paintbrush-iron": "Paintbrush (Iron)",
+	"item-paintbrush-steel": "Paintbrush (Steel)",
+	"item-paintbrush-meteoriciron": "Paintbrush (Meteoric Iron)",
+	"itemdesc-paintbrush-*": "Replaces the targeted voxel with the material in your first hotbar slot",
 	"helphelp-pasteblock": "Paste Block Shape",
 	"helphelp-copyblock": "Copy Block Shape"
 }
