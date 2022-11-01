@@ -45,6 +45,7 @@
     <Content Include="rustandrails\assets\rustandrails\textures\block\shinyiron.png" />
     <Content Include="rustandrails\RNR Changelog.txt" />
     <None Include="chisel\assets\chiseltools\config\handbook\chiseltools.json" />
+    <None Include="chisel\assets\chiseltools\itemtypes\blockswapper.json" />
     <None Include="chisel\assets\chiseltools\itemtypes\paintbrush.json" />
     <None Include="chisel\assets\chiseltools\itemtypes\pantograph.json" />
     <None Include="chisel\assets\chiseltools\itemtypes\handwedge.json" />
