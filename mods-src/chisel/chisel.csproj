@@ -86,7 +86,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="src\BEMBMover.cs" />
     <Compile Include="src\ChiselToolLoader.cs" />
+    <Compile Include="src\ItemChiselBlockController.cs" />
     <Compile Include="src\ItemHandPlaner.cs" />
     <Compile Include="src\ItemBlockSwapper.cs" />
     <Compile Include="src\ItemPaintBrush.cs" />

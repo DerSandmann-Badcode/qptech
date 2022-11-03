@@ -64,6 +64,8 @@ namespace chisel.src
             api.RegisterItemClass("ItemPantograph", typeof(ItemPantograph));
             api.RegisterItemClass("ItemPaintBrush", typeof(ItemPaintBrush));
             api.RegisterItemClass("ItemBlockSwapper", typeof(ItemBlockSwapper));
+            api.RegisterBlockEntityClass("BEMBMover", typeof(BEMBMover));
+            api.RegisterItemClass("ItemChiselBlockController", typeof(ItemChiselBlockController));
         }
 
         private void CmdSetHandPlanerMultiplier(IPlayer player, int groupId, CmdArgs args)
