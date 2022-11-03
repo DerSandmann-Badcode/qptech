@@ -1,9 +1,9 @@
 {
-	"code": "chiselblockcontroller",
-	"class": "ItemChiselBlockController",
+	"code": "laddermaker",
+	"class": "ItemLadderMaker",
 	
 	"drawtype": "json",
-	"shape": { "base": "item/tool/blockswapper" },
+	"shape": { "base": "item/tool/laddermaker" },
 	"variantgroups": [
 		{
 			"code": "material",
@@ -112,8 +112,8 @@
 	},
 	"durabilitybytype": {
 		
-		"chiselblockcontroller-iron": 2000,
-		"chiselblockcontroller-meteoriciron": 2800,
-		"chiselblockcontroller-steel": 5000
+		"laddermaker-iron": 1000,
+		"laddermaker-meteoriciron": 1400,
+		"laddermaker-steel": 2500
 	}
 }

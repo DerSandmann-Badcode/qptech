@@ -112,8 +112,8 @@
 	},
 	"durabilitybytype": {
 		
-		"paintbrush-iron": 2000,
-		"paintbrush-meteoriciron": 2800,
-		"paintbrush-steel": 5000
+		"blockswapper-iron": 2000,
+		"blockswapper-meteoriciron": 2800,
+		"blockswapper-steel": 5000
 	}
 }
