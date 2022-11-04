@@ -127,7 +127,8 @@ namespace chisel.src
             public static int paintBrushUseRateDefault = 10;
             public static int pantographMinimumDamagePerOpDefault = 1;
             public static int paintBrushLiquidMultiplierDefault = 10;
-
+            public static int minimumVoxelsForLadderDefault = 8;
+            public int minimumVoxelsForLadder = minimumVoxelsForLadderDefault;
             public void Reset()
             {
                 handPlanerBaseDurabilityMultiplier = handplanerDefault;
@@ -137,6 +138,7 @@ namespace chisel.src
                 pantographMinimumDamagePerOp = pantographMinimumDamagePerOpDefault;
                 paintBrushUseRate = paintBrushUseRateDefault;
                 fixedToolWear = fixedToolWearDefault;
+                minimumVoxelsForLadder = minimumVoxelsForLadderDefault;
             }
         }
     }

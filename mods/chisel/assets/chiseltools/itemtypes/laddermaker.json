@@ -112,8 +112,8 @@
 	},
 	"durabilitybytype": {
 		
-		"laddermaker-iron": 1000,
-		"laddermaker-meteoriciron": 1400,
-		"laddermaker-steel": 2500
+		"laddermaker-iron": 64,
+		"laddermaker-meteoriciron": 96,
+		"laddermaker-steel": 164
 	}
 }

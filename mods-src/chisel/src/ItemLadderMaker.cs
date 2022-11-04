@@ -49,6 +49,28 @@ namespace chisel.src
             AssetLocation al = new AssetLocation("chiseltools:climbablechiseledblock");
             Block nb = api.World.GetBlock(al);
             if (bc.BlockId == nb.BlockId) { return; }
+            //Voxel count check 
+            bool voxelcountok = false;
+            if (ChiselToolLoader.serverconfig.minimumVoxelsForLadder > 0)
+            {
+                int voxelcount = 0;
+                //Count voxels to make sure there are enough for ladder
+                foreach (uint su in copiedblockvoxels)
+                {
+                    CuboidWithMaterial cwm = new CuboidWithMaterial();
+                    BlockEntityMicroBlock.FromUint(su, cwm);
+                    
+                    //cycle through each voxel of the source cuboid and see if it's safe to write to the destination block
+                    voxelcount += cwm.Volume;
+                    if (voxelcount>= ChiselToolLoader.serverconfig.minimumVoxelsForLadder)
+                    {
+                        voxelcountok = true;
+                        break;
+                    }
+
+                }
+                if (!voxelcountok) { return; }
+            }
             api.World.BlockAccessor.SetBlock(nb.BlockId, blockSel.Position);
             bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityMicroBlock;
             bmb.BlockName = copiedname + "[Ladder]";
@@ -56,6 +78,13 @@ namespace chisel.src
             bmb.MaterialIds = copiedblockmaterials.ToArray();
             bmb.VoxelCuboids = new List<uint>(copiedblockvoxels);
             bmb.MarkDirty(true);
+            
+            if (api is ICoreServerAPI && byPlayer?.WorldData.CurrentGameMode != EnumGameMode.Creative)
+            {
+                int dmg = 1;
+                this.DamageItem(api.World, byEntity, byPlayer.InventoryManager.ActiveHotbarSlot, dmg);
+                byPlayer.InventoryManager.ActiveHotbarSlot.MarkDirty();
+            }
             api.World.PlaySoundAt(new AssetLocation("sounds/stone_move"), blockSel.Position.X, blockSel.Position.Y, blockSel.Position.Z, byPlayer, true, 12, 1);
         }
 
@@ -70,11 +99,7 @@ namespace chisel.src
             
         }
 
-        protected virtual int CalcDamage()
-        {
-
-            return 0;
-        }
+        
 
 
     }
