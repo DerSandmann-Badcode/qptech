@@ -27,5 +27,9 @@
 	"item-blockswapper-steel": "Steel Block Swapper",
 	"item-blockswapper-iron": "Iron Block Swapper",
 	"item-blockswapper-meteoriciron": "Meteoric Iron Block Swapper",
-	"itemdesc-blockswapper-*": "Replaces the targetted block with whatever block is in your first inventory slot. (Targeted block is destroyed)"
+	"itemdesc-blockswapper-*": "Replaces the targetted block with whatever block is in your first inventory slot. (Targeted block is destroyed)",
+	"item-laddermaker-steel": "Steel Ladder Maker",
+	"item-laddermaker-iron":  "Iron Ladder Maker",
+	"item-laddermaker-meteoriciron": "Meteoric Iron Ladder Maker",
+	"itemdesc-laddermaker-*": "Right click on a chiseled block to make it climable! (Chiseled block must have at least 8 voxels)"
 }
