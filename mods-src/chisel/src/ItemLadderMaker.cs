@@ -35,15 +35,34 @@ namespace chisel.src
                 byPlayer.InventoryManager.ActiveHotbarSlot.MarkDirty();
                 return;
             }
+            if (!CanMakeLadder(byPlayer)) { return; }
             //TODO Add Survival Mode damage and ladder draw
             BlockChisel bc = api.World.BlockAccessor.GetBlock(blockSel.Position) as BlockChisel;
             if (bc == null) { return; }
+            BlockEntityMicroBlock bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityMicroBlock;
+            //First Copy the original block
+            string copiedname = bmb.BlockName;
+            List<uint> copiedblockvoxels = new List<uint>(bmb.VoxelCuboids);
+            List<int> copiedblockmaterials = new List<int>(bmb.MaterialIds);
+            int copiedvolume = (int)(bmb.VolumeRel * 16f * 16f * 16f);
+            //Then Create our new ladder block
             AssetLocation al = new AssetLocation("chiseltools:climbablechiseledblock");
             Block nb = api.World.GetBlock(al);
             if (bc.BlockId == nb.BlockId) { return; }
-            api.World.BlockAccessor.ExchangeBlock(nb.Id, blockSel.Position);
+            api.World.BlockAccessor.SetBlock(nb.BlockId, blockSel.Position);
+            bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityMicroBlock;
+            bmb.BlockName = copiedname + "[Ladder]";
+            //Then Paste shape and material data into new block
+            bmb.MaterialIds = copiedblockmaterials.ToArray();
+            bmb.VoxelCuboids = new List<uint>(copiedblockvoxels);
+            bmb.MarkDirty(true);
+            api.World.PlaySoundAt(new AssetLocation("sounds/stone_move"), blockSel.Position.X, blockSel.Position.Y, blockSel.Position.Z, byPlayer, true, 12, 1);
         }
 
+        public virtual bool CanMakeLadder(IPlayer player)
+        {
+            return true;
+        }
         public override void OnHeldAttackStart(ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel, ref EnumHandHandling handling)
         {
             handling = EnumHandHandling.PreventDefaultAction;
@@ -57,6 +76,6 @@ namespace chisel.src
             return 0;
         }
 
-        
+
     }
 }
