@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Vintagestory.API.Client;
+using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Config;
+using Vintagestory.API.Datastructures;
+using Vintagestory.API.MathTools;
+using Vintagestory.API.Util;
+using Vintagestory.GameContent;
+using Vintagestory.API.Server;
+
+namespace chisel.src
+{
+    class BlockFunctionalChiseled:BlockChisel
+    {
+        
+        public override Cuboidf[] GetCollisionBoxes(IBlockAccessor blockAccessor, BlockPos pos)
+        {
+            BlockFunctionalChiseled bfc = blockAccessor.GetBlock(pos) as BlockFunctionalChiseled;
+            BEFunctionChiseled befcc=blockAccessor.GetBlockEntity(pos) as BEFunctionChiseled;
+            
+            if (bfc == null || befcc == null|| !befcc.Passable) { return base.GetCollisionBoxes(blockAccessor, pos); }
+            
+            return null;
+            //return base.GetCollisionBoxes(blockAccessor, pos);
+        }
+    }
+}

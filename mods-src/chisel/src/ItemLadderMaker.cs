@@ -51,33 +51,44 @@ namespace chisel.src
             if (bc.BlockId == nb.BlockId) { return; }
             //Voxel count check 
             bool voxelcountok = false;
-            if (ChiselToolLoader.serverconfig.minimumVoxelsForLadder > 0)
+            /*
+            if (api is ICoreServerAPI)
             {
-                int voxelcount = 0;
-                //Count voxels to make sure there are enough for ladder
-                foreach (uint su in copiedblockvoxels)
+                if (ChiselToolLoader.serverconfig.minimumVoxelsForLadder > 0)
                 {
-                    CuboidWithMaterial cwm = new CuboidWithMaterial();
-                    BlockEntityMicroBlock.FromUint(su, cwm);
-                    
-                    //cycle through each voxel of the source cuboid and see if it's safe to write to the destination block
-                    voxelcount += cwm.Volume;
-                    if (voxelcount>= ChiselToolLoader.serverconfig.minimumVoxelsForLadder)
+                    int voxelcount = 0;
+                    //Count voxels to make sure there are enough for ladder
+                    foreach (uint su in copiedblockvoxels)
                     {
-                        voxelcountok = true;
-                        break;
-                    }
+                        CuboidWithMaterial cwm = new CuboidWithMaterial();
+                        BlockEntityMicroBlock.FromUint(su, cwm);
 
+                        //cycle through each voxel of the source cuboid and see if it's safe to write to the destination block
+                        voxelcount += cwm.Volume;
+                        if (voxelcount >= ChiselToolLoader.serverconfig.minimumVoxelsForLadder)
+                        {
+                            voxelcountok = true;
+                            break;
+                        }
+
+                    }
+                    if (!voxelcountok) {
+                        api.World.BlockAccessor.MarkBlockDirty(blockSel.Position);
+                        return;
+                    }
                 }
-                if (!voxelcountok) { return; }
             }
+            */
             api.World.BlockAccessor.SetBlock(nb.BlockId, blockSel.Position);
             bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityMicroBlock;
             bmb.BlockName = copiedname + "[Ladder]";
             //Then Paste shape and material data into new block
             bmb.MaterialIds = copiedblockmaterials.ToArray();
             bmb.VoxelCuboids = new List<uint>(copiedblockvoxels);
-            bmb.MarkDirty(true);
+            
+                api.World.BlockAccessor.MarkBlockEntityDirty(blockSel.Position);
+                api.World.BlockAccessor.MarkBlockDirty(blockSel.Position);
+            
             
             if (api is ICoreServerAPI && byPlayer?.WorldData.CurrentGameMode != EnumGameMode.Creative)
             {

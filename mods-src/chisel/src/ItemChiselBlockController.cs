@@ -27,8 +27,8 @@ namespace chisel.src
             base.OnHeldInteractStart(slot, byEntity, blockSel, entitySel, firstEvent, ref handling);
             handling = EnumHandHandling.PreventDefaultAction;
             if (blockSel == null) { return; }
-            BEMBMover mover = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BEMBMover;
-            if (mover == null) { return; }
+            BEFunctionChiseled controllable = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BEFunctionChiseled;
+            if (controllable == null) { return; }
             //Do nothing if we don't have access to selected block
             IPlayer byPlayer = (byEntity as EntityPlayer)?.Player;
             if (!byEntity.World.Claims.TryAccess(byPlayer, blockSel.Position, EnumBlockAccessFlags.BuildOrBreak))
@@ -38,10 +38,15 @@ namespace chisel.src
             }
             if (byPlayer.Entity.Controls.Sneak)
             {
-                mover.SetRotationSpeed(0);
-                mover.Sync(null);
+                controllable.SetPassable(true) ;
+                controllable.Sync(null);
             }
-            else { mover.AdjustRotationSpeed(1); }
+            else
+            {
+                controllable.SetPassable(false);
+                controllable.Sync(null);
+            }
+            
             
         }
 
@@ -49,7 +54,7 @@ namespace chisel.src
         {
             handling = EnumHandHandling.PreventDefaultAction;
             if (blockSel == null) { return; }
-            BEMBMover mover = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BEMBMover;
+            BEFunctionChiseled mover = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BEFunctionChiseled;
             if (mover == null) { return; }
             
             IPlayer byPlayer = (byEntity as EntityPlayer)?.Player;
@@ -58,12 +63,7 @@ namespace chisel.src
                 byPlayer.InventoryManager.ActiveHotbarSlot.MarkDirty();
                 return;
             }
-            if (byPlayer.Entity.Controls.Sneak)
-            {
-                mover.SetRotationSpeed(0);
-                
-            }
-            else { mover.AdjustRotationSpeed(-1); }
+           
         }
 
         protected virtual int CalcDamage()

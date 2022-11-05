@@ -1,11 +1,11 @@
 {
 	code: "moveablechiseledblock",
-	class: "BlockChisel",
-	entityClass: "BEMBMover",
+	class: "BlockFunctionalChiseled",
+	entityClass: "BEFunctionChiseled",
 	attributes: {
 		dropSelf: true
 	},
-	creativeinventory: { "general": [""] },
+	creativeinventory: { "chiseltools": ["*"] },
 	shape: { base: "game:block/basic/cube" },
 	replaceable: 90,
 	drops: [],

@@ -86,7 +86,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Compile Include="src\BEMBMover.cs" />
+    <Compile Include="src\BEFunctionChiseled.cs" />
+    <Compile Include="src\BlockFunctionalChiseled.cs" />
     <Compile Include="src\ChiselToolLoader.cs" />
     <Compile Include="src\ItemLadderMaker.cs" />
     <Compile Include="src\ItemChiselBlockController.cs" />
