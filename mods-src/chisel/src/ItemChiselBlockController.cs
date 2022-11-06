@@ -39,12 +39,12 @@ namespace chisel.src
             if (byPlayer.Entity.Controls.Sneak)
             {
                 controllable.SetState("OPEN") ;
-                controllable.Sync();
+                
             }
             else
             {
                 controllable.SetState("CLOSED");
-                controllable.Sync();
+                
             }
             
             

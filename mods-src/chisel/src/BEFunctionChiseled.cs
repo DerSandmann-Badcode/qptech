@@ -37,8 +37,13 @@ namespace chisel.src
         }
         BlockPos controlblockpos;
         public BlockPos ControlBlockPos=>controlblockpos;
-        
 
+        public override void OnBlockPlaced(ItemStack byItemStack = null)
+        {
+            controlblockpos = Pos;
+            controlledblocks = new List<BlockPos>();
+            base.OnBlockPlaced(byItemStack);
+        }
         public override void Initialize(ICoreAPI api)
         {
             base.Initialize(api);
@@ -84,15 +89,16 @@ namespace chisel.src
                     controlblockpos = Pos;
                 }
             }
-            if (currentstate == closename) { SetState(openname); }
-            else { SetState(closename); }
+            string targetstate = currentstate;
+            if (currentstate == closename) { SetState(openname);targetstate = openname; }
+            else { SetState(closename);targetstate = closename; }
             if (controlledblocks != null && controlledblocks.Count > 0)
             {
                 foreach (BlockPos p in controlledblocks)
                 {
-                    BEFunctionChiseled bfc = Api.World.BlockAccessor.GetBlockEntity(controlblockpos) as BEFunctionChiseled;
+                    BEFunctionChiseled bfc = Api.World.BlockAccessor.GetBlockEntity(p) as BEFunctionChiseled;
                     if (bfc == null) { continue; }
-                    bfc.ControlBlockSignal(Pos, currentstate);
+                    bfc.SetState(targetstate);
                 }
             }
         }
@@ -104,14 +110,15 @@ namespace chisel.src
         public virtual bool ControlBlockSignal(BlockPos fromblock, string tostate)
         {
             
-            //if a signal is received from a door that is controlled by us, dump all controlled doors and obey the signal
-            if (controlledblocks != null)
-            {
-                controlledblocks = new List<BlockPos>();
-                controlblockpos = fromblock;
-            }
             SetState(tostate);
             return true;
+        }
+
+        public virtual void InitControlBlockSignal(BlockPos fromblock)
+        {
+            controlblockpos = fromblock;
+            controlledblocks = new List<BlockPos>();
+            MarkDirty(true);
         }
 
         void SetupDictionaries() {
@@ -137,36 +144,28 @@ namespace chisel.src
             
                 this.MaterialIds = statematerials[newstate].ToArray();
                 this.VoxelCuboids = statevoxels[newstate];
-                
-            if (Api is ICoreClientAPI)
-            {
-                RegenMesh(Api as ICoreClientAPI);
-            }
+
             currentstate = newstate;
             MarkDirty(true);
+            
         }
-
-        public virtual void Sync()
-        {
-           //here we should verify which set of chisel data to show
-            if (Api is ICoreClientAPI)
-            {
-                RegenMesh(Api as ICoreClientAPI);
-            }
-        }
-        
+                
         public virtual void SetControlledBlocks(List<BlockPos> newlist)
         {
             controlblockpos = Pos;
             controlledblocks= new List<BlockPos>(newlist);
-            SetState(closename);
+            
             foreach (BlockPos p in newlist)
             {
+                if (p == Pos)
+                {
+                    break;
+                }
                 BEFunctionChiseled bfc = Api.World.BlockAccessor.GetBlockEntity(p) as BEFunctionChiseled;
                 if (p == null) { continue; }
-                bfc.ControlBlockSignal(Pos, closename);
+                bfc.InitControlBlockSignal(Pos);
             }
-            MarkDirty(true);
+            SetState(closename);
         }
 
         public override void ToTreeAttributes(ITreeAttribute tree)
@@ -221,6 +220,15 @@ namespace chisel.src
         public override void GetBlockInfo(IPlayer forPlayer, StringBuilder dsc)
         {
             dsc.AppendLine("STATE:" + currentstate);
+            if (controlblockpos != Pos) { dsc.AppendLine("Controlled by " + controlblockpos.ToString()); }
+            if (controlledblocks != null && controlledblocks.Count > 0)
+            {
+                dsc.AppendLine("Controlling:");
+                foreach (BlockPos p in controlledblocks)
+                {
+                    dsc.Append(p.ToString() + ",");
+                }
+            }
             base.GetBlockInfo(forPlayer, dsc);
         }
     }
