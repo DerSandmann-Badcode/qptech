@@ -98,7 +98,8 @@ namespace chisel.src
                 {
                     BEFunctionChiseled bfc = Api.World.BlockAccessor.GetBlockEntity(p) as BEFunctionChiseled;
                     if (bfc == null) { continue; }
-                    bfc.SetState(targetstate);
+                    bfc.ControlBlockSignal(Pos, targetstate);
+                    
                 }
             }
         }
@@ -109,7 +110,8 @@ namespace chisel.src
         //also if a door control signal is recieved it will cease controlling other doors
         public virtual bool ControlBlockSignal(BlockPos fromblock, string tostate)
         {
-            
+            controlblockpos = fromblock;
+            controlledblocks = new List<BlockPos>();
             SetState(tostate);
             return true;
         }
