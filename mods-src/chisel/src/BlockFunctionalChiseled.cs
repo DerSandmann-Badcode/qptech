@@ -28,5 +28,16 @@ namespace chisel.src
             return null;
             //return base.GetCollisionBoxes(blockAccessor, pos);
         }
+
+        public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
+        {
+            BEFunctionChiseled befcc = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BEFunctionChiseled;
+            if (befcc != null)
+            {
+                befcc.ToggleOpenClosed();
+                return true;
+            }
+            return base.OnBlockInteractStart(world, byPlayer, blockSel);
+        }
     }
 }

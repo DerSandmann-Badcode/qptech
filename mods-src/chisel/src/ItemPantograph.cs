@@ -34,7 +34,7 @@ namespace chisel.src
         ICoreClientAPI capi;
         
         bool showcopiedshape = false;
-        public enum enModes {COPY,FULLPASTE,ADDPASTE,UNDO,CHANGEMAT}
+        public enum enModes {COPY,FULLPASTE,ADDPASTE,UNDO,CHANGEMAT,CLOSEDDOOR,OPENDOOR}
         public override void OnLoaded(ICoreAPI api)
         {
             base.OnLoaded(api);
@@ -49,6 +49,8 @@ namespace chisel.src
                 modes[(int)enModes.ADDPASTE] = new SkillItem() { Code = new AssetLocation(enModes.ADDPASTE.ToString()), Name = Lang.Get("Add Shape Mode") };
                 modes[(int)enModes.UNDO] = new SkillItem() { Code = new AssetLocation(enModes.UNDO.ToString()), Name = Lang.Get("Undo Last Block Change") };
                 modes[(int)enModes.CHANGEMAT] = new SkillItem() { Code = new AssetLocation(enModes.CHANGEMAT.ToString()), Name = Lang.Get("(Creative Only)Paste Materials") };
+                modes[(int)enModes.CLOSEDDOOR] = new SkillItem() { Code = new AssetLocation(enModes.CLOSEDDOOR.ToString()), Name = Lang.Get("Assign Closed Door Model") };
+                modes[(int)enModes.OPENDOOR] = new SkillItem() { Code = new AssetLocation(enModes.OPENDOOR.ToString()), Name = Lang.Get("Assign Open Door Model") };
                 if (capi != null)
                 {
                     modes[(int)enModes.COPY].WithIcon(capi, capi.Gui.LoadSvgWithPadding(new AssetLocation("textures/icons/takecopy.svg"), 48, 48, 5, ColorUtil.WhiteArgb));
@@ -61,7 +63,10 @@ namespace chisel.src
                     modes[(int)enModes.UNDO].TexturePremultipliedAlpha = false;
                     modes[(int)enModes.CHANGEMAT].WithIcon(capi, capi.Gui.LoadSvgWithPadding(new AssetLocation("textures/icons/paintbrush.svg"), 48, 48, 5, ColorUtil.WhiteArgb));
                     modes[(int)enModes.CHANGEMAT].TexturePremultipliedAlpha = false;
-                    
+                    modes[(int)enModes.OPENDOOR].WithIcon(capi, capi.Gui.LoadSvgWithPadding(new AssetLocation("textures/icons/paintbrush.svg"), 48, 48, 5, ColorUtil.WhiteArgb));
+                    modes[(int)enModes.OPENDOOR].TexturePremultipliedAlpha = false;
+                    modes[(int)enModes.CLOSEDDOOR].WithIcon(capi, capi.Gui.LoadSvgWithPadding(new AssetLocation("textures/icons/paintbrush.svg"), 48, 48, 5, ColorUtil.WhiteArgb));
+                    modes[(int)enModes.CLOSEDDOOR].TexturePremultipliedAlpha = false;
                 }
                 
                
@@ -177,6 +182,18 @@ namespace chisel.src
             else if (slot.Itemstack.Attributes.GetInt("toolMode", (int)enModes.COPY) == (int)enModes.CHANGEMAT)
             {
                 PasteMaterials(slot, blockSel);
+                handling = EnumHandHandling.PreventDefaultAction;
+                return;
+            }
+            else if (slot.Itemstack.Attributes.GetInt("toolMode", (int)enModes.COPY) == (int)enModes.CLOSEDDOOR)
+            {
+                SetDoor(slot, blockSel,BEFunctionChiseled.closename);
+                handling = EnumHandHandling.PreventDefaultAction;
+                return;
+            }
+            else if (slot.Itemstack.Attributes.GetInt("toolMode", (int)enModes.COPY) == (int)enModes.OPENDOOR)
+            {
+                SetDoor(slot, blockSel,BEFunctionChiseled.openname);
                 handling = EnumHandHandling.PreventDefaultAction;
                 return;
             }
@@ -478,7 +495,21 @@ namespace chisel.src
             bmb.MarkDirty(true);
         }
 
-
+        //Will Setup a functional chiseled block with an open or closed frame
+        void SetDoor(ItemSlot slot, BlockSelection blockSel, string state)
+        {
+            //Do nothing if we have no stored voxel information
+            List<int> copiedmaterials = GetCopiedBlockMaterials(slot);
+            if (copiedmaterials == null) { return; }
+            List<uint> copiedblockvoxels = GetCopiedBlockVoxels(slot);
+            if (copiedblockvoxels == null) { return; }
+            //Do nothing if there is no funcitonal chiseled block
+            BEFunctionChiseled bfc = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BEFunctionChiseled;
+            if (bfc == null) { return; }
+            if (state == BEFunctionChiseled.openname) { bfc.AddOpen(copiedblockvoxels, copiedmaterials); }
+            else if (state==BEFunctionChiseled.closename){ bfc.AddClosed(copiedblockvoxels, copiedmaterials); }
+            
+        }
 
         public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
         {

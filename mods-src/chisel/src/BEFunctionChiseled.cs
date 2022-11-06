@@ -17,7 +17,9 @@ namespace chisel.src
 {
     class BEFunctionChiseled : BlockEntityMicroBlock
     {
-        string currentstate = "CLOSED";
+        public static string openname = "OPEN";
+        public static string closename = "CLOSE";
+        string currentstate = closename;
         Dictionary<string, List<uint>> statevoxels;
         Dictionary<string, List<int>> statematerials;
         
@@ -49,8 +51,26 @@ namespace chisel.src
             
             statepassable[key] = passable;
             MarkDirty(true);
+            if (changenow) { SetState(key); }
         }
-        
+        //helper function to easily add a door open state
+        public virtual void AddOpen(List<uint>voxels, List<int> materials)
+        {
+            AddState(openname, voxels, materials, true, true);
+        }
+        //helper function to easily add a door closed state
+        public virtual void AddClosed(List<uint> voxels, List<int> materials)
+        {
+            AddState(closename, voxels, materials, false, true);
+        }
+
+        //will cycle between open and closed, or set to closed if in a different state
+        public virtual void ToggleOpenClosed()
+        {
+            if (currentstate == closename) { SetState(openname); }
+            else { SetState(closename); }
+        }
+
         void SetupDictionaries() {
             if (statevoxels == null) { statevoxels = new Dictionary<string, List<uint>>(); }
             if (statematerials == null) { statematerials = new Dictionary<string, List<int>>(); }
