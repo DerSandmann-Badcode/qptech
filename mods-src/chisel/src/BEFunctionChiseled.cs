@@ -71,7 +71,7 @@ namespace chisel.src
         public virtual void ToggleOpenClosed()
         {
             //first if we are controlled by a block we will just let the block know and wait for it to tell us to open/close
-            if (controlblockpos != null)
+            if (controlblockpos != Pos)
             {
                 BEFunctionChiseled bfc = Api.World.BlockAccessor.GetBlockEntity(controlblockpos) as BEFunctionChiseled;
                 if (bfc != null)
@@ -81,7 +81,7 @@ namespace chisel.src
                 }
                 else
                 {
-                    controlblockpos = null;
+                    controlblockpos = Pos;
                 }
             }
             if (currentstate == closename) { SetState(openname); }
@@ -169,7 +169,9 @@ namespace chisel.src
             tree.SetBytes("statematerials", bmat);
             tree.SetBytes("statepassable", bpass);
             tree.SetBytes("controlleddoors", bcontrol);
+            if (controlblockpos == null) { controlblockpos = Pos; }
             tree.SetBlockPos("controlblockpos", controlblockpos);
+            
         }
         public override void FromTreeAttributes(ITreeAttribute tree, IWorldAccessor worldAccessForResolve)
         {
