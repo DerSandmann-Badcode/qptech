@@ -20,9 +20,12 @@
     <Content Include="chisel\assets\game\sounds\filtercopy.ogg" />
     <Content Include="chisel\assets\game\sounds\stone_move.ogg" />
     <Content Include="chisel\assets\game\textures\icons\add.svg" />
+    <Content Include="chisel\assets\game\textures\icons\closeddoor.svg" />
     <Content Include="chisel\assets\game\textures\icons\copy.svg" />
+    <Content Include="chisel\assets\game\textures\icons\doortool.svg" />
     <Content Include="chisel\assets\game\textures\icons\flip.svg" />
     <Content Include="chisel\assets\game\textures\icons\material.svg" />
+    <Content Include="chisel\assets\game\textures\icons\opendoor.svg" />
     <Content Include="chisel\assets\game\textures\icons\paintbrush.svg" />
     <Content Include="chisel\assets\game\textures\icons\plane.svg" />
     <Content Include="chisel\assets\game\textures\icons\push.svg" />

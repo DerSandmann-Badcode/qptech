@@ -20,7 +20,12 @@ namespace chisel.src
     /// First copy a block - hold left click to copy, maybe use some cloth and dye?
     /// Work a new block into that shape, hold right click to apply it
     /// </summary>
-    
+    /// Door Setup flow:
+    /// From door tool mode:
+    ///    shift + right click - clear all selections
+    ///    right click - highlight & add door to selected door list
+    ///    left click - set door as master (for highlighted doors)
+    ///    
     class ItemPantograph:Item
     {
 
@@ -34,7 +39,7 @@ namespace chisel.src
         ICoreClientAPI capi;
         
         bool showcopiedshape = false;
-        public enum enModes {COPY,FULLPASTE,ADDPASTE,UNDO,CHANGEMAT,CLOSEDDOOR,OPENDOOR}
+        public enum enModes {COPY,FULLPASTE,ADDPASTE,UNDO,CHANGEMAT,CLOSEDDOOR,OPENDOOR,DOORTOOL}
         public override void OnLoaded(ICoreAPI api)
         {
             base.OnLoaded(api);
@@ -43,7 +48,7 @@ namespace chisel.src
             {
                 SkillItem[] modes;
                 
-                modes = new SkillItem[7];
+                modes = new SkillItem[8];
                 modes[(int)enModes.COPY] = new SkillItem() { Code = new AssetLocation(enModes.COPY.ToString()), Name = Lang.Get("Snapshot Shape Mode") };
                 modes[(int)enModes.FULLPASTE] = new SkillItem() { Code = new AssetLocation(enModes.FULLPASTE.ToString()), Name = Lang.Get("Replace Shape Mode") };
                 modes[(int)enModes.ADDPASTE] = new SkillItem() { Code = new AssetLocation(enModes.ADDPASTE.ToString()), Name = Lang.Get("Add Shape Mode") };
@@ -51,6 +56,7 @@ namespace chisel.src
                 modes[(int)enModes.CHANGEMAT] = new SkillItem() { Code = new AssetLocation(enModes.CHANGEMAT.ToString()), Name = Lang.Get("(Creative Only)Paste Materials") };
                 modes[(int)enModes.CLOSEDDOOR] = new SkillItem() { Code = new AssetLocation(enModes.CLOSEDDOOR.ToString()), Name = Lang.Get("Assign Closed Door Model") };
                 modes[(int)enModes.OPENDOOR] = new SkillItem() { Code = new AssetLocation(enModes.OPENDOOR.ToString()), Name = Lang.Get("Assign Open Door Model") };
+                modes[(int)enModes.DOORTOOL] = new SkillItem() { Code = new AssetLocation(enModes.DOORTOOL.ToString()), Name = Lang.Get("Connect Door Tool") };
                 if (capi != null)
                 {
                     modes[(int)enModes.COPY].WithIcon(capi, capi.Gui.LoadSvgWithPadding(new AssetLocation("textures/icons/takecopy.svg"), 48, 48, 5, ColorUtil.WhiteArgb));
@@ -63,10 +69,12 @@ namespace chisel.src
                     modes[(int)enModes.UNDO].TexturePremultipliedAlpha = false;
                     modes[(int)enModes.CHANGEMAT].WithIcon(capi, capi.Gui.LoadSvgWithPadding(new AssetLocation("textures/icons/paintbrush.svg"), 48, 48, 5, ColorUtil.WhiteArgb));
                     modes[(int)enModes.CHANGEMAT].TexturePremultipliedAlpha = false;
-                    modes[(int)enModes.OPENDOOR].WithIcon(capi, capi.Gui.LoadSvgWithPadding(new AssetLocation("textures/icons/paintbrush.svg"), 48, 48, 5, ColorUtil.WhiteArgb));
+                    modes[(int)enModes.OPENDOOR].WithIcon(capi, capi.Gui.LoadSvgWithPadding(new AssetLocation("textures/icons/opendoor.svg"), 48, 48, 5, ColorUtil.WhiteArgb));
                     modes[(int)enModes.OPENDOOR].TexturePremultipliedAlpha = false;
-                    modes[(int)enModes.CLOSEDDOOR].WithIcon(capi, capi.Gui.LoadSvgWithPadding(new AssetLocation("textures/icons/paintbrush.svg"), 48, 48, 5, ColorUtil.WhiteArgb));
+                    modes[(int)enModes.CLOSEDDOOR].WithIcon(capi, capi.Gui.LoadSvgWithPadding(new AssetLocation("textures/icons/closeddoor.svg"), 48, 48, 5, ColorUtil.WhiteArgb));
                     modes[(int)enModes.CLOSEDDOOR].TexturePremultipliedAlpha = false;
+                    modes[(int)enModes.DOORTOOL].WithIcon(capi, capi.Gui.LoadSvgWithPadding(new AssetLocation("textures/icons/doortool.svg"), 48, 48, 5, ColorUtil.WhiteArgb));
+                    modes[(int)enModes.DOORTOOL].TexturePremultipliedAlpha = false;
                 }
                 
                
