@@ -24,7 +24,7 @@ namespace chisel.src
     /// From door tool mode:
     ///    shift + right click - clear all selections
     ///    right click - highlight & add door to selected door list
-    ///    left click - set door as master (for highlighted doors)
+    ///    left click - set door as master (for highlighted doors, clear highlighted list)
     ///    
     class ItemPantograph:Item
     {
@@ -37,7 +37,7 @@ namespace chisel.src
         MeshData objectmesh;
         MeshRef objectmeshref;
         ICoreClientAPI capi;
-        
+        List<BlockPos> flaggedblocks;
         bool showcopiedshape = false;
         public enum enModes {COPY,FULLPASTE,ADDPASTE,UNDO,CHANGEMAT,CLOSEDDOOR,OPENDOOR,DOORTOOL}
         public override void OnLoaded(ICoreAPI api)
@@ -104,6 +104,31 @@ namespace chisel.src
             if (!byEntity.World.Claims.TryAccess(byPlayer, blockSel.Position, EnumBlockAccessFlags.BuildOrBreak))
             {
                 byPlayer.InventoryManager.ActiveHotbarSlot.MarkDirty();
+                return;
+            }
+            //for functional chiseled blocks this would set the targetted block as a control block
+            if (slot.Itemstack.Attributes.GetInt("toolMode", (int)enModes.COPY) == (int)enModes.DOORTOOL){
+                //nothing selected
+                if (flaggedblocks == null || flaggedblocks.Count == 0)
+                {
+                    handling = EnumHandHandling.PreventDefaultAction;
+                    return;
+                }
+                BEFunctionChiseled bfc = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BEFunctionChiseled;
+                if (bfc == null)
+                {
+                    handling = EnumHandHandling.PreventDefaultAction;
+                    return;
+                }
+                if (flaggedblocks.Contains(blockSel.Position))
+                {
+                    flaggedblocks.Remove(blockSel.Position);
+                }
+                bfc.SetControlledBlocks(flaggedblocks);
+                flaggedblocks = new List<BlockPos>();
+                api.World.HighlightBlocks(byPlayer, 1, flaggedblocks);
+                handling = EnumHandHandling.PreventDefaultAction;
+                api.World.PlaySoundAt(new AssetLocation("sounds/filtercopy"), blockSel.Position.X, blockSel.Position.Y, blockSel.Position.Z, byPlayer, true, 12, 1);
                 return;
             }
             BlockEntityMicroBlock bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityMicroBlock;
@@ -205,7 +230,21 @@ namespace chisel.src
                 handling = EnumHandHandling.PreventDefaultAction;
                 return;
             }
-            List<uint> copiedblockvoxels = GetCopiedBlockVoxels(slot);
+            else if (slot.Itemstack.Attributes.GetInt("toolMode", (int)enModes.COPY) == (int)enModes.DOORTOOL)
+            {
+                if (flaggedblocks == null||byPlayer.Entity.Controls.Sneak) { flaggedblocks = new List<BlockPos>(); }
+                
+                if (flaggedblocks.Contains(blockSel.Position))
+                {
+                    flaggedblocks.Remove(blockSel.Position);
+                }
+                else { flaggedblocks.Add(blockSel.Position); }
+                //api.World.HighlightBlocks(byPlayer, HighlightSlotId, blocks, colors);
+                
+                api.World.HighlightBlocks(byPlayer, 1, flaggedblocks);
+                
+            }
+                List<uint> copiedblockvoxels = GetCopiedBlockVoxels(slot);
             List<int> copiedblockmaterials = GetCopiedBlockMaterials(slot);
             
             if (copiedblockmaterials==null||copiedblockvoxels==null|| bmb == null || bmb.VoxelCuboids == null || bmb.VoxelCuboids.Count == 0) { base.OnHeldAttackStart(slot, byEntity, blockSel, entitySel, ref handling);handling =EnumHandHandling.NotHandled;  return; }

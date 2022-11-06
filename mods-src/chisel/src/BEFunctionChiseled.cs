@@ -25,7 +25,7 @@ namespace chisel.src
         
         //Passable needs a way to set things passable (ie no collision)
         Dictionary<string, bool> statepassable;
-        List<BlockPos> controlleddoors;
+        List<BlockPos> controlledblocks;
         
         
         public virtual bool Passable {
@@ -86,13 +86,13 @@ namespace chisel.src
             }
             if (currentstate == closename) { SetState(openname); }
             else { SetState(closename); }
-            if (controlleddoors != null && controlleddoors.Count > 0)
+            if (controlledblocks != null && controlledblocks.Count > 0)
             {
-                foreach (BlockPos p in controlleddoors)
+                foreach (BlockPos p in controlledblocks)
                 {
                     BEFunctionChiseled bfc = Api.World.BlockAccessor.GetBlockEntity(controlblockpos) as BEFunctionChiseled;
                     if (bfc == null) { continue; }
-                    bfc.SetState(currentstate);
+                    bfc.ControlBlockSignal(Pos, currentstate);
                 }
             }
         }
@@ -101,15 +101,17 @@ namespace chisel.src
         //also will record a given door as controlling it so it can send future door toggle requests
         //to the controller
         //also if a door control signal is recieved it will cease controlling other doors
-        public virtual void ControlDoorSignal(BlockPos fromblock, string tostate)
+        public virtual bool ControlBlockSignal(BlockPos fromblock, string tostate)
         {
+            
             //if a signal is received from a door that is controlled by us, dump all controlled doors and obey the signal
-            if (controlleddoors != null)
+            if (controlledblocks != null)
             {
-                controlleddoors = new List<BlockPos>();
+                controlledblocks = new List<BlockPos>();
                 controlblockpos = fromblock;
             }
             SetState(tostate);
+            return true;
         }
 
         void SetupDictionaries() {
@@ -117,7 +119,7 @@ namespace chisel.src
             if (statematerials == null) { statematerials = new Dictionary<string, List<int>>(); }
             
             if (statepassable == null) { statepassable = new Dictionary<string, bool>(); }
-            if (controlleddoors == null) { controlleddoors = new List<BlockPos>(); }
+            if (controlledblocks == null) { controlledblocks = new List<BlockPos>(); }
         }
         public override bool OnTesselation(ITerrainMeshPool mesher, ITesselatorAPI tesselator)
         {
@@ -153,7 +155,20 @@ namespace chisel.src
             }
         }
         
-        
+        public virtual void SetControlledBlocks(List<BlockPos> newlist)
+        {
+            controlblockpos = Pos;
+            controlledblocks= new List<BlockPos>(newlist);
+            SetState(closename);
+            foreach (BlockPos p in newlist)
+            {
+                BEFunctionChiseled bfc = Api.World.BlockAccessor.GetBlockEntity(p) as BEFunctionChiseled;
+                if (p == null) { continue; }
+                bfc.ControlBlockSignal(Pos, closename);
+            }
+            MarkDirty(true);
+        }
+
         public override void ToTreeAttributes(ITreeAttribute tree)
         {
             base.ToTreeAttributes(tree);
@@ -164,11 +179,11 @@ namespace chisel.src
             byte[] bvox = SerializerUtil.Serialize<Dictionary<string, List<uint>>>(statevoxels);
             byte[] bmat = SerializerUtil.Serialize<Dictionary<string, List<int>>>(statematerials);
             byte[] bpass = SerializerUtil.Serialize<Dictionary<string, bool>>(statepassable);
-            byte[] bcontrol = SerializerUtil.Serialize<List<BlockPos>>(controlleddoors);
+            byte[] bcontrol = SerializerUtil.Serialize<List<BlockPos>>(controlledblocks);
             tree.SetBytes("statevoxels", bvox);
             tree.SetBytes("statematerials", bmat);
             tree.SetBytes("statepassable", bpass);
-            tree.SetBytes("controlleddoors", bcontrol);
+            tree.SetBytes("controlledblocks", bcontrol);
             if (controlblockpos == null) { controlblockpos = Pos; }
             tree.SetBlockPos("controlblockpos", controlblockpos);
             
@@ -191,10 +206,10 @@ namespace chisel.src
                 statevoxels = SerializerUtil.Deserialize<Dictionary<string, List<uint>>>(voxdat);
                 statematerials = SerializerUtil.Deserialize<Dictionary<string, List<int>>>(matdat);
                 statepassable = SerializerUtil.Deserialize<Dictionary<string, bool>>(passdat);
-                byte[] controldat = tree.GetBytes("controlleddoors", null);
+                byte[] controldat = tree.GetBytes("controlledblocks", null);
                 if (controldat != null)
                 {
-                    controlleddoors = SerializerUtil.Deserialize<List<BlockPos>>(controldat);
+                    controlledblocks = SerializerUtil.Deserialize<List<BlockPos>>(controldat);
                 }
             }
             catch
