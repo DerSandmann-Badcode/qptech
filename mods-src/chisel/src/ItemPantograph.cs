@@ -43,7 +43,7 @@ namespace chisel.src
             {
                 SkillItem[] modes;
                 
-                modes = new SkillItem[5];
+                modes = new SkillItem[7];
                 modes[(int)enModes.COPY] = new SkillItem() { Code = new AssetLocation(enModes.COPY.ToString()), Name = Lang.Get("Snapshot Shape Mode") };
                 modes[(int)enModes.FULLPASTE] = new SkillItem() { Code = new AssetLocation(enModes.FULLPASTE.ToString()), Name = Lang.Get("Replace Shape Mode") };
                 modes[(int)enModes.ADDPASTE] = new SkillItem() { Code = new AssetLocation(enModes.ADDPASTE.ToString()), Name = Lang.Get("Add Shape Mode") };

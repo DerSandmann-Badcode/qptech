@@ -90,10 +90,12 @@ namespace chisel.src
         {
             if (statepassable == null || !statepassable.ContainsKey(newstate)) { return; }
             
-            if (Api is ICoreClientAPI)
-            {
+            
                 this.MaterialIds = statematerials[newstate].ToArray();
                 this.VoxelCuboids = statevoxels[newstate];
+                
+            if (Api is ICoreClientAPI)
+            {
                 RegenMesh(Api as ICoreClientAPI);
             }
             currentstate = newstate;
@@ -114,11 +116,38 @@ namespace chisel.src
         {
             base.ToTreeAttributes(tree);
             tree.SetString("currentstate", currentstate);
+            
+            //Serialize &  Save all the dictionaries
+            SetupDictionaries();
+            byte[] bvox = SerializerUtil.Serialize<Dictionary<string, List<uint>>>(statevoxels);
+            byte[] bmat = SerializerUtil.Serialize<Dictionary<string, List<int>>>(statematerials);
+            byte[] bpass = SerializerUtil.Serialize<Dictionary<string, bool>>(statepassable);
+            tree.SetBytes("statevoxels", bvox);
+            tree.SetBytes("statematerials", bmat);
+            tree.SetBytes("statepassable", bpass);
+            
         }
         public override void FromTreeAttributes(ITreeAttribute tree, IWorldAccessor worldAccessForResolve)
         {
             base.FromTreeAttributes(tree, worldAccessForResolve);
             currentstate = tree.GetString("currentstate", currentstate);
+            SetupDictionaries();
+            try
+            {
+                byte[] voxdat = tree.GetBytes("statevoxels", null);
+                if (voxdat == null) { return; }
+                byte[] matdat = tree.GetBytes("statematerials", null);
+                if (matdat == null) { return; }
+                byte[] passdat = tree.GetBytes("statepassable", null);
+                if (passdat == null) { return; }
+                statevoxels = SerializerUtil.Deserialize<Dictionary<string, List<uint>>>(voxdat);
+                statematerials = SerializerUtil.Deserialize<Dictionary<string, List<int>>>(matdat);
+                statepassable = SerializerUtil.Deserialize<Dictionary<string, bool>>(passdat);
+            }
+            catch
+            {
+                return;
+            }
         }
 
         public override void GetBlockInfo(IPlayer forPlayer, StringBuilder dsc)

@@ -18,8 +18,9 @@ namespace chisel.src
     class BlockFunctionalChiseled:BlockChisel
     {
         
-        public override Cuboidf[] GetCollisionBoxes(IBlockAccessor blockAccessor, BlockPos pos)
+        /*public override Cuboidf[] GetCollisionBoxes(IBlockAccessor blockAccessor, BlockPos pos)
         {
+            return base.GetCollisionBoxes(blockAccessor, pos);
             BlockFunctionalChiseled bfc = blockAccessor.GetBlock(pos) as BlockFunctionalChiseled;
             BEFunctionChiseled befcc=blockAccessor.GetBlockEntity(pos) as BEFunctionChiseled;
             
@@ -27,10 +28,14 @@ namespace chisel.src
             
             return null;
             //return base.GetCollisionBoxes(blockAccessor, pos);
-        }
-
+        }*/
+        
         public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
         {
+            if (!byPlayer.InventoryManager.ActiveHotbarSlot.Empty)
+            {
+                return base.OnBlockInteractStart(world, byPlayer, blockSel);
+            }
             BEFunctionChiseled befcc = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BEFunctionChiseled;
             if (befcc != null)
             {
