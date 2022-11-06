@@ -17,22 +17,46 @@ namespace chisel.src
 {
     class BEFunctionChiseled : BlockEntityMicroBlock
     {
-        float rotationtracker;
-        float rotationspeed = 0f;
-        bool passable = false;
-        public virtual bool Passable => passable;
-        public virtual float RotationSpeed => rotationspeed;
+        string currentstate = "CLOSED";
+        Dictionary<string, List<uint>> statevoxels;
+        Dictionary<string, List<int>> statematerials;
+        
+        Dictionary<string, bool> statepassable;
+        
+        public virtual bool Passable {
+            get
+            {
+                if (statepassable == null || !statepassable.ContainsKey(currentstate)) { return false; }
+                return statepassable[currentstate];
+            }
+        }
+        BlockPos controlblockpos;
+        public BlockPos ControlBlockPos;
+        public BEFunctionChiseled ControlBlock;
+
         public override void Initialize(ICoreAPI api)
         {
             base.Initialize(api);
-            
+            SetState(currentstate);
         }
-
-        public virtual void ClientTick(float dt)
+                
+        //Add set of voxel data to the library
+        public virtual void AddState(string key, List<uint> voxels, List<int> materials, bool passable=false,bool changenow = true)
         {
-
+            SetupDictionaries();
+            statevoxels[key] = voxels;
+            statematerials[key] = materials;
+            
+            statepassable[key] = passable;
+            MarkDirty(true);
         }
-
+        
+        void SetupDictionaries() {
+            if (statevoxels == null) { statevoxels = new Dictionary<string, List<uint>>(); }
+            if (statematerials == null) { statematerials = new Dictionary<string, List<int>>(); }
+            
+            if (statepassable == null) { statepassable = new Dictionary<string, bool>(); }
+        }
         public override bool OnTesselation(ITerrainMeshPool mesher, ITesselatorAPI tesselator)
         {
 
@@ -41,23 +65,24 @@ namespace chisel.src
             return base.OnTesselation(mesher, tesselator);
         }
 
-        public virtual void SetPassable(bool ispass)
+        //Set the object to a particular state
+        public virtual void SetState(string newstate)
         {
-            passable = ispass;
+            if (statepassable == null || !statepassable.ContainsKey(newstate)) { return; }
+            
             if (Api is ICoreClientAPI)
             {
+                this.MaterialIds = statematerials[newstate].ToArray();
+                this.VoxelCuboids = statevoxels[newstate];
                 RegenMesh(Api as ICoreClientAPI);
             }
+            currentstate = newstate;
             MarkDirty(true);
         }
 
-        public virtual void Sync(BEFunctionChiseled toblock)
+        public virtual void Sync()
         {
-            if (toblock != null)
-            {
-                rotationspeed = toblock.RotationSpeed;
-                rotationtracker = 0;
-            }
+           //here we should verify which set of chisel data to show
             if (Api is ICoreClientAPI)
             {
                 RegenMesh(Api as ICoreClientAPI);
@@ -68,13 +93,18 @@ namespace chisel.src
         public override void ToTreeAttributes(ITreeAttribute tree)
         {
             base.ToTreeAttributes(tree);
-            tree.SetBool("passable", Passable);
-            
+            tree.SetString("currentstate", currentstate);
         }
         public override void FromTreeAttributes(ITreeAttribute tree, IWorldAccessor worldAccessForResolve)
         {
             base.FromTreeAttributes(tree, worldAccessForResolve);
-            passable = tree.GetBool("passable", false);
+            currentstate = tree.GetString("currentstate", currentstate);
+        }
+
+        public override void GetBlockInfo(IPlayer forPlayer, StringBuilder dsc)
+        {
+            dsc.AppendLine("STATE:" + currentstate);
+            base.GetBlockInfo(forPlayer, dsc);
         }
     }
 }

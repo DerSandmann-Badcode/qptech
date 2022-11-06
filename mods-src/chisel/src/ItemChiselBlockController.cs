@@ -38,13 +38,13 @@ namespace chisel.src
             }
             if (byPlayer.Entity.Controls.Sneak)
             {
-                controllable.SetPassable(true) ;
-                controllable.Sync(null);
+                controllable.SetState("OPEN") ;
+                controllable.Sync();
             }
             else
             {
-                controllable.SetPassable(false);
-                controllable.Sync(null);
+                controllable.SetState("CLOSED");
+                controllable.Sync();
             }
             
             
