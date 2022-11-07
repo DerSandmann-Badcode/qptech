@@ -29,7 +29,12 @@ namespace chisel.src
             return null;
             //return base.GetCollisionBoxes(blockAccessor, pos);
         }
-        
+        public override Cuboidf[] GetSelectionBoxes(IBlockAccessor blockAccessor, BlockPos pos)
+        {
+            Cuboidf[] cube = { new Cuboidf(0, 0, 0, 1, 1, 1) };
+
+            return cube;
+        }
         public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
         {
             if (!byPlayer.InventoryManager.ActiveHotbarSlot.Empty)
@@ -43,6 +48,14 @@ namespace chisel.src
                 return true;
             }
             return base.OnBlockInteractStart(world, byPlayer, blockSel);
+        }
+        public override bool AllowSnowCoverage(IWorldAccessor world, BlockPos blockPos)
+        {
+            return false;
+        }
+        public override float GetSnowLevel(BlockPos pos)
+        {
+            return 0;
         }
     }
 }

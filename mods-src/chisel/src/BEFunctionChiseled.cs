@@ -53,7 +53,22 @@ namespace chisel.src
         //Add set of voxel data to the library
         public virtual void AddState(string key, List<uint> voxels, List<int> materials, bool passable=false,bool changenow = true)
         {
+            
             SetupDictionaries();
+            if (materials == null || materials.Count == 0)
+            {
+                materials = new List<int>();
+                materials.Add(0);
+                materials.Add(0);
+            }
+            if (voxels == null)
+            {
+                CuboidWithMaterial cwms = new CuboidWithMaterial();
+                cwms.Set(0, 0, 0, 0, 0, 0);
+
+                voxels = new List<uint>();
+                voxels.Add(ToUint(cwms));
+            }
             statevoxels[key] = voxels;
             statematerials[key] = materials;
             
@@ -64,6 +79,7 @@ namespace chisel.src
         //helper function to easily add a door open state
         public virtual void AddOpen(List<uint>voxels, List<int> materials)
         {
+            
             AddState(openname, voxels, materials, true, true);
         }
         //helper function to easily add a door closed state
@@ -172,7 +188,14 @@ namespace chisel.src
 
         public override void ToTreeAttributes(ITreeAttribute tree)
         {
-            base.ToTreeAttributes(tree);
+            try
+            {
+                base.ToTreeAttributes(tree);
+            }
+            catch
+            {
+                return;
+            }
             tree.SetString("currentstate", currentstate);
             
             //Serialize &  Save all the dictionaries
@@ -222,6 +245,7 @@ namespace chisel.src
         public override void GetBlockInfo(IPlayer forPlayer, StringBuilder dsc)
         {
             dsc.AppendLine("STATE:" + currentstate);
+            if (controlblockpos == null) { controlblockpos = Pos; }
             if (controlblockpos != Pos) { dsc.AppendLine("Controlled by " + controlblockpos.ToString()); }
             if (controlledblocks != null && controlledblocks.Count > 0)
             {
@@ -231,6 +255,7 @@ namespace chisel.src
                     dsc.Append(p.ToString() + ",");
                 }
             }
+            if (VoxelCuboids == null || VoxelCuboids.Count == 0) { return; }
             base.GetBlockInfo(forPlayer, dsc);
         }
     }

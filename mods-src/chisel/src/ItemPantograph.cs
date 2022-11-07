@@ -206,30 +206,36 @@ namespace chisel.src
                 handling = EnumHandHandling.PreventDefaultAction;
                 return;
             }
+            //copy
             if (slot.Itemstack.Attributes.GetInt("toolMode", (int)enModes.COPY) == (int)enModes.COPY)
             {
                 MakeCopy(slot, byEntity, blockSel, entitySel, ref handling);
                 handling = EnumHandHandling.PreventDefaultAction;
                 return;
             }
+            //changemat
             else if (slot.Itemstack.Attributes.GetInt("toolMode", (int)enModes.COPY) == (int)enModes.CHANGEMAT)
             {
                 PasteMaterials(slot, blockSel);
                 handling = EnumHandHandling.PreventDefaultAction;
                 return;
             }
+            //closedoor
             else if (slot.Itemstack.Attributes.GetInt("toolMode", (int)enModes.COPY) == (int)enModes.CLOSEDDOOR)
             {
-                SetDoor(slot, blockSel,BEFunctionChiseled.closename);
+                
+                SetDoor(slot, blockSel,BEFunctionChiseled.closename, byPlayer.Entity.Controls.Sneak);
                 handling = EnumHandHandling.PreventDefaultAction;
                 return;
             }
+            //opendoor
             else if (slot.Itemstack.Attributes.GetInt("toolMode", (int)enModes.COPY) == (int)enModes.OPENDOOR)
             {
-                SetDoor(slot, blockSel,BEFunctionChiseled.openname);
+                SetDoor(slot, blockSel,BEFunctionChiseled.openname, byPlayer.Entity.Controls.Sneak);
                 handling = EnumHandHandling.PreventDefaultAction;
                 return;
             }
+            //door tool
             else if (slot.Itemstack.Attributes.GetInt("toolMode", (int)enModes.COPY) == (int)enModes.DOORTOOL)
             {
                 if (flaggedblocks == null||byPlayer.Entity.Controls.Sneak) { flaggedblocks = new List<BlockPos>(); }
@@ -242,7 +248,7 @@ namespace chisel.src
                 //api.World.HighlightBlocks(byPlayer, HighlightSlotId, blocks, colors);
                 
                 api.World.HighlightBlocks(byPlayer, 1, flaggedblocks);
-                
+                return;
             }
                 List<uint> copiedblockvoxels = GetCopiedBlockVoxels(slot);
             List<int> copiedblockmaterials = GetCopiedBlockMaterials(slot);
@@ -543,16 +549,24 @@ namespace chisel.src
         }
 
         //Will Setup a functional chiseled block with an open or closed frame
-        void SetDoor(ItemSlot slot, BlockSelection blockSel, string state)
+        void SetDoor(ItemSlot slot, BlockSelection blockSel, string state, bool transparent=false)
         {
+            
             //Do nothing if we have no stored voxel information
             List<int> copiedmaterials = GetCopiedBlockMaterials(slot);
-            if (copiedmaterials == null) { return; }
+            if (copiedmaterials == null&&!transparent) { return; }
             List<uint> copiedblockvoxels = GetCopiedBlockVoxels(slot);
-            if (copiedblockvoxels == null) { return; }
+            if (copiedblockvoxels == null&&!transparent) { return; }
+            if (transparent)
+            {
+                copiedmaterials = new List<int>();
+                copiedblockvoxels = new List<uint>();
+            }
             //Do nothing if there is no funcitonal chiseled block
             BEFunctionChiseled bfc = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BEFunctionChiseled;
             if (bfc == null) { return; }
+            
+            
             if (state == BEFunctionChiseled.openname) { bfc.AddOpen(copiedblockvoxels, copiedmaterials); }
             else if (state==BEFunctionChiseled.closename){ bfc.AddClosed(copiedblockvoxels, copiedmaterials); }
             

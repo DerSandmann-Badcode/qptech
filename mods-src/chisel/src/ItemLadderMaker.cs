@@ -50,8 +50,9 @@ namespace chisel.src
             Block nb = api.World.GetBlock(al);
             if (bc.BlockId == nb.BlockId) { return; }
             //Voxel count check 
-            bool voxelcountok = false;
+
             /*
+             * bool voxelcountok = false;
             if (api is ICoreServerAPI)
             {
                 if (ChiselToolLoader.serverconfig.minimumVoxelsForLadder > 0)
