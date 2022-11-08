@@ -51,21 +51,19 @@ namespace chisel.src
         }
                 
         //Add set of voxel data to the library
-        public virtual void AddState(string key, List<uint> voxels, List<int> materials, bool passable=false,bool changenow = true)
+        public virtual void AddState(string key, List<uint> voxels, List<int> materials, bool passable=false,bool blank=false,bool changenow = true)
         {
             
             SetupDictionaries();
-            if (materials == null || materials.Count == 0)
-            {
-                materials = new List<int>();
-                materials.Add(0);
-                materials.Add(0);
-            }
-            if (voxels == null)
+            if (blank)
             {
                 CuboidWithMaterial cwms = new CuboidWithMaterial();
-                cwms.Set(0, 0, 0, 0, 0, 0);
-
+                cwms.Set(0, 0, 0, 16, 16, 16);
+                cwms.Material = 0;
+                materials = new List<int>();
+                Block blankblock = Api.World.GetBlock(new AssetLocation("chiseltools:blankblock"));
+                materials.Add(blankblock.BlockId);
+                
                 voxels = new List<uint>();
                 voxels.Add(ToUint(cwms));
             }
@@ -77,15 +75,15 @@ namespace chisel.src
             if (changenow) { SetState(key); }
         }
         //helper function to easily add a door open state
-        public virtual void AddOpen(List<uint>voxels, List<int> materials)
+        public virtual void AddOpen(List<uint>voxels, List<int> materials,bool transparent=false)
         {
             
-            AddState(openname, voxels, materials, true, true);
+            AddState(openname, voxels, materials, true, transparent,true);
         }
         //helper function to easily add a door closed state
-        public virtual void AddClosed(List<uint> voxels, List<int> materials)
+        public virtual void AddClosed(List<uint> voxels, List<int> materials,bool transparent=false)
         {
-            AddState(closename, voxels, materials, false, true);
+            AddState(closename, voxels, materials, false, transparent,true);
         }
 
         //will cycle between open and closed, or set to closed if in a different state
@@ -183,6 +181,7 @@ namespace chisel.src
                 if (p == null) { continue; }
                 bfc.InitControlBlockSignal(Pos);
             }
+            
             SetState(closename);
         }
 
