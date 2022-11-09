@@ -5,7 +5,7 @@
 	attributes: {
 		dropSelf: true
 	},
-	creativeinventory: { "chiseltools": ["*"] },
+	creativeinventory: { "chiseltools": [""] },
 	shape: { base: "game:block/basic/cube" },
 	replaceable: 90,
 	drops: [],

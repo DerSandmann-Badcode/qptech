@@ -41,12 +41,24 @@ namespace chisel.src
         public override void OnBlockPlaced(ItemStack byItemStack = null)
         {
             controlblockpos = Pos;
-            controlledblocks = new List<BlockPos>();
+            SetupDictionaries();
+            List<int> newmat = new List<int>();
+            Block blankblock = Api.World.GetBlock(new AssetLocation("chiseltools:techblank"));
+            newmat.Add(blankblock.BlockId);
+            
+            List<uint> newvox = new List<uint>();
+            CuboidWithMaterial cwms = new CuboidWithMaterial();
+            cwms.Set(0, 0, 0, 16, 16, 16);
+            cwms.Material = 0;
+            
+            newvox.Add(ToUint(cwms));
+            AddState(closename, newvox, newmat, false, false, true);
             base.OnBlockPlaced(byItemStack);
         }
         public override void Initialize(ICoreAPI api)
         {
             base.Initialize(api);
+            
             SetState(currentstate);
         }
                 

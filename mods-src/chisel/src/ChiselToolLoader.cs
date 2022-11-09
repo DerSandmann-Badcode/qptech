@@ -68,6 +68,7 @@ namespace chisel.src
             api.RegisterBlockClass("BlockFunctionalChiseled", typeof(BlockFunctionalChiseled));
             api.RegisterItemClass("ItemChiselBlockController", typeof(ItemChiselBlockController));
             api.RegisterItemClass("ItemLadderMaker", typeof(ItemLadderMaker));
+            api.RegisterItemClass("ItemDoorPart", typeof(ItemDoorPart));
         }
 
         private void CmdSetHandPlanerMultiplier(IPlayer player, int groupId, CmdArgs args)

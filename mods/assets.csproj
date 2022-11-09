@@ -47,10 +47,12 @@
     <Content Include="rustandrails\assets\rustandrails\textures\block\shinybrass.png" />
     <Content Include="rustandrails\assets\rustandrails\textures\block\shinyiron.png" />
     <Content Include="rustandrails\RNR Changelog.txt" />
+    <None Include="chisel\assets\chiseltools\blocktypes\techblank.json" />
     <None Include="chisel\assets\chiseltools\blocktypes\blank.json" />
     <None Include="chisel\assets\chiseltools\blocktypes\climbablechiseledblock.json" />
     <None Include="chisel\assets\chiseltools\blocktypes\moveablechiseledblock.json" />
     <None Include="chisel\assets\chiseltools\config\handbook\chiseltools.json" />
+    <None Include="chisel\assets\chiseltools\itemtypes\doorpart.json" />
     <None Include="chisel\assets\chiseltools\itemtypes\laddermaker.json" />
     <None Include="chisel\assets\chiseltools\itemtypes\chiselblockcontroller.json" />
     <None Include="chisel\assets\chiseltools\itemtypes\blockswapper.json" />

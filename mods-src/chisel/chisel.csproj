@@ -89,6 +89,7 @@
     <Compile Include="src\BEFunctionChiseled.cs" />
     <Compile Include="src\BlockFunctionalChiseled.cs" />
     <Compile Include="src\ChiselToolLoader.cs" />
+    <Compile Include="src\ItemDoorPart.cs" />
     <Compile Include="src\ItemLadderMaker.cs" />
     <Compile Include="src\ItemChiselBlockController.cs" />
     <Compile Include="src\ItemHandPlaner.cs" />
