@@ -52,7 +52,10 @@ namespace chisel.src
             cwms.Material = 0;
             
             newvox.Add(ToUint(cwms));
+            //add a (ugly) block as closed state
             AddState(closename, newvox, newmat, false, false, true);
+            //add a default open/empty state
+            AddState(openname, newvox, newmat, true, true, false);
             base.OnBlockPlaced(byItemStack);
         }
         public override void Initialize(ICoreAPI api)

@@ -60,6 +60,7 @@
     <None Include="chisel\assets\chiseltools\itemtypes\pantograph.json" />
     <None Include="chisel\assets\chiseltools\itemtypes\handwedge.json" />
     <None Include="chisel\assets\chiseltools\lang\en.json" />
+    <None Include="chisel\assets\chiseltools\recipes\grid\doorpart.json" />
     <None Include="chisel\assets\chiseltools\recipes\smithing\laddermaker.json" />
     <None Include="chisel\assets\chiseltools\recipes\smithing\paintbrush.json" />
     <None Include="chisel\assets\chiseltools\recipes\smithing\pantograph.json" />

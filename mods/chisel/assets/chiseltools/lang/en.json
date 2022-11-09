@@ -31,5 +31,7 @@
 	"item-laddermaker-steel": "Steel Ladder Maker",
 	"item-laddermaker-iron":  "Iron Ladder Maker",
 	"item-laddermaker-meteoriciron": "Meteoric Iron Ladder Maker",
-	"itemdesc-laddermaker-*": "Right click on a chiseled block to make it climable! (Chiseled block must have at least 8 voxels)"
+	"itemdesc-laddermaker-*": "Right click on a chiseled block to make it climable! (Chiseled block must have at least 8 voxels)",
+	"item-doorpart": "Door Part",
+	"itemdesc-doorpart": "Place in the world to make a chiseled door. The <a href=\"handbook://item-chiseltools:pantograph-iron\">Pantograph</a> can be used to change the open and closed shape and to link multiple chiseled doors together."
 }

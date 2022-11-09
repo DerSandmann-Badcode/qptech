@@ -37,7 +37,13 @@ namespace chisel.src
             Block placeblock = api.World.GetBlock(new AssetLocation("chiseltools:moveablechiseledblock"));
             BlockPos usepos = blockSel.Position.Copy().Offset(blockSel.Face);
             api.World.BlockAccessor.SetBlock(placeblock.BlockId, usepos);
-            
+            //consume a door part
+            if (byPlayer?.WorldData.CurrentGameMode != EnumGameMode.Creative)
+            {
+                ItemSlot s = byPlayer.InventoryManager.ActiveHotbarSlot;
+                s.TakeOut(1);
+                s.MarkDirty();
+            }
             handling = EnumHandHandling.PreventDefaultAction;
         }
         public override void OnHeldAttackStart(ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel, ref EnumHandHandling handling)

@@ -37,10 +37,15 @@ namespace chisel.src
         }
         public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
         {
-            if (!byPlayer.InventoryManager.ActiveHotbarSlot.Empty)
+            //if the player is holding a pantograph do the pantograph's thing instead
+            if (!byPlayer.InventoryManager.ActiveHotbarSlot.Empty && byPlayer.InventoryManager.ActiveHotbarSlot.Itemstack.Item != null &&
+                byPlayer.InventoryManager.ActiveHotbarSlot.Itemstack.Item.Code.ToString().Contains("pantograph"))
             {
                 return base.OnBlockInteractStart(world, byPlayer, blockSel);
             }
+            //if player is holding sneak do the item's thing
+            if (byPlayer.Entity.Controls.Sneak) { return base.OnBlockInteractStart(world, byPlayer, blockSel); }
+            //otherwise we'll open/close the door
             BEFunctionChiseled befcc = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BEFunctionChiseled;
             if (befcc != null)
             {
