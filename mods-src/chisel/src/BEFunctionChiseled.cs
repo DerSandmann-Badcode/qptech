@@ -22,12 +22,20 @@ namespace chisel.src
         string currentstate = closename;
         Dictionary<string, List<uint>> statevoxels;
         Dictionary<string, List<int>> statematerials;
-        
+        ICoreServerAPI sapi;
         //Passable needs a way to set things passable (ie no collision)
         Dictionary<string, bool> statepassable;
         List<BlockPos> controlledblocks;
-        
-        
+        public override void OnBlockBroken(IPlayer byPlayer = null)
+        {
+            base.OnBlockBroken(byPlayer);
+            if (sapi != null)
+            {
+                ItemStack dropstack = new ItemStack(sapi.World.GetItem(new AssetLocation("chiseltools:doorpart")), 1);
+                sapi.World.SpawnItemEntity(dropstack, Pos.ToVec3d());
+            }
+        }
+
         public virtual bool Passable {
             get
             {
@@ -61,7 +69,7 @@ namespace chisel.src
         public override void Initialize(ICoreAPI api)
         {
             base.Initialize(api);
-            
+            if (api is ICoreServerAPI) { sapi = api as ICoreServerAPI; }
             SetState(currentstate);
         }
                 

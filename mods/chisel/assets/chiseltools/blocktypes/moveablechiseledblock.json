@@ -2,15 +2,14 @@
 	code: "moveablechiseledblock",
 	class: "BlockFunctionalChiseled",
 	entityClass: "BEFunctionChiseled",
-	attributes: {
-		dropSelf: true
-	},
 	creativeinventory: { "chiseltools": [""] },
 	shape: { base: "game:block/basic/cube" },
 	replaceable: 90,
-	drops: [],
 	sidesolid: { all: false },
 	sideopaque: { all: false },
 	sideao: { all: true },
-	lightAbsorption: 99
+	lightAbsorption: 99,
+	drops: [
+		
+	]
 }
