@@ -12,11 +12,12 @@ using Vintagestory.API.MathTools;
 using Vintagestory.API.Util;
 using Vintagestory.GameContent;
 using Vintagestory.API.Server;
-
+using ProtoBuf;
 namespace chisel.src
 {
     class BEFunctionChiseled : BlockEntityMicroBlock
     {
+        public enum enPacketCode { SETSTATE, ADDSTATE };
         public static string openname = "OPEN";
         public static string closename = "CLOSE";
         string currentstate = closename;
@@ -44,7 +45,7 @@ namespace chisel.src
             }
         }
         BlockPos controlblockpos;
-        public BlockPos ControlBlockPos=>controlblockpos;
+        public BlockPos ControlBlockPos => controlblockpos;
 
         public override void OnBlockPlaced(ItemStack byItemStack = null)
         {
@@ -53,17 +54,19 @@ namespace chisel.src
             List<int> newmat = new List<int>();
             Block blankblock = Api.World.GetBlock(new AssetLocation("chiseltools:techblank"));
             newmat.Add(blankblock.BlockId);
-            
+
             List<uint> newvox = new List<uint>();
             CuboidWithMaterial cwms = new CuboidWithMaterial();
             cwms.Set(0, 0, 0, 16, 16, 16);
             cwms.Material = 0;
-            
+
             newvox.Add(ToUint(cwms));
             //add a (ugly) block as closed state
-            AddState(closename, newvox, newmat, false, false, true);
+            AddState(closename, newvox, newmat, false, false);
             //add a default open/empty state
-            AddState(openname, newvox, newmat, true, true, false);
+            AddState(openname, newvox, newmat, true, true);
+            MarkDirty();
+            
             base.OnBlockPlaced(byItemStack);
         }
         public override void Initialize(ICoreAPI api)
@@ -72,11 +75,11 @@ namespace chisel.src
             if (api is ICoreServerAPI) { sapi = api as ICoreServerAPI; }
             SetState(currentstate);
         }
-                
+
         //Add set of voxel data to the library
-        public virtual void AddState(string key, List<uint> voxels, List<int> materials, bool passable=false,bool blank=false,bool changenow = true)
+        public virtual void AddState(string key, List<uint> voxels, List<int> materials, bool passable = false, bool blank = false)
         {
-            
+            if (sapi == null) { return; }
             SetupDictionaries();
             if (blank)
             {
@@ -86,28 +89,17 @@ namespace chisel.src
                 materials = new List<int>();
                 Block blankblock = Api.World.GetBlock(new AssetLocation("chiseltools:blankblock"));
                 materials.Add(blankblock.BlockId);
-                
+
                 voxels = new List<uint>();
                 voxels.Add(ToUint(cwms));
             }
             statevoxels[key] = voxels;
             statematerials[key] = materials;
-            
             statepassable[key] = passable;
             MarkDirty(true);
-            if (changenow) { SetState(key); }
+                        
         }
-        //helper function to easily add a door open state
-        public virtual void AddOpen(List<uint>voxels, List<int> materials,bool transparent=false)
-        {
-            
-            AddState(openname, voxels, materials, true, transparent,true);
-        }
-        //helper function to easily add a door closed state
-        public virtual void AddClosed(List<uint> voxels, List<int> materials,bool transparent=false)
-        {
-            AddState(closename, voxels, materials, false, transparent,true);
-        }
+        
 
         //will cycle between open and closed, or set to closed if in a different state
         public virtual void ToggleOpenClosed()
@@ -127,8 +119,8 @@ namespace chisel.src
                 }
             }
             string targetstate = currentstate;
-            if (currentstate == closename) { SetState(openname);targetstate = openname; }
-            else { SetState(closename);targetstate = closename; }
+            if (currentstate == closename) { SetState(openname); targetstate = openname; }
+            else { SetState(closename); targetstate = closename; }
             if (controlledblocks != null && controlledblocks.Count > 0)
             {
                 foreach (BlockPos p in controlledblocks)
@@ -136,7 +128,7 @@ namespace chisel.src
                     BEFunctionChiseled bfc = Api.World.BlockAccessor.GetBlockEntity(p) as BEFunctionChiseled;
                     if (bfc == null) { continue; }
                     bfc.ControlBlockSignal(Pos, targetstate);
-                    
+
                 }
             }
         }
@@ -163,7 +155,7 @@ namespace chisel.src
         void SetupDictionaries() {
             if (statevoxels == null) { statevoxels = new Dictionary<string, List<uint>>(); }
             if (statematerials == null) { statematerials = new Dictionary<string, List<int>>(); }
-            
+
             if (statepassable == null) { statepassable = new Dictionary<string, bool>(); }
             if (controlledblocks == null) { controlledblocks = new List<BlockPos>(); }
         }
@@ -175,25 +167,49 @@ namespace chisel.src
             return base.OnTesselation(mesher, tesselator);
         }
 
+        public override void OnReceivedClientPacket(IPlayer fromPlayer, int packetid, byte[] data)
+        {
+            if (packetid == (int)enPacketCode.ADDSTATE && data!=null)
+            {
+                DoorData dat = SerializerUtil.Deserialize<DoorData>(data);
+                if (dat == null) { return; }
+                AddState(dat.state, dat.voxeldata, dat.matdata, dat.passable, dat.transparent);
+            }
+            base.OnReceivedClientPacket(fromPlayer, packetid, data);
+        }
+        public override void OnReceivedServerPacket(int packetid, byte[] data)
+        {
+            if (packetid == (int)enPacketCode.ADDSTATE && data != null)
+            {
+                DoorData dat = SerializerUtil.Deserialize<DoorData>(data);
+                if (dat == null) { return; }
+                AddState(dat.state, dat.voxeldata, dat.matdata, dat.passable, dat.transparent);
+            }
+            base.OnReceivedServerPacket(packetid, data);
+        }
         //Set the object to a particular state
         public virtual void SetState(string newstate)
         {
             if (statepassable == null || !statepassable.ContainsKey(newstate)) { return; }
-            
-            
-                this.MaterialIds = statematerials[newstate].ToArray();
-                this.VoxelCuboids = statevoxels[newstate];
+
+
+            this.MaterialIds = statematerials[newstate].ToArray();
+            this.VoxelCuboids = statevoxels[newstate];
 
             currentstate = newstate;
+            if (Api is ICoreClientAPI)
+            {
+                RegenMesh();
+            }
             MarkDirty(true);
-            
+
         }
-                
+
         public virtual void SetControlledBlocks(List<BlockPos> newlist)
         {
             controlblockpos = Pos;
-            controlledblocks= new List<BlockPos>(newlist);
-            
+            controlledblocks = new List<BlockPos>(newlist);
+
             foreach (BlockPos p in newlist)
             {
                 if (p == Pos)
@@ -204,7 +220,7 @@ namespace chisel.src
                 if (p == null) { continue; }
                 bfc.InitControlBlockSignal(Pos);
             }
-            
+
             SetState(closename);
         }
 
@@ -219,7 +235,7 @@ namespace chisel.src
                 return;
             }
             tree.SetString("currentstate", currentstate);
-            
+
             //Serialize &  Save all the dictionaries
             SetupDictionaries();
             byte[] bvox = SerializerUtil.Serialize<Dictionary<string, List<uint>>>(statevoxels);
@@ -232,7 +248,7 @@ namespace chisel.src
             tree.SetBytes("controlledblocks", bcontrol);
             if (controlblockpos == null) { controlblockpos = Pos; }
             tree.SetBlockPos("controlblockpos", controlblockpos);
-            
+
         }
         public override void FromTreeAttributes(ITreeAttribute tree, IWorldAccessor worldAccessForResolve)
         {
@@ -248,7 +264,7 @@ namespace chisel.src
                 if (matdat == null) { return; }
                 byte[] passdat = tree.GetBytes("statepassable", null);
                 if (passdat == null) { return; }
-                
+
                 statevoxels = SerializerUtil.Deserialize<Dictionary<string, List<uint>>>(voxdat);
                 statematerials = SerializerUtil.Deserialize<Dictionary<string, List<int>>>(matdat);
                 statepassable = SerializerUtil.Deserialize<Dictionary<string, bool>>(passdat);
@@ -281,4 +297,16 @@ namespace chisel.src
             base.GetBlockInfo(forPlayer, dsc);
         }
     }
+    [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
+    public class DoorData
+    {
+        public DoorData() { }
+        public string state;
+        public List<uint> voxeldata;
+        public List<int> matdata;
+        public bool passable=false;
+        public bool transparent = false;
+        
+    }
+
 }

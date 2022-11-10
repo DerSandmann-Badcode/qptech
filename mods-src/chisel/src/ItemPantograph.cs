@@ -12,6 +12,7 @@ using Vintagestory.API.MathTools;
 using Vintagestory.API.Util;
 using Vintagestory.GameContent;
 using Vintagestory.API.Server;
+using ProtoBuf;
 
 
 namespace chisel.src
@@ -557,7 +558,7 @@ namespace chisel.src
         //Will Setup a functional chiseled block with an open or closed frame
         void SetDoor(ItemSlot slot, BlockSelection blockSel, string state, bool transparent=false)
         {
-            
+            if (api is ICoreServerAPI) { return; }
             //Do nothing if we have no stored voxel information
             List<int> copiedmaterials = GetCopiedBlockMaterials(slot);
             if (copiedmaterials == null&&!transparent) { return; }
@@ -567,10 +568,16 @@ namespace chisel.src
             //Do nothing if there is no funcitonal chiseled block
             BEFunctionChiseled bfc = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BEFunctionChiseled;
             if (bfc == null) { return; }
-            
-            
-            if (state == BEFunctionChiseled.openname) { bfc.AddOpen(copiedblockvoxels, copiedmaterials,transparent); }
-            else if (state==BEFunctionChiseled.closename){ bfc.AddClosed(copiedblockvoxels, copiedmaterials,transparent); }
+            bool passable = false;
+            if (state == BEFunctionChiseled.openname) { passable = true; }
+            DoorData dat = new DoorData();
+            dat.matdata = copiedmaterials;
+            dat.voxeldata = copiedblockvoxels;
+            dat.state = state;
+            dat.passable = passable;
+            dat.transparent = transparent;
+            byte[] datbyte = SerializerUtil.Serialize<DoorData>(dat);
+            (api as ICoreClientAPI).Network.SendBlockEntityPacket(bfc.Pos, (int)BEFunctionChiseled.enPacketCode.ADDSTATE, datbyte);
             
         }
 
