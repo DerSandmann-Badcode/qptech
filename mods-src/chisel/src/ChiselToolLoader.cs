@@ -20,16 +20,21 @@ namespace chisel.src
         ICoreServerAPI sapi;
         string serverconfigfile = "qpchiseltoolserversettings.json";
         public static ChiselToolServerData serverconfig;
+        public INetworkChannel chiselnet;
         public override void StartPre(ICoreAPI api)
         {
             base.StartPre(api);
             if (api is ICoreClientAPI)
             {
                 capi = api as ICoreClientAPI;
+                chiselnet= capi.Network.RegisterChannel("pantograph").RegisterMessageType(typeof(DoorData));
             }
             else if (api is ICoreServerAPI)
             {
                 sapi = api as ICoreServerAPI;
+                chiselnet= sapi.Network.RegisterChannel("pantograph")
+                    .RegisterMessageType(typeof(DoorData)).
+                    SetMessageHandler<DoorData>(DoorDataHandler); 
                 ServerPreStart();
             }
             loader = this;
@@ -108,7 +113,19 @@ namespace chisel.src
             sapi.SendMessage(player, groupid, "QP's Chisel Tools server config has been reset to defaults!", EnumChatType.CommandSuccess);
         }
 
+        //Used by pantograph to transfrom a chiseled block in to a function chiseled block
+        private void DoorDataHandler(IPlayer fromplayer, DoorData networkMessage)
+        {
+            if (sapi == null) { return; }
 
+            sapi.World.BlockAccessor.SetBlock(sapi.World.GetBlock(new AssetLocation("chiseltools:moveablechiseledblock")).BlockId, networkMessage.pos);
+            BEFunctionChiseled bfc = sapi.World.BlockAccessor.GetBlockEntity(networkMessage.pos) as BEFunctionChiseled;
+            if (bfc == null) { return; }
+            bfc.AddState(networkMessage.state, networkMessage.voxeldata, networkMessage.matdata, networkMessage.passable, networkMessage.transparent);
+            networkMessage.state = "ORIGINAL";
+            bfc.AddState(BEFunctionChiseled.originalblockname, networkMessage.voxeldata, networkMessage.matdata, networkMessage.passable, networkMessage.transparent);
+        }
+        
 
         [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
         public class ChiselToolServerData

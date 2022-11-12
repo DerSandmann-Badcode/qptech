@@ -17,9 +17,10 @@ namespace chisel.src
 {
     class BEFunctionChiseled : BlockEntityMicroBlock
     {
-        public enum enPacketCode { SETSTATE, ADDSTATE };
+        public enum enPacketCode { SETSTATE=999001, ADDSTATE=999002, SETCONTROLLED=999003 };
         public static string openname = "OPEN";
         public static string closename = "CLOSE";
+        public static string originalblockname = "ORIGINAL";
         string currentstate = closename;
         Dictionary<string, List<uint>> statevoxels;
         Dictionary<string, List<int>> statematerials;
@@ -32,8 +33,26 @@ namespace chisel.src
             base.OnBlockBroken(byPlayer);
             if (sapi != null)
             {
-                ItemStack dropstack = new ItemStack(sapi.World.GetItem(new AssetLocation("chiseltools:doorpart")), 1);
-                sapi.World.SpawnItemEntity(dropstack, Pos.ToVec3d());
+                //ItemStack dropstack = new ItemStack(sapi.World.GetItem(new AssetLocation("chiseltools:doorpart")), 1);
+                //sapi.World.SpawnItemEntity(dropstack, Pos.ToVec3d());
+                controlblockpos = null;
+                if (controlledblocks != null && controlledblocks.Count > 0)
+                {
+                    foreach (BlockPos pos in controlledblocks)
+                    {
+                        BEFunctionChiseled bfc = Api.World.BlockAccessor.GetBlockEntity(pos) as BEFunctionChiseled;
+                        if (bfc == null) { continue; }
+                        bfc.SetControlledBlocks(new List<BlockPos>());
+                    }
+                    controlledblocks = new List<BlockPos>();
+                }
+                //now we need to make a new chiseled block where the old door block was and copy back original state
+                if (!statevoxels.ContainsKey(originalblockname)) { return; }
+                Api.World.BlockAccessor.SetBlock(Api.World.GetBlock(new AssetLocation("game:chiseledblock")).BlockId, Pos);
+                BlockEntityChisel bec = Api.World.BlockAccessor.GetBlockEntity(Pos) as BlockEntityChisel;
+                bec.MaterialIds = statematerials[originalblockname].ToArray();
+                bec.VoxelCuboids = new List<uint>(statevoxels[originalblockname]);
+                bec.MarkDirty(true);
             }
         }
 
@@ -175,6 +194,16 @@ namespace chisel.src
                 if (dat == null) { return; }
                 AddState(dat.state, dat.voxeldata, dat.matdata, dat.passable, dat.transparent);
             }
+            else if (packetid == (int)enPacketCode.SETCONTROLLED)
+            {
+                if (data == null) { controlblockpos = Pos;controlledblocks = new List<BlockPos>();MarkDirty(true); }
+                else
+                {
+                    controlledblocks = SerializerUtil.Deserialize<List<BlockPos>>(data);
+                    controlblockpos = Pos;
+                    MarkDirty(true);
+                }
+            }
             base.OnReceivedClientPacket(fromPlayer, packetid, data);
         }
         public override void OnReceivedServerPacket(int packetid, byte[] data)
@@ -300,6 +329,7 @@ namespace chisel.src
     [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
     public class DoorData
     {
+        public BlockPos pos;
         public DoorData() { }
         public string state;
         public List<uint> voxeldata;

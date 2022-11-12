@@ -8,8 +8,6 @@
 	sidesolid: { all: false },
 	sideopaque: { all: false },
 	sideao: { all: true },
-	lightAbsorption: 99,
-	drops: [
-		
-	]
+	lightAbsorption: 99
+
 }

@@ -40,6 +40,7 @@ namespace chisel.src
         ICoreClientAPI capi;
         List<BlockPos> flaggedblocks;
         bool showcopiedshape = false;
+        
         public enum enModes {COPY,FULLPASTE,ADDPASTE,UNDO,CHANGEMAT,CLOSEDDOOR,OPENDOOR,DOORTOOL}
         public override void OnLoaded(ICoreAPI api)
         {
@@ -95,7 +96,7 @@ namespace chisel.src
                    
                 };
             });
-            
+           
         }
 
         public override void OnHeldAttackStart(ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel, ref EnumHandHandling handling)
@@ -112,11 +113,7 @@ namespace chisel.src
             //for functional chiseled blocks this would set the targetted block as a control block
             if (slot.Itemstack.Attributes.GetInt("toolMode", (int)enModes.COPY) == (int)enModes.DOORTOOL){
                 //nothing selected
-                if (flaggedblocks == null || flaggedblocks.Count == 0)
-                {
-                    handling = EnumHandHandling.PreventDefaultAction;
-                    return;
-                }
+                
                 BEFunctionChiseled bfc = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BEFunctionChiseled;
                 if (bfc == null)
                 {
@@ -128,7 +125,16 @@ namespace chisel.src
                     flaggedblocks.Remove(blockSel.Position);
                 }
                 
-                bfc.SetControlledBlocks(flaggedblocks);
+                //send flagged block list to the new contol block (via the server)
+                if (api is ICoreClientAPI)
+                {
+                    if (flaggedblocks == null || flaggedblocks.Count == 0)
+                    {
+                        (api as ICoreClientAPI).Network.SendBlockEntityPacket(blockSel.Position, (int)BEFunctionChiseled.enPacketCode.SETCONTROLLED, null);
+                    }
+                    byte[] data = SerializerUtil.Serialize<List<BlockPos>>(flaggedblocks);
+                    (api as ICoreClientAPI).Network.SendBlockEntityPacket(blockSel.Position, (int)BEFunctionChiseled.enPacketCode.SETCONTROLLED, data);
+                }
                 flaggedblocks = new List<BlockPos>();
                 api.World.HighlightBlocks(byPlayer, 1, flaggedblocks);
                 handling = EnumHandHandling.PreventDefaultAction;
@@ -559,17 +565,30 @@ namespace chisel.src
         void SetDoor(ItemSlot slot, BlockSelection blockSel, string state, bool transparent=false)
         {
             if (api is ICoreServerAPI) { return; }
+            ICoreClientAPI capi = api as ICoreClientAPI;
             //Do nothing if we have no stored voxel information
             List<int> copiedmaterials = GetCopiedBlockMaterials(slot);
             if (copiedmaterials == null&&!transparent) { return; }
             List<uint> copiedblockvoxels = GetCopiedBlockVoxels(slot);
             if (copiedblockvoxels == null&&!transparent) { return; }
-            
-            //Do nothing if there is no funcitonal chiseled block
-            BEFunctionChiseled bfc = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BEFunctionChiseled;
-            if (bfc == null) { return; }
             bool passable = false;
             if (state == BEFunctionChiseled.openname) { passable = true; }
+            //Create a function chiseled block if necessary
+            BEFunctionChiseled bfc = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BEFunctionChiseled;
+            if (bfc == null) {
+                BlockEntityChisel bec = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityChisel;
+                if (bec == null) { return; }
+                DoorData newdoor = new DoorData();
+                newdoor.pos = blockSel.Position;
+                newdoor.matdata = new List<int>(bec.MaterialIds);
+                newdoor.voxeldata = new List<uint>(bec.VoxelCuboids);
+                newdoor.state = state;
+                newdoor.passable = passable;
+                newdoor.transparent = transparent;
+                (ChiselToolLoader.loader.chiselnet as IClientNetworkChannel).SendPacket<DoorData>(newdoor);
+                return;
+            }
+            
             DoorData dat = new DoorData();
             dat.matdata = copiedmaterials;
             dat.voxeldata = copiedblockvoxels;
@@ -580,7 +599,7 @@ namespace chisel.src
             (api as ICoreClientAPI).Network.SendBlockEntityPacket(bfc.Pos, (int)BEFunctionChiseled.enPacketCode.ADDSTATE, datbyte);
             
         }
-
+       
         public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
         {
             base.GetHeldItemInfo(inSlot, dsc, world, withDebugInfo);
