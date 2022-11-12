@@ -87,10 +87,11 @@ namespace chisel.src
             bmb.MaterialIds = copiedblockmaterials.ToArray();
             bmb.VoxelCuboids = new List<uint>(copiedblockvoxels);
             
-                api.World.BlockAccessor.MarkBlockEntityDirty(blockSel.Position);
-                api.World.BlockAccessor.MarkBlockDirty(blockSel.Position);
-            
-            
+            api.World.BlockAccessor.MarkBlockEntityDirty(blockSel.Position);
+            api.World.BlockAccessor.MarkBlockDirty(blockSel.Position);
+            // need our own version of this: bmb.RegenSelectionBoxes(byPlayer);
+            bmb.RegenSelectionBoxes(null);
+            bmb.MarkDirty(true);
             if (api is ICoreServerAPI && byPlayer?.WorldData.CurrentGameMode != EnumGameMode.Creative)
             {
                 int dmg = 1;
