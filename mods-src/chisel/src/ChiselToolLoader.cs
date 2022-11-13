@@ -130,6 +130,8 @@ namespace chisel.src
             bfc.AddState(networkMessage.state, networkMessage.voxeldata, networkMessage.matdata, networkMessage.passable, networkMessage.transparent);
             networkMessage.state = "ORIGINAL";
             bfc.AddState(BEFunctionChiseled.originalblockname, networkMessage.voxeldata, networkMessage.matdata, networkMessage.passable, networkMessage.transparent);
+            bfc.SetState(BEFunctionChiseled.closename);
+
         }
         int chiselblockid;
         private void MakeNewChiseledBlock(DoorData data)

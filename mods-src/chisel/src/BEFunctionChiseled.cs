@@ -120,7 +120,7 @@ namespace chisel.src
             statematerials[key] = materials;
             statepassable[key] = passable;
             MarkDirty(true);
-                        
+            
         }
         
 
@@ -173,6 +173,7 @@ namespace chisel.src
             controlblockpos = fromblock;
             controlledblocks = new List<BlockPos>();
             MarkDirty(true);
+            SetState(closename);
         }
 
         void SetupDictionaries() {
