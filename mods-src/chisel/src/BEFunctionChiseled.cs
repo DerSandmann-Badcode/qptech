@@ -31,28 +31,32 @@ namespace chisel.src
         public override void OnBlockBroken(IPlayer byPlayer = null)
         {
             base.OnBlockBroken(byPlayer);
-            if (sapi != null)
+           
+            //ItemStack dropstack = new ItemStack(sapi.World.GetItem(new AssetLocation("chiseltools:doorpart")), 1);
+            //sapi.World.SpawnItemEntity(dropstack, Pos.ToVec3d());
+            controlblockpos = null;
+            if (controlledblocks != null && controlledblocks.Count > 0)
             {
-                //ItemStack dropstack = new ItemStack(sapi.World.GetItem(new AssetLocation("chiseltools:doorpart")), 1);
-                //sapi.World.SpawnItemEntity(dropstack, Pos.ToVec3d());
-                controlblockpos = null;
-                if (controlledblocks != null && controlledblocks.Count > 0)
+                foreach (BlockPos pos in controlledblocks)
                 {
-                    foreach (BlockPos pos in controlledblocks)
-                    {
-                        BEFunctionChiseled bfc = Api.World.BlockAccessor.GetBlockEntity(pos) as BEFunctionChiseled;
-                        if (bfc == null) { continue; }
-                        bfc.SetControlledBlocks(new List<BlockPos>());
-                    }
-                    controlledblocks = new List<BlockPos>();
+                    BEFunctionChiseled bfc = Api.World.BlockAccessor.GetBlockEntity(pos) as BEFunctionChiseled;
+                    if (bfc == null) { continue; }
+                    bfc.SetControlledBlocks(new List<BlockPos>());
                 }
-                //now we need to make a new chiseled block where the old door block was and copy back original state
-                if (!statevoxels.ContainsKey(originalblockname)) { return; }
-                Api.World.BlockAccessor.SetBlock(Api.World.GetBlock(new AssetLocation("game:chiseledblock")).BlockId, Pos);
-                BlockEntityChisel bec = Api.World.BlockAccessor.GetBlockEntity(Pos) as BlockEntityChisel;
-                bec.MaterialIds = statematerials[originalblockname].ToArray();
-                bec.VoxelCuboids = new List<uint>(statevoxels[originalblockname]);
-                bec.MarkDirty(true);
+                controlledblocks = new List<BlockPos>();
+            }
+            //now we need to make a new chiseled block where the old door block was and copy back original state
+            if (!statevoxels.ContainsKey(originalblockname)) { return; }
+            //package up a special door data flagged to create original and let server make the block next tick
+            
+            if (Api is ICoreClientAPI)
+            {
+                DoorData reborn = new DoorData();
+                reborn.voxeldata = new List<uint>(statevoxels[originalblockname]);
+                reborn.matdata = new List<int>(statematerials[originalblockname]);
+                reborn.pos = Pos;
+                reborn.makenewblock = true;
+                (ChiselToolLoader.loader.chiselnet as IClientNetworkChannel).SendPacket<DoorData>(reborn);
             }
         }
 
@@ -336,7 +340,7 @@ namespace chisel.src
         public List<int> matdata;
         public bool passable=false;
         public bool transparent = false;
-        
+        public bool makenewblock = false;
     }
 
 }

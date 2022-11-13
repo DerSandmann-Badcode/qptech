@@ -9,6 +9,7 @@ using Vintagestory.API.Config;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
 using Vintagestory.API.Datastructures;
+using Vintagestory.GameContent;
 using ProtoBuf;
 
 namespace chisel.src
@@ -118,6 +119,11 @@ namespace chisel.src
         {
             if (sapi == null) { return; }
 
+            if (networkMessage.makenewblock)
+            {
+                MakeNewChiseledBlock(networkMessage);
+                return;
+            }
             sapi.World.BlockAccessor.SetBlock(sapi.World.GetBlock(new AssetLocation("chiseltools:moveablechiseledblock")).BlockId, networkMessage.pos);
             BEFunctionChiseled bfc = sapi.World.BlockAccessor.GetBlockEntity(networkMessage.pos) as BEFunctionChiseled;
             if (bfc == null) { return; }
@@ -125,7 +131,21 @@ namespace chisel.src
             networkMessage.state = "ORIGINAL";
             bfc.AddState(BEFunctionChiseled.originalblockname, networkMessage.voxeldata, networkMessage.matdata, networkMessage.passable, networkMessage.transparent);
         }
-        
+        int chiselblockid;
+        private void MakeNewChiseledBlock(DoorData data)
+        {
+            if (chiselblockid == 0)
+            {
+                chiselblockid = sapi.World.GetBlock(new AssetLocation("game:chiseledblock")).BlockId;
+            }
+            if (data.matdata == null || data.matdata.Count == 0 || data.voxeldata == null || data.voxeldata.Count == 0) { return; }
+            sapi.World.BlockAccessor.SetBlock(chiselblockid, data.pos);
+            BlockEntityChisel bec = sapi.World.BlockAccessor.GetBlockEntity(data.pos) as BlockEntityChisel;
+            if (bec == null) { return; }
+            bec.MaterialIds = data.matdata.ToArray();
+            bec.VoxelCuboids = new List<uint>(data.voxeldata);
+            bec.MarkDirty(true);
+        }
 
         [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
         public class ChiselToolServerData
