@@ -571,8 +571,8 @@ namespace chisel.src
             if (copiedmaterials == null&&!transparent) { return; }
             List<uint> copiedblockvoxels = GetCopiedBlockVoxels(slot);
             if (copiedblockvoxels == null&&!transparent) { return; }
-            bool passable = false;
-            if (state == BEFunctionChiseled.openname) { passable = true; }
+            bool passable = transparent;
+            //if (state == BEFunctionChiseled.openname) { passable = true; }
             //Create a function chiseled block if necessary
             BEFunctionChiseled bfc = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BEFunctionChiseled;
             if (bfc == null) {
