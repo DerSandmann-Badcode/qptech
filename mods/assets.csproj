@@ -53,7 +53,6 @@
     <None Include="chisel\assets\chiseltools\blocktypes\moveablechiseledblock.json" />
     <None Include="chisel\assets\chiseltools\config\handbook\chiseltools.json" />
     <None Include="chisel\assets\chiseltools\itemtypes\laddermaker.json" />
-    <None Include="chisel\assets\chiseltools\itemtypes\chiselblockcontroller.json" />
     <None Include="chisel\assets\chiseltools\itemtypes\blockswapper.json" />
     <None Include="chisel\assets\chiseltools\itemtypes\paintbrush.json" />
     <None Include="chisel\assets\chiseltools\itemtypes\pantograph.json" />
