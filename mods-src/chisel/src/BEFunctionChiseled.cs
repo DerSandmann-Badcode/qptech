@@ -67,6 +67,9 @@ namespace chisel.src
                 return statepassable[currentstate];
             }
         }
+
+       
+
         BlockPos controlblockpos;
         public BlockPos ControlBlockPos => controlblockpos;
 

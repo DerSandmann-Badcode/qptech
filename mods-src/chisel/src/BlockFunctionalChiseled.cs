@@ -31,6 +31,13 @@ namespace chisel.src
         }
         public override Cuboidf[] GetSelectionBoxes(IBlockAccessor blockAccessor, BlockPos pos)
         {
+            BlockFunctionalChiseled bfc = blockAccessor.GetBlock(pos) as BlockFunctionalChiseled;
+            BEFunctionChiseled befcc = blockAccessor.GetBlockEntity(pos) as BEFunctionChiseled;
+            if (bfc != null && befcc != null && !befcc.Passable && befcc.VoxelCuboids!=null&&befcc.VoxelCuboids.Count!=0)
+            {
+                return base.GetSelectionBoxes(blockAccessor, pos);
+            }
+
             Cuboidf[] cube = { new Cuboidf(0, 0, 0, 1, 1, 1) };
 
             return cube;
