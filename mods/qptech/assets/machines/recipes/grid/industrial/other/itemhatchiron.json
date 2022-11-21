@@ -1,0 +1,10 @@
+{
+	ingredientPattern: "C	M",
+	ingredients: {
+		"M": { type: "block", code: "machineryblock-iron", quantity: 1 },
+		"C": { type: "item", code: "game:plank-*", quantity: 8 }
+	},
+	width: 1,
+	height: 2,
+	output: { type: "block", code: "itemhatchiron-east", quantity: 1 }
+}

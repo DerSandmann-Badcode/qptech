@@ -1,0 +1,11 @@
+{
+	ingredientPattern: "C	M	E",
+	ingredients: {
+		"M": { type: "item", code: "game:metalplate-copper", quantity: 1 },
+		"C": { type: "item", code: "game:plank-*", quantity: 8 },
+		"E": { type: "item", code: "heatingcoil-*", quantity: 1 },
+	},
+	width: 1,
+	height: 3,
+	output: { type: "block", code: "itemhatchcopper-east", quantity: 1 }
+}
