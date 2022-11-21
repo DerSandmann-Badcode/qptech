@@ -1,0 +1,70 @@
+[
+  {
+    "op": "add",
+    "path": "/behaviors/-",
+    "file": "blocktypes/metal/itemhatch",
+    "value": {
+      "name": "Carryable",
+      "properties": {
+        "translation": [ 0.0625, 0, 0 ],
+        "rotation": [ 0, 180, 0 ],
+        "slots": {
+          "Hands": {},
+          "Back": {}
+        }
+      }
+    },
+    "dependsOn": [ { "modid": "carrycapacity" } ]
+  },
+  {
+    "op": "add",
+    "path": "/behaviors/-",
+    "file": "blocktypes/metal/itemhatch-iron",
+    "value": {
+      "name": "Carryable",
+      "properties": {
+        "translation": [ 0.0625, 0, 0 ],
+        "rotation": [ 0, 180, 0 ],
+        "slots": {
+          "Hands": {},
+          "Back": {}
+        }
+      }
+    },
+    "dependsOn": [ { "modid": "carrycapacity" } ]
+  },
+  {
+    "op": "add",
+    "path": "/behaviors/-",
+    "file": "blocktypes/metal/itemhatch-steel",
+    "value": {
+      "name": "Carryable",
+      "properties": {
+        "translation": [ 0.0625, 0, 0 ],
+        "rotation": [ 0, 180, 0 ],
+        "slots": {
+          "Hands": {},
+          "Back": {}
+        }
+      }
+    },
+    "dependsOn": [ { "modid": "carrycapacity" } ]
+  },
+   {
+    "op": "add",
+    "path": "/behaviors/-",
+    "file": "blocktypes/metal/itemhatchcopper",
+    "value": {
+      "name": "Carryable",
+      "properties": {
+        "translation": [ 0.0625, 0, 0 ],
+        "rotation": [ 0, 180, 0 ],
+        "slots": {
+          "Hands": {},
+          "Back": {}
+        }
+      }
+    },
+    "dependsOn": [ { "modid": "carrycapacity" } ]
+  }
+]

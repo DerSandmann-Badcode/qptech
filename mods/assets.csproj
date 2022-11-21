@@ -37,6 +37,7 @@
     <Content Include="qptech\assets\machines\textures\block\chevrons.png" />
     <Content Include="qptech\assets\machines\textures\block\shinyiron.png" />
     <Content Include="qptech\assets\machines\textures\item\temporalcircuitboard.png" />
+    <Content Include="qptech\QPTECHCHange1.11.txt" />
     <Content Include="qptech\ChangeLog1.10.txt" />
     <Content Include="qptech\tovintagstory.py" />
     <Content Include="rustandrails\assets\rustandrails\textures\block\chevrons.png" />
@@ -117,6 +118,9 @@
     <None Include="qptech\assets\machines\blocktypes\metal\electric\wires\powerrod.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\electric\wires\wireplate-tin-electricjunction.json" />
     <None Include="qptech\assets\machines\blocktypes\dummyobjects\dummy.json" />
+    <None Include="qptech\assets\machines\blocktypes\metal\itemhatchcopper.json" />
+    <None Include="qptech\assets\machines\blocktypes\metal\itemhatch-steel.json" />
+    <None Include="qptech\assets\machines\blocktypes\metal\itemhatch-iron.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\machineryblock-iron.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\temporalpocket.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\sheet.json" />
@@ -266,8 +270,8 @@
     <None Include="qptech\assets\machines\itemtypes\tool\screwdriver.json" />
     <None Include="qptech\assets\machines\itemtypes\tool\screwdriverhead.json" />
     <None Include="qptech\assets\machines\lang\en.json" />
-    <None Include="qptech\assets\machines\patches\itemhatch.json" />
-    <None Include="qptech\assets\machines\patches\cabinet.json" />
+    <None Include="qptech\assets\machines\patches\cabinets.json" />
+    <None Include="qptech\assets\machines\patches\itemhatches.json" />
     <None Include="qptech\assets\machines\recipes\barrel\cable.json" />
     <None Include="qptech\assets\machines\recipes\grid\decor\slidingdoor.json" />
     <None Include="qptech\assets\machines\recipes\grid\decor\blocklantern.json" />
