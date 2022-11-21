@@ -1,5 +1,8 @@
 ﻿1.11.0:
 - adding iron & steel item hatches
+- cabinets work with carry capacity
+- encased lanterns chiselable
+- electrical items should show their flux usage while in inventory
 
 Phase 1 Roadmap:
 - need an assembly (crafting) machine

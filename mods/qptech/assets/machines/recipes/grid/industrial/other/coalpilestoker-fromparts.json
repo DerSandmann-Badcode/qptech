@@ -12,8 +12,8 @@
 			"quantity": 1
 		},
 		"T": {
-			"type": "item",
-			"code": "circuitboard-primitive",
+			"type": "block",
+			"code": "game:metal-parts",
 			"quantity": 1
 		}
 	},

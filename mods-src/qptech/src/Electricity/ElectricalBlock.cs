@@ -107,5 +107,22 @@ namespace qptech.src
             }
             base.OnNeighbourBlockChange(world, pos, neibpos);
         }
+
+        public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
+        {
+            
+            if (inSlot.Itemstack.Block.Attributes["useFlux"].Exists)
+            {
+                int reqpower= inSlot.Itemstack.Block.Attributes["useFlux"].AsInt();
+                if (reqpower != 0)
+                {
+                    dsc.AppendLine("Uses " + reqpower + " flux");
+                }
+            }
+
+            base.GetHeldItemInfo(inSlot, dsc, world, withDebugInfo);
+        }
+
     }
+
 }
