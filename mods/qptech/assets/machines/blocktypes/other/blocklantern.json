@@ -8,6 +8,9 @@
 	"textures": {
 		"all": { "base": "block/lightblock" }
 	},
+	"attributes": {
+		"canChisel": true
+	},
 	"resistance": 1,
 	"sounds": {
 		"place": "game:block/anvil",
