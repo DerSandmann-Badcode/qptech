@@ -3,6 +3,7 @@
 - cabinets work with carry capacity
 - encased lanterns chiselable
 - electrical items should show their flux usage while in inventory
+- coal stoker now buildable with machine parts or primitive circuit board (can now be built in the iron age)
 
 Phase 1 Roadmap:
 - need an assembly (crafting) machine
