@@ -110,6 +110,7 @@
     <Compile Include="src\itemtransport\TabletTool.cs" />
     <Compile Include="src\misc\BEAnimator.cs" />
     <Compile Include="src\misc\BEBlockSeeker.cs" />
+    <Compile Include="src\misc\BEBNamed.cs" />
     <Compile Include="src\misc\BlockPowerRod.cs" />
     <Compile Include="src\misc\BEBMultiDummy.cs" />
     <Compile Include="src\misc\BECoalPileStoker.cs" />

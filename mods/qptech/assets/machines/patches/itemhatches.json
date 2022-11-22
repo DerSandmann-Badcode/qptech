@@ -66,5 +66,25 @@
       }
     },
     "dependsOn": [ { "modid": "carrycapacity" } ]
+  },
+
+  {
+    "file": "blocktypes/metal/itemhatchcopper",
+    "side": "server",
+    "op": "add",
+    "path": "/behaviors/-",
+    "value": {
+      "name": "Carryable",
+      "properties": {
+        "translation": [ 0, 0, 0 ],
+        "rotation": [ 0, 90, 0 ],
+        "slots": {
+          "Hands": {},
+          "Back": {}
+        }
+      }
+    },
+    "dependsOn": [ { "modid": "carryon" } ]
   }
+
 ]
