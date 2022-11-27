@@ -122,6 +122,7 @@
     <None Include="qptech\assets\machines\blocktypes\metal\itemhatch-steel.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\itemhatch-iron.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\machineryblock-iron.json" />
+    <None Include="qptech\assets\machines\blocktypes\metal\industrialdrillhead.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\temporalpocket.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\sheet.json" />
     <None Include="qptech\assets\machines\blocktypes\other\door\slidingdoor.json" />
@@ -170,6 +171,7 @@
     <None Include="qptech\assets\machines\shapes\block\itemscanner.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\autosmith.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\electric\charcoalkiln.json" />
+    <None Include="qptech\assets\machines\shapes\block\metal\industrialdrillhead.json" />
     <None Include="qptech\assets\machines\shapes\block\simplecubefortests.json" />
     <None Include="qptech\assets\machines\shapes\block\testobj.obj" />
     <None Include="qptech\assets\machines\shapes\block\vacuumtube.obj" />

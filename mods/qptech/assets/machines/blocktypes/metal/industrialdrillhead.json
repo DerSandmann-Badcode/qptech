@@ -1,0 +1,18 @@
+{
+	"code": "industrialdrillhead",
+	"creativeinventory": {
+		"general": [ "*" ],
+		"qptech": [ "*" ]
+	},
+	"blockmaterial": "Metal",
+	"drawtype": "json",
+	"shape": { "base": "block/metal/industrialdrillhead" },
+	"sideopaque": {
+		"all": false
+	},
+	"resistance": 1,
+	"sounds": {
+		"place": "game:block/anvil",
+		"walk": "game:walk/stone"
+	}
+}
