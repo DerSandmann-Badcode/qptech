@@ -1,8 +1,20 @@
 {
 	"code": "industrialdrillhead",
+	"class": "ElectricalBlock",
+	"entityclass": "BEMiningRig",
 	"creativeinventory": {
 		"general": [ "*" ],
 		"qptech": [ "*" ]
+	},
+	"attributes": {
+
+		
+			"genFlux": 0,
+			"useFlux": 128,
+
+			"inputFace": "west",
+			"outputFace": "east"
+		
 	},
 	"blockmaterial": "Metal",
 	"drawtype": "json",

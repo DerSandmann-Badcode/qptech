@@ -93,6 +93,7 @@
     <Compile Include="src\Electricity\BEEProcessingSupplier.cs" />
     <Compile Include="src\Electricity\BEERecipeProcessor.cs" />
     <Compile Include="src\Electricity\BEETemporalCondenser.cs" />
+    <Compile Include="src\Electricity\BEMiningRig.cs" />
     <Compile Include="src\Electricity\BlockAutocrafter.cs" />
     <Compile Include="src\Electricity\BlockAutosmith.cs" />
     <Compile Include="src\Electricity\ElectricityAPI.cs" />
