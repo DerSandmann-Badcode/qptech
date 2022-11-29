@@ -23,7 +23,7 @@ namespace qptech.src.Electricity
         public virtual int drillstartyoffset=>-1;
         int skipcounter;
         bool surveyed = false;
-        
+        Vec3d dropoffset => new Vec3d(0, 6, 0);
         public virtual int skip => 5;
         public virtual int range => 1;
         ProPickWorkSpace ppws;
@@ -120,7 +120,7 @@ namespace qptech.src.Electricity
             }
             DummyInventory di = new DummyInventory(Api, 1);
             di[0].Itemstack = new ItemStack(drop, 1);
-            di.DropAll(Pos.ToVec3d());
+            di.DropAll(Pos.ToVec3d()+dropoffset);
         }
 
         protected virtual void DoSurvey( BlockPos pos)
