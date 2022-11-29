@@ -22,13 +22,19 @@ namespace qptech.src.Electricity
         BlockPos drillpos;
         public virtual int drillstartyoffset=>-1;
         int skipcounter;
+        bool surveyed = false;
+        
         public virtual int skip => 5;
         public virtual int range => 1;
         ProPickWorkSpace ppws;
-        bool temp = false;
+        
+        Dictionary<string, double> survey;
+        Random roll;
         public override void Initialize(ICoreAPI api)
         {
             base.Initialize(api);
+            survey = new Dictionary<string, double>();
+            roll = new Random();
             ppws = ObjectCacheUtil.GetOrCreate<ProPickWorkSpace>(api, "propickworkspace", () =>
             {
                 ProPickWorkSpace ppws = new ProPickWorkSpace();
@@ -42,7 +48,12 @@ namespace qptech.src.Electricity
             base.OnTick(par);
             if (Api is ICoreServerAPI)
             {
-                if (skipcounter < skip) { skipcounter++;return; }
+
+
+                if (skipcounter < skip) { skipcounter++; return; }
+                if (!surveyed) { DoSurvey(Pos); }
+                else if (survey.Count == 0) { return; }
+                
                 skipcounter = 0;
                 if (drillpos == null) { drillpos=StartDrillPos;MarkDirty(true); }
 
@@ -55,10 +66,11 @@ namespace qptech.src.Electricity
                 }
                 else
                 {
+                    DoDrops(b);
                     Api.World.BlockAccessor.SetBlock(0, drillpos);
                 }
                 drillpos.X++;
-                if (!temp) { DoSurvey(Api.World, Pos); }
+                
                 if ((drillpos.X - Pos.X) > range)
                 {
                     drillpos.X = Pos.X - range;
@@ -76,24 +88,58 @@ namespace qptech.src.Electricity
 
         BlockPos StartDrillPos=>new BlockPos(Pos.X-range, Pos.Y + drillstartyoffset, Pos.Z-range);
 
-        protected virtual void DoSurvey( IWorldAccessor world,  BlockPos pos)
+        protected virtual void DoDrops(Block b)
         {
-            temp = true;
-            
-            
+            //handle dirt
+            if (b.Code.ToString().Contains("soil")|| b.Code.ToString().Contains("mud")|| b.Code.ToString().Contains("dirt"))
+            {
+                return; //for now we just skip dirt
+            }
+            //handle stone
+            //handle tailings?
+            //handle ore
+            if (survey == null || survey.Count == 0) { return; }
+            double diceroll = roll.NextDouble();
+            //first make a list of anything that qualifies this dice roll
+            List<string> potentialores = new List<string>();
+            foreach (string key in survey.Keys)
+            {
+                if (diceroll < survey[key]) { potentialores.Add(key); }
+            }
+            //nothing was found
+            if (potentialores.Count == 0) { return; }
+            //pick something:
+            int selectroll = roll.Next(0, potentialores.Count);
+            string chosen = potentialores[selectroll];
+            chosen = "nugget-" + chosen;
+            AssetLocation al = new AssetLocation("game:" + chosen);
+            Item drop = Api.World.GetItem(al);
+            if (drop == null)
+            {
+                return;
+            }
+            DummyInventory di = new DummyInventory(Api, 1);
+            di[0].Itemstack = new ItemStack(drop, 1);
+            di.DropAll(Pos.ToVec3d());
+        }
+
+        protected virtual void DoSurvey( BlockPos pos)
+        {
+            survey = new Dictionary<string, double>();
+            surveyed = true;
             DepositVariant[] deposits = Api.ModLoader.GetModSystem<GenDeposits>()?.Deposits;
             if (deposits == null) return;
 
-            IBlockAccessor blockAccess = world.BlockAccessor;
+            IBlockAccessor blockAccess = Api.World.BlockAccessor;
             int chunksize = blockAccess.ChunkSize;
             int regsize = blockAccess.RegionSize;
 
-            IMapRegion reg = world.BlockAccessor.GetMapRegion(pos.X / regsize, pos.Z / regsize);
+            IMapRegion reg = Api.World.BlockAccessor.GetMapRegion(pos.X / regsize, pos.Z / regsize);
             int lx = pos.X % regsize;
             int lz = pos.Z % regsize;
 
             pos = pos.Copy();
-            pos.Y = world.BlockAccessor.GetTerrainMapheightAt(pos);
+            pos.Y = Api.World.BlockAccessor.GetTerrainMapheightAt(pos);
 
             int[] blockColumn = ppws.GetRockColumn(pos.X, pos.Z);
 
@@ -124,10 +170,14 @@ namespace qptech.src.Electricity
                 
                 if (totalFactor > 0.002)
                 {
-                    readouts.Add(new KeyValuePair<double, string>(totalFactor, val.Key));
+                    if (survey.ContainsKey(val.Key)) { survey[val.Key] += totalFactor; }
+                    else { survey.Add(val.Key, totalFactor); }
+                    
                 }
+
             }
-            bool x = true;
+            
+            MarkDirty(true);
             
         }
 
@@ -137,6 +187,7 @@ namespace qptech.src.Electricity
             if (drillpos == null) { drillpos=StartDrillPos; }
             tree.SetBlockPos("drillpos",drillpos);
             tree.SetInt("skipcounter", skipcounter);
+            
             base.ToTreeAttributes(tree);
         }
 
@@ -145,6 +196,13 @@ namespace qptech.src.Electricity
             base.FromTreeAttributes(tree, worldAccessForResolve);
             drillpos = tree.GetBlockPos("drillpos",StartDrillPos);
             skipcounter = tree.GetInt("skipcounter");
+            
+        }
+
+        public override void GetBlockInfo(IPlayer forPlayer, StringBuilder dsc)
+        {
+            base.GetBlockInfo(forPlayer, dsc);
+            
         }
     }
 }
