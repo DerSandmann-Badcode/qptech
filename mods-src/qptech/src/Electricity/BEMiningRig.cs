@@ -24,10 +24,11 @@ namespace qptech.src.Electricity
         int skipcounter;
         bool surveyed = false;
         Vec3i outputcontaineroffset => new Vec3i(0, 1, 0); //where to create items
-        public virtual int skip => 5; //how many onticks to skip between block breaking
+        public virtual int skip => 20; //how many onticks to skip between block breaking
         public virtual int range => 2;//how far out to mine (2=5x5 shaft)
+        public virtual int maxore => 10;
         ProPickWorkSpace ppws; //used to fine ore densities
-        
+        protected const int clientplaysound = 999900001; //packet id for sound playing
         Dictionary<string, double> survey; //list of available minerals and their percentages
         Random roll;
         public override void Initialize(ICoreAPI api)
@@ -53,7 +54,7 @@ namespace qptech.src.Electricity
                 if (skipcounter < skip) { skipcounter++; return; }
                 if (!surveyed) { DoSurvey(Pos); }
                 else if (survey.Count == 0) { return; }
-                
+                DoRunningParticles();
                 skipcounter = 0;
                 if (drillpos == null) { drillpos=StartDrillPos;MarkDirty(true); }
 
@@ -155,7 +156,7 @@ namespace qptech.src.Electricity
             //Add ore to our dummy inventory if relevant
             if (oredropok)
             {
-                drops.Add( new ItemStack(drop, 1 + roll.Next(0, 5)));
+                drops.Add( new ItemStack(drop, 1 + roll.Next(0, maxore)));
             }
             //Add other block drops to our dummy inventory if relevant
             DummyInventory di = new DummyInventory(Api, drops.Count);
@@ -219,7 +220,34 @@ namespace qptech.src.Electricity
             }
             beoutput.MarkDirty(true);
             MarkDirty(true);
+            //string sound="sounds/block/rock-break-pickaxe";
+            
+            
             return true;
+        }
+        private SimpleParticleProperties smokeParticles;
+        protected virtual void DoRunningParticles()
+        {
+
+            smokeParticles = new SimpleParticleProperties(
+                  1, 2,
+                  ColorUtil.ToRgba(192, 32, 24, 10),
+                  new Vec3d(),
+                  new Vec3d(0.75, 0, 0.75),
+                  new Vec3f(-1 / 32f, 0.1f, -1 / 32f),
+                  new Vec3f(1 / 32f, 0.1f, 1 / 32f),
+                  10f,
+                  -0.025f / 4,
+                  0.6f,
+                  2f,
+                  EnumParticleModel.Quad
+              );
+
+            smokeParticles.SizeEvolve = new EvolvingNatFloat(EnumTransformFunction.LINEAR, 0.25f);
+            smokeParticles.SelfPropelled = true;
+            smokeParticles.AddPos.Set(8 / 16.0, 0, 8 / 16.0);
+            smokeParticles.MinPos.Set(Pos.X + 4 / 16f, Pos.Y + 2, Pos.Z + 4 / 16f);
+            Api.World.SpawnParticles(smokeParticles);
         }
 
         protected virtual void DoSurvey( BlockPos pos)

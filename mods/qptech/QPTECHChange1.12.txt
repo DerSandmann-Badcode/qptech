@@ -1,0 +1,3 @@
+﻿1.12
+- creative generator now outputs 512 flux
+- adding Mining Rig which is an autominer

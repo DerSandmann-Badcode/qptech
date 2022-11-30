@@ -37,6 +37,7 @@
     <Content Include="qptech\assets\machines\textures\block\chevrons.png" />
     <Content Include="qptech\assets\machines\textures\block\shinyiron.png" />
     <Content Include="qptech\assets\machines\textures\item\temporalcircuitboard.png" />
+    <Content Include="qptech\QPTECHChange1.12.txt" />
     <Content Include="qptech\QPTECHCHange1.11.txt" />
     <Content Include="qptech\ChangeLog1.10.txt" />
     <Content Include="qptech\tovintagstory.py" />
