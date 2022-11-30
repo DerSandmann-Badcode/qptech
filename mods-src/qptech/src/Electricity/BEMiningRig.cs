@@ -182,7 +182,7 @@ namespace qptech.src.Electricity
                     if (outcontainer.Inventory[outc].Empty)
                     {
                         foundroom = true;
-                        slotreservation.Add(outc, dc);
+                        slotreservation[outc]=dc;
                         break;
                     }
                     else if (outcontainer.Inventory[outc].Itemstack.Collectible!=di[dc].Itemstack.Collectible)
@@ -194,7 +194,7 @@ namespace qptech.src.Electricity
                     //not enough room
                     if (spaceremaining < di[dc].StackSize) { continue; }
                     //enough room, reserve
-                    slotreservation.Add(outc, dc);
+                    slotreservation[outc]=dc;
                     foundroom = true;
                     break;
                 }
@@ -206,10 +206,16 @@ namespace qptech.src.Electricity
             //the output container isn't ready for our processing, cancel processing
             if (!foundroom) { return false; }
             //the output container is ready, load it up
-            foreach (int outslotc in slotreservation.Keys)
+            for (int dc = 0; dc < di.Count(); dc++)
             {
-                int moved = di[slotreservation[outslotc]].TryPutInto(Api.World, outcontainer.Inventory[outslotc], di[0].StackSize);
-                outcontainer.Inventory[outslotc].MarkDirty();
+                foreach (int outc in slotreservation.Keys)
+                {
+                    if (slotreservation[outc] == dc)
+                    {
+                        int moved = di[dc].TryPutInto(Api.World, outcontainer.Inventory[outc], di[dc].StackSize);
+                        outcontainer.Inventory[outc].MarkDirty();
+                    }
+                }
             }
             beoutput.MarkDirty(true);
             MarkDirty(true);
