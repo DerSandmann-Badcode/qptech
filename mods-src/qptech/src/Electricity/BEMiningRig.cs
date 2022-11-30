@@ -19,16 +19,16 @@ namespace qptech.src.Electricity
 {
     class BEMiningRig:BEElectric
     {
-        BlockPos drillpos;
-        public virtual int drillstartyoffset=>-1;
+        BlockPos drillpos; //records the position being drilled
+        public virtual int drillstartyoffset=>-1; //how low to start drilling
         int skipcounter;
         bool surveyed = false;
-        Vec3d dropoffset => new Vec3d(0, 6, 0);
-        public virtual int skip => 5;
-        public virtual int range => 1;
-        ProPickWorkSpace ppws;
+        Vec3i outputcontaineroffset => new Vec3i(0, 1, 0); //where to create items
+        public virtual int skip => 5; //how many onticks to skip between block breaking
+        public virtual int range => 2;//how far out to mine (2=5x5 shaft)
+        ProPickWorkSpace ppws; //used to fine ore densities
         
-        Dictionary<string, double> survey;
+        Dictionary<string, double> survey; //list of available minerals and their percentages
         Random roll;
         public override void Initialize(ICoreAPI api)
         {
@@ -48,7 +48,7 @@ namespace qptech.src.Electricity
             base.OnTick(par);
             if (Api is ICoreServerAPI)
             {
-
+                if (!IsPowered) { return; }
 
                 if (skipcounter < skip) { skipcounter++; return; }
                 if (!surveyed) { DoSurvey(Pos); }
@@ -66,7 +66,12 @@ namespace qptech.src.Electricity
                 }
                 else
                 {
-                    DoDrops(b);
+                    //stop operating if nowhere to put generated material
+                    bool trydrop=DoDrops(b);
+                    if (!trydrop)
+                    {
+                        return;
+                    }
                     Api.World.BlockAccessor.SetBlock(0, drillpos);
                 }
                 drillpos.X++;
@@ -88,17 +93,35 @@ namespace qptech.src.Electricity
 
         BlockPos StartDrillPos=>new BlockPos(Pos.X-range, Pos.Y + drillstartyoffset, Pos.Z-range);
 
-        protected virtual void DoDrops(Block b)
+        protected virtual bool DoDrops(Block b)
         {
+            BlockEntity beoutput = Api.World.BlockAccessor.GetBlockEntity(Pos.AddCopy(outputcontaineroffset));
+            if (beoutput == null) { return false; }
+            IBlockEntityContainer outcontainer = beoutput as IBlockEntityContainer;
+            if (outcontainer == null) { return false; }
+            
+            bool dooredrop = true; //should we calculate an ore drop?
             //handle dirt
             if (b.Code.ToString().Contains("soil")|| b.Code.ToString().Contains("mud")|| b.Code.ToString().Contains("dirt"))
             {
-                return; //for now we just skip dirt
+                dooredrop = false;
+                
             }
             //handle stone
+            ItemStack[] drops = b.GetDrops(Api.World, drillpos, null);
+            int disize = 0;
+            if (dooredrop)
+            {
+                disize+= 1;
+            }
+            if (drops != null && drops.Count() > 0)
+            {
+                disize += drops.Count();
+            }
+            DummyInventory di = new DummyInventory(Api, disize);
             //handle tailings?
             //handle ore
-            if (survey == null || survey.Count == 0) { return; }
+            if (survey == null || survey.Count == 0) { return true; }
             double diceroll = roll.NextDouble();
             //first make a list of anything that qualifies this dice roll
             List<string> potentialores = new List<string>();
@@ -107,20 +130,74 @@ namespace qptech.src.Electricity
                 if (diceroll < survey[key]) { potentialores.Add(key); }
             }
             //nothing was found
-            if (potentialores.Count == 0) { return; }
+            if (potentialores.Count == 0) { return true; }
             //pick something:
             int selectroll = roll.Next(0, potentialores.Count);
             string chosen = potentialores[selectroll];
-            chosen = "nugget-" + chosen;
-            AssetLocation al = new AssetLocation("game:" + chosen);
+            bool oredropok = true;
+            AssetLocation al = new AssetLocation("game:" + "nugget-" + chosen);
             Item drop = Api.World.GetItem(al);
             if (drop == null)
             {
-                return;
+                al = new AssetLocation("game:" + "ore-" + chosen);
+                drop = Api.World.GetItem(al);
+                if (drop == null)
+                {
+                    oredropok = false;
+                }
             }
-            DummyInventory di = new DummyInventory(Api, 1);
-            di[0].Itemstack = new ItemStack(drop, 1);
-            di.DropAll(Pos.ToVec3d()+dropoffset);
+            //Add ore to our dummy inventory if relevant
+            if (oredropok)
+            {
+                di[0].Itemstack = new ItemStack(drop, 1 + roll.Next(0, 5));
+            }
+            //Add other block drops to our dummy inventory if relevant
+            if (di.Count() > 1)
+            {
+                for (int c = 0; c < drops.Count(); c++)
+                {
+                    di[c + 1].Itemstack = drops[c].Clone();
+
+                }
+            }
+            //di.DropAll(Pos.ToVec3d()+outputcontaineroffset);
+            //if the container doesn't have enough slots than clearly it can't hold the output
+            if (outcontainer.Inventory.Count() < di.Count()) { return false; }
+
+            //pre check to see if we can store our pending inventory
+
+            Dictionary<int,int> slotreservation = new Dictionary<int, int>(); //slot reservations (output,dummy inventory)
+            bool foundroom = false;
+            for (int dc = 0; dc < di.Count(); dc++)
+            {
+                foundroom = false;
+                for (int outc = 0; outc < outcontainer.Inventory.Count(); outc++)
+                {
+                    if (slotreservation.ContainsKey(outc)) { continue; } //we already would use this slot
+                    //if we this output slot can hold our item, then reserve it and break
+                    if (outcontainer.Inventory[outc].CanHold(di[dc]))
+                    {
+                        foundroom = true;
+                        slotreservation.Add(outc,dc);
+                        break;
+                    }
+                }
+                if (!foundroom) //if there's no room for this item the operation has failed
+                {
+                    break;
+                }
+            }
+            //the output container isn't ready for our processing, cancel processing
+            if (!foundroom) { return false; }
+            //the output container is ready, load it up
+            foreach (int outslotc in slotreservation.Keys)
+            {
+                int moved = di[slotreservation[outslotc]].TryPutInto(Api.World, outcontainer.Inventory[outslotc], di[0].StackSize);
+                outcontainer.Inventory[outslotc].MarkDirty();
+            }
+            beoutput.MarkDirty(true);
+            MarkDirty(true);
+            return true;
         }
 
         protected virtual void DoSurvey( BlockPos pos)

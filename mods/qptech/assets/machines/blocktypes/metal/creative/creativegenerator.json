@@ -9,8 +9,8 @@
 	},
 	"attributes": {
 		"capacitance": 64,
-		"maxFlux": 64,
-		"genFlux": 64,
+		"maxFlux": 512,
+		"genFlux": 512,
 		"distributionFaces": [ "north" ]
 	},
 	"variantgroups": [
