@@ -67,7 +67,7 @@ namespace qptech.src.Electricity
                 else
                 {
                     //stop operating if nowhere to put generated material
-                    bool trydrop=DoDrops(b);
+                    bool trydrop=DoDrops(b,drillpos);
                     if (!trydrop)
                     {
                         return;
@@ -93,7 +93,7 @@ namespace qptech.src.Electricity
 
         BlockPos StartDrillPos=>new BlockPos(Pos.X-range, Pos.Y + drillstartyoffset, Pos.Z-range);
 
-        protected virtual bool DoDrops(Block b)
+        protected virtual bool DoDrops(Block b, BlockPos drillpos)
         {
             BlockEntity beoutput = Api.World.BlockAccessor.GetBlockEntity(Pos.AddCopy(outputcontaineroffset));
             if (beoutput == null) { return false; }
@@ -107,18 +107,24 @@ namespace qptech.src.Electricity
                 dooredrop = false;
                 
             }
-            //handle stone
-            ItemStack[] drops = b.GetDrops(Api.World, drillpos, null);
-            int disize = 0;
-            if (dooredrop)
+            
+            List<ItemStack>drops= new List<ItemStack>();
+            
+            if (b.Drops != null)
             {
-                disize+= 1;
+                foreach (BlockDropItemStack bd in b.Drops)
+                {
+                    ItemStack newstack= bd.ResolvedItemstack;
+                    if (newstack != null && newstack.StackSize > 0)
+                    {
+                        drops.Add(newstack.Clone());
+                        if (bd.LastDrop) { break; }
+                    }
+                }
             }
-            if (drops != null && drops.Count() > 0)
-            {
-                disize += drops.Count();
-            }
-            DummyInventory di = new DummyInventory(Api, disize);
+            
+            
+            
             //handle tailings?
             //handle ore
             if (survey == null || survey.Count == 0) { return true; }
@@ -149,17 +155,15 @@ namespace qptech.src.Electricity
             //Add ore to our dummy inventory if relevant
             if (oredropok)
             {
-                di[0].Itemstack = new ItemStack(drop, 1 + roll.Next(0, 5));
+                drops.Add( new ItemStack(drop, 1 + roll.Next(0, 5)));
             }
             //Add other block drops to our dummy inventory if relevant
-            if (di.Count() > 1)
+            DummyInventory di = new DummyInventory(Api, drops.Count);
+            for (int c = 0; c < drops.Count(); c++)
             {
-                for (int c = 0; c < drops.Count(); c++)
-                {
-                    di[c + 1].Itemstack = drops[c].Clone();
-
-                }
+                di[c].Itemstack = drops[c].Clone();
             }
+            
             //di.DropAll(Pos.ToVec3d()+outputcontaineroffset);
             //if the container doesn't have enough slots than clearly it can't hold the output
             if (outcontainer.Inventory.Count() < di.Count()) { return false; }
@@ -175,12 +179,24 @@ namespace qptech.src.Electricity
                 {
                     if (slotreservation.ContainsKey(outc)) { continue; } //we already would use this slot
                     //if we this output slot can hold our item, then reserve it and break
-                    if (outcontainer.Inventory[outc].CanHold(di[dc]))
+                    if (outcontainer.Inventory[outc].Empty)
                     {
                         foundroom = true;
-                        slotreservation.Add(outc,dc);
+                        slotreservation.Add(outc, dc);
                         break;
                     }
+                    else if (outcontainer.Inventory[outc].Itemstack.Collectible!=di[dc].Itemstack.Collectible)
+                    {
+                        continue;
+                    }
+                    //we have match see if there's room
+                    int spaceremaining = outcontainer.Inventory[outc].Itemstack.Collectible.MaxStackSize - outcontainer.Inventory[outc].StackSize;
+                    //not enough room
+                    if (spaceremaining < di[dc].StackSize) { continue; }
+                    //enough room, reserve
+                    slotreservation.Add(outc, dc);
+                    foundroom = true;
+                    break;
                 }
                 if (!foundroom) //if there's no room for this item the operation has failed
                 {
