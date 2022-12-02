@@ -180,7 +180,7 @@ namespace chisel.src
 
             if (undovoxels != null && undoposition != null)
             {
-                BlockEntityMicroBlock bmb = api.World.BlockAccessor.GetBlockEntity(undoposition) as BlockEntityMicroBlock;
+                BlockEntityChisel bmb = api.World.BlockAccessor.GetBlockEntity(undoposition) as BlockEntityChisel;
                 if (bmb == null) { return; }
                 bmb.VoxelCuboids = new List<uint>(undovoxels);
                 bmb.MarkDirty(true);
@@ -198,7 +198,7 @@ namespace chisel.src
         }
         public virtual void Backup(ItemSlot slot, BlockPos pos)
         {
-            BlockEntityMicroBlock bmb = api.World.BlockAccessor.GetBlockEntity(pos) as BlockEntityMicroBlock;
+            BlockEntityChisel bmb = api.World.BlockAccessor.GetBlockEntity(pos) as BlockEntityChisel;
             if (bmb == null) { return; }
             
             List<uint> undovoxels = new List<uint>(bmb.VoxelCuboids);
@@ -226,7 +226,7 @@ namespace chisel.src
                 byPlayer.InventoryManager.ActiveHotbarSlot.MarkDirty();
                 return;
             }
-            BlockEntityMicroBlock bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityMicroBlock;
+            BlockEntityChisel bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityChisel;
             if (bmb == null)
             {
                 lastpos = null;
@@ -276,7 +276,7 @@ namespace chisel.src
         
         public virtual int MoveChiseledBlock(BlockSelection blockSel)
         {
-            BlockEntityMicroBlock bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityMicroBlock;
+            BlockEntityChisel bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityChisel;
             if (bmb == null) { lastpos = null; return 0; }
             
 
@@ -317,7 +317,7 @@ namespace chisel.src
         }
         public virtual int MirrorBlock(BlockSelection blockSel)
         {
-            BlockEntityMicroBlock bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityMicroBlock;
+            BlockEntityChisel bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityChisel;
             if (bmb == null) { lastpos = null; return 0; }
             if (bmb.VoxelCuboids == null || bmb.VoxelCuboids.Count == 0) { return 0; }
             List<uint> cuboids = new List<uint>();
@@ -361,7 +361,7 @@ namespace chisel.src
         }
         public virtual int RotateBlock(BlockSelection blockSel)
         {
-            BlockEntityMicroBlock bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityMicroBlock;
+            BlockEntityChisel bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityChisel;
             if (bmb == null) { lastpos = null; return 0; }
             if (bmb.VoxelCuboids == null || bmb.VoxelCuboids.Count == 0) { return 0; }
             List<uint> cuboids = new List<uint>();

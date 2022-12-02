@@ -39,7 +39,7 @@ namespace chisel.src
             //TODO Add Survival Mode damage and ladder draw
             BlockChisel bc = api.World.BlockAccessor.GetBlock(blockSel.Position) as BlockChisel;
             if (bc == null) { return; }
-            BlockEntityMicroBlock bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityMicroBlock;
+            BlockEntityChisel bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityChisel;
             //First Copy the original block
             string copiedname = bmb.BlockName;
             List<uint> copiedblockvoxels = new List<uint>(bmb.VoxelCuboids);
@@ -81,7 +81,7 @@ namespace chisel.src
             }
             */
             api.World.BlockAccessor.SetBlock(nb.BlockId, blockSel.Position);
-            bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityMicroBlock;
+            bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityChisel;
             bmb.BlockName = copiedname + "[Ladder]";
             //Then Paste shape and material data into new block
             bmb.MaterialIds = copiedblockmaterials.ToArray();

@@ -114,7 +114,7 @@ namespace chisel.src
                 byPlayer.InventoryManager.ActiveHotbarSlot.MarkDirty();
                 return;
             }
-            BlockEntityMicroBlock bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityMicroBlock;
+            BlockEntityChisel bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityChisel;
             if (bmb == null)
             {
                 TryChangeBlockToChisel(blockSel, byEntity, byPlayer);
@@ -153,6 +153,8 @@ namespace chisel.src
         public bool TryChangeBlockToChisel(BlockSelection blockSel, Entity byEntity, IPlayer byPlayer)
         {
             Block bl = api.World.BlockAccessor.GetBlock(blockSel.Position);
+            BEFunctionChiseled bfctest = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BEFunctionChiseled;
+            if (bfctest != null) { return false; }
             string blockName = bl.GetPlacedBlockName(byEntity.World, blockSel.Position);
             Block chiseledblock = byEntity.World.GetBlock(new AssetLocation("chiseledblock"));
             if (!IsChiselingAllowedFor(bl, byPlayer)) { return false; }
@@ -233,7 +235,7 @@ namespace chisel.src
 
             if (undovoxels != null && undoposition != null)
             {
-                BlockEntityMicroBlock bmb = api.World.BlockAccessor.GetBlockEntity(undoposition) as BlockEntityMicroBlock;
+                BlockEntityChisel bmb = api.World.BlockAccessor.GetBlockEntity(undoposition) as BlockEntityChisel;
                 if (bmb == null) { return; }
                 bmb.VoxelCuboids = new List<uint>(undovoxels);
                 bmb.MarkDirty(true);
@@ -251,7 +253,7 @@ namespace chisel.src
         }
         public virtual void Backup(ItemSlot slot, BlockPos pos)
         {
-            BlockEntityMicroBlock bmb = api.World.BlockAccessor.GetBlockEntity(pos) as BlockEntityMicroBlock;
+            BlockEntityChisel bmb = api.World.BlockAccessor.GetBlockEntity(pos) as BlockEntityChisel;
             if (bmb == null) { return; }
 
             List<uint> undovoxels = new List<uint>(bmb.VoxelCuboids);
@@ -279,7 +281,7 @@ namespace chisel.src
                 byPlayer.InventoryManager.ActiveHotbarSlot.MarkDirty();
                 return;
             }
-            BlockEntityMicroBlock bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityMicroBlock;
+            BlockEntityChisel bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityChisel;
             if (bmb == null) {
                 lastpos = null;
                 TryChangeBlockToChisel(blockSel, byEntity, byPlayer);
@@ -353,7 +355,7 @@ namespace chisel.src
                 lastfacing = blockSel.Face;
 
             }
-            BlockEntityMicroBlock bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityMicroBlock;
+            BlockEntityChisel bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityChisel;
             if (bmb == null) { lastpos = null; return 0; }
             byte useindex = 0;
             CuboidWithMaterial cwm = new CuboidWithMaterial();

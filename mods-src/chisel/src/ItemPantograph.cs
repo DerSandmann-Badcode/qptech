@@ -362,6 +362,8 @@ namespace chisel.src
 
         public bool TryChangeBlockToChisel(BlockSelection blockSel, Entity byEntity, IPlayer byPlayer)
         {
+            BEFunctionChiseled bfctest = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BEFunctionChiseled;
+            if (bfctest != null) { return false; }
             Block bl = api.World.BlockAccessor.GetBlock(blockSel.Position);
             string blockName = bl.GetPlacedBlockName(byEntity.World, blockSel.Position);
             Block chiseledblock = byEntity.World.GetBlock(new AssetLocation("chiseledblock"));
