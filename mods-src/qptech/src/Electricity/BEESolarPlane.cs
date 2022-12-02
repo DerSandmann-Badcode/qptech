@@ -87,7 +87,11 @@ namespace qptech.src
             timeOfDay = Api.World.Calendar.FullHourOfDay;
             if (isOn)
             {
-                if (sunLightStrength > 9 & timeofday.Length < 10)
+                if (!CheckClearSky())
+                {
+                    genPower = 0;
+                }
+                else if (sunLightStrength > 9 & timeofday.Length < 10)
                 {
 
                     setBlockState("morning");
@@ -157,6 +161,11 @@ namespace qptech.src
 
             return meshdata;
         }
-
+        bool CheckClearSky()
+        {
+            int worldheight = Api.World.BlockAccessor.GetRainMapHeightAt(Pos);
+            if (worldheight > Pos.Y) { return false; }
+            return true;
+        }
     }
 }

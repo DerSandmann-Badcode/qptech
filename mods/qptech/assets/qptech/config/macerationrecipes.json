@@ -98,6 +98,13 @@
 			"type": "PARTIAL",
 			"odds": 3,
 			"machinename": "washplant"
+		},
+		{
+			"outputmaterial": "game:ore-sulfur",
+			"outputquantity": 1,
+			"type": "PARTIAL",
+			"odds": 2,
+			"machinename": "washplant"
 		}
 	],
 	"stone": [
