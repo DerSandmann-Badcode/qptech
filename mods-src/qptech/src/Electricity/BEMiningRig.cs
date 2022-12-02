@@ -88,6 +88,7 @@ namespace qptech.src.Electricity
                     if (!trydrop)
                     {
                         nostorage = true;
+                        TogglePower();
                         MarkDirty(true);
                         return;
                     }

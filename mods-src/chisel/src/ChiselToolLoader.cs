@@ -46,13 +46,14 @@ namespace chisel.src
             sapi.RegisterCommand("qpchisel-handplaner-toolusage", "Set how fast hand planer gets damaged when used.", "", CmdSetHandPlanerMultiplier,Privilege.controlserver);
             sapi.RegisterCommand("qpchisel-pantograph-toolusage", "Set how fast hand pantograph gets damaged when used.", "", CmdSetPantographMultiplier, Privilege.controlserver);
             sapi.RegisterCommand("qpchisel-resetdefaults", "Reset chisel tools settings to defaults", "", CmdSetReset, Privilege.controlserver);
+            serverconfig = null;
             try
             {
                 serverconfig = sapi.LoadModConfig<ChiselToolServerData>(serverconfigfile);
             }
             catch
             {
-
+                serverconfig = null;
 
             }
             if (serverconfig == null)
