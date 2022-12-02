@@ -123,7 +123,7 @@
     <None Include="qptech\assets\machines\blocktypes\metal\itemhatch-steel.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\itemhatch-iron.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\machineryblock-iron.json" />
-    <None Include="qptech\assets\machines\blocktypes\metal\industrialdrillhead.json" />
+    <None Include="qptech\assets\machines\blocktypes\metal\electric\ev\industrialdrillhead.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\temporalpocket.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\sheet.json" />
     <None Include="qptech\assets\machines\blocktypes\other\door\slidingdoor.json" />
@@ -154,6 +154,7 @@
     <None Include="qptech\assets\machines\recipes\grid\industrial\lv\metalpress-lvpunch from iron.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\lv\metalpress-lvpunch.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\lv\metalpress-lvhardscrew.json" />
+    <None Include="qptech\assets\machines\recipes\grid\industrial\mv\solarplane-primitive-morning.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\mv\sawmill-mv.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\other\coalpilestoker-fromparts.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\other\itemhatchsteel.json" />
@@ -173,6 +174,11 @@
     <None Include="qptech\assets\machines\shapes\block\metal\autosmith.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\electric\charcoalkiln.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\industrialdrillhead.json" />
+    <None Include="qptech\assets\machines\shapes\block\metal\solarplane\evening.json" />
+    <None Include="qptech\assets\machines\shapes\block\metal\solarplane\midday.json" />
+    <None Include="qptech\assets\machines\shapes\block\metal\solarplane\morning.json" />
+    <None Include="qptech\assets\machines\shapes\block\metal\solarplane\night.json" />
+    <None Include="qptech\assets\machines\shapes\block\minehead.json" />
     <None Include="qptech\assets\machines\shapes\block\simplecubefortests.json" />
     <None Include="qptech\assets\machines\shapes\block\testobj.obj" />
     <None Include="qptech\assets\machines\shapes\block\vacuumtube.obj" />

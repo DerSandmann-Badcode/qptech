@@ -96,6 +96,7 @@
     <Compile Include="src\Electricity\BEMiningRig.cs" />
     <Compile Include="src\Electricity\BlockAutocrafter.cs" />
     <Compile Include="src\Electricity\BlockAutosmith.cs" />
+    <Compile Include="src\Electricity\BlockMiningRig.cs" />
     <Compile Include="src\Electricity\ElectricityAPI.cs" />
     <Compile Include="src\Electricity\BEELightBulb.cs" />
     <Compile Include="src\Electricity\WireRenderer.cs" />

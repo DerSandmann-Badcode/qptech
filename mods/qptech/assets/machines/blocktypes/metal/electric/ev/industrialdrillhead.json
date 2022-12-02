@@ -1,0 +1,140 @@
+{
+	"code": "industrialdrillhead",
+	"class": "BlockMiningRig",
+	"entityclass": "BEMiningRig",
+	"creativeinventory": {
+		"general": [ "*" ],
+		"qptech": [ "*" ]
+	},
+	"attributes": {
+
+		
+			"genFlux": 0,
+			"useFlux": 128,
+
+			"inputFace": "west",
+			"outputFace": "east",
+			"mboffset": [ 0, 0, 0 ],
+			"multiblockStructure": {
+				"blockNumbers": {
+					"machines:industrialdrillhead": 1,
+					"machines:girder": 2,
+					"machines:concrete-*": 3,
+					"machines:machineryblock-steel": 4
+				},
+				"offsets": [
+					{
+						"x": 0,"y": 0,"z": 0,"w": 1
+					},
+					{
+						"x": 1,"y": 0,"z": 0,"w": 2
+					},
+					{
+						"x": -1,"y": 0,"z": 0,"w": 2
+					},
+					{
+						"x": 0,"y": 0,"z": 1,"w": 2
+					},
+					{
+						"x": 0,"y": 0,"z": -1,"w": 2
+					},
+					{
+						"x": 2,"y": 0,"z": 0,"w": 4
+					},
+					{
+						"x": -2,"y": 0,"z": 0,"w": 4
+					},
+					{
+						"x": 0,"y": 0,"z": 2,"w": 4
+					},
+					{
+						"x": 3,"y": 0,"z": 0,"w": 2
+					},
+					{
+						"x": -3,"y": 0,"z": 0,"w": 2
+					},
+					{
+						"x": 0,"y": 0,"z": 3,"w": 2
+					},
+					{
+						"x": 0,"y": 0,"z": -3,"w": 2
+					},
+					{
+						"x": 4,"y": 0,"z": 0,"w": 2
+					},
+					{
+						"x": -4,"y": 0,"z": 0,"w": 2
+					},
+					{
+						"x": 0,"y": 0,"z": 4,"w": 2
+					},
+					{
+						"x": 0,"y": 0,"z": -4,"w": 2
+					},
+
+					{
+						"x": 3,"y": -1,"z": 0,"w": 3
+					},
+					{
+						"x": 3,"y": -2,"z": 0,"w": 3
+					},
+					{
+						"x": 4,"y": -1,"z": 0,"w": 3
+					},
+					{
+						"x": 4,"y": -2,"z": 0,"w": 3
+					},
+
+					{
+						"x": -3,"y": -1,"z": 0,"w": 3
+					},
+					{
+						"x": -3,"y": -2,"z": 0,"w": 3
+					},
+					{
+						"x": -4,"y": -1,"z": 0,"w": 3
+					},
+					{
+						"x": -4,"y": -2,"z": 0,"w": 3
+					},
+
+					{
+						"x": 0,"y": -1,"z": 3,"w": 3
+					},
+					{
+						"x": 0,"y": -2,"z": 3,"w": 3
+					},
+					{
+						"x": 0,"y": -1,"z": 4,"w": 3
+					},
+					{
+						"x": 0,"y": -2,"z": 4,"w": 3
+					},
+
+					{
+						"x": 0,"y": -1,"z": -3,"w": 3
+					},
+					{
+						"x": 0,"y": -2,"z": -3,"w": 3
+					},
+					{
+						"x": 0,"y": -1,"z": -4,"w": 3
+					},
+					{
+						"x": 0,"y": -2,"z": -4,"w": 3
+					},
+				]
+			}
+	},
+	"blockmaterial": "Metal",
+	"drawtype": "json",
+	"shape": { "base": "block/minehead" },
+	"sideopaque": {
+		"all": false
+	},
+	"resistance": 1,
+	"sounds": {
+		"place": "game:block/anvil",
+		"walk": "game:walk/stone"
+	}
+}

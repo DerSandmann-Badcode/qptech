@@ -1,0 +1,11 @@
+{
+	"ingredientPattern": "MGM	_C_	MWM",
+	"ingredients": {
+		"G": {"type": "block","code": "industrialglass-*","quantity": 1},
+		"C": {"type": "item","code": "circuitboard-*","quantity": 1},
+		"M": {"type": "item","code": "metalchannel-*","quantity": 1},
+		"W": {"type": "item","code": "cable-copper","quantity": 1}
+	},
+	"width": 3,"height": 3,
+	"output": { "type": "block","code": "solarplane-primitive-morning", "quantity": 1  }
+}

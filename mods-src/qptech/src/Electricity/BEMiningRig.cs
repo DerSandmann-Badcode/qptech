@@ -21,6 +21,7 @@ namespace qptech.src.Electricity
     {
         BlockPos drillpos; //records the position being drilled
         public virtual int drillstartyoffset=>-1; //how low to start drilling
+        BlockPos StartDrillPos => new BlockPos(Pos.X - range, Pos.Y + drillstartyoffset, Pos.Z - range);
         int skipcounter;
         bool surveyed = false;
         Vec3i outputcontaineroffset => new Vec3i(0, 1, 0); //where to create items
@@ -31,6 +32,12 @@ namespace qptech.src.Electricity
         protected const int clientplaysound = 999900001; //packet id for sound playing
         Dictionary<string, double> survey; //list of available minerals and their percentages
         Random roll;
+        MultiblockStructure ms;
+        public BlockPos mboffset;
+        bool structurecomplete = false;
+        bool nostorage = false;
+        bool showingcontents = false;
+        public bool StructureComplete => structurecomplete;
         public override void Initialize(ICoreAPI api)
         {
             base.Initialize(api);
@@ -42,15 +49,24 @@ namespace qptech.src.Electricity
                 ppws.OnLoaded(api);
                 return ppws;
             });
+            ms = Block.Attributes["multiblockStructure"].AsObject<MultiblockStructure>();
+            int[] offsarray = { 0, 0, 0 };
+            offsarray = Block.Attributes["mboffset"].AsArray<int>(offsarray);
+            mboffset = new BlockPos(offsarray[0] + Pos.X, offsarray[1] + Pos.Y, offsarray[2] + Pos.Z);
+
+            ms.InitForUse(0);
         }
 
         public override void OnTick(float par)
         {
             base.OnTick(par);
+            structurecomplete = CheckCompleteStructure();
+            nostorage = false;
             if (Api is ICoreServerAPI)
             {
+                
+                if (!structurecomplete) { return; }
                 if (!IsPowered) { return; }
-
                 if (skipcounter < skip) { skipcounter++; return; }
                 if (!surveyed) { DoSurvey(Pos); }
                 else if (survey.Count == 0) { return; }
@@ -71,6 +87,8 @@ namespace qptech.src.Electricity
                     bool trydrop=DoDrops(b,drillpos);
                     if (!trydrop)
                     {
+                        nostorage = true;
+                        MarkDirty(true);
                         return;
                     }
                     Api.World.BlockAccessor.SetBlock(0, drillpos);
@@ -92,8 +110,18 @@ namespace qptech.src.Electricity
             }
         }
 
-        BlockPos StartDrillPos=>new BlockPos(Pos.X-range, Pos.Y + drillstartyoffset, Pos.Z-range);
+        
+        bool CheckCompleteStructure()
+        {
+            if (ms == null) { return false; }
+            if (ms.InCompleteBlockCount(Api.World, mboffset) > 0)
+            {
 
+                return false;
+            }
+
+            return true;
+        }
         protected virtual bool DoDrops(Block b, BlockPos drillpos)
         {
             BlockEntity beoutput = Api.World.BlockAccessor.GetBlockEntity(Pos.AddCopy(outputcontaineroffset));
@@ -308,13 +336,30 @@ namespace qptech.src.Electricity
             
         }
 
-
+        public bool Interact(IPlayer byPlayer)
+        {
+            showingcontents = !showingcontents;
+            
+            structurecomplete = CheckCompleteStructure();
+            if (Api.Side == EnumAppSide.Client)
+            {
+                if (showingcontents)
+                {
+                    ms.HighlightIncompleteParts(Api.World, byPlayer, mboffset);
+                }
+                else
+                {
+                    ms.ClearHighlights(Api.World, byPlayer);
+                }
+            }
+            return true;
+        }
         public override void ToTreeAttributes(ITreeAttribute tree)
         {
             if (drillpos == null) { drillpos=StartDrillPos; }
             tree.SetBlockPos("drillpos",drillpos);
             tree.SetInt("skipcounter", skipcounter);
-            
+            tree.SetBool("nostorage", nostorage);
             base.ToTreeAttributes(tree);
         }
 
@@ -323,13 +368,20 @@ namespace qptech.src.Electricity
             base.FromTreeAttributes(tree, worldAccessForResolve);
             drillpos = tree.GetBlockPos("drillpos",StartDrillPos);
             skipcounter = tree.GetInt("skipcounter");
-            
+            nostorage = tree.GetBool("nostorage");
         }
 
         public override void GetBlockInfo(IPlayer forPlayer, StringBuilder dsc)
         {
             base.GetBlockInfo(forPlayer, dsc);
-            
+            if (!structurecomplete)
+            {
+                dsc.AppendLine("Structure incomplete!");
+            }
+            if (nostorage)
+            {
+                dsc.AppendLine("No available storage!");
+            }
         }
     }
 }

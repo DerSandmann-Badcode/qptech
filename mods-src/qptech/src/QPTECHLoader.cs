@@ -220,7 +220,7 @@ namespace qptech.src
             api.RegisterBlockEntityClass("BEEMixer", typeof(BEEMixer));
             api.RegisterBlockEntityClass("BECoalPileStoker", typeof(BECoalPileStoker));
             api.RegisterBlockEntityBehaviorClass("BEBProceduralAnimator", typeof(BEBProceduralAnimator));
-            
+            api.RegisterBlockClass("BlockMiningRig", typeof(BlockMiningRig));
             //api.RegisterBlockClass("BlockElectricMotor", typeof(BlockElectricMotor));
             //api.RegisterBlockEntityClass("BEEMotor", typeof(BEEMotor));
         }
