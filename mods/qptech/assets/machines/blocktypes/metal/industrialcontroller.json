@@ -1,0 +1,61 @@
+{
+	"code": "industrialcontroller",
+	
+	
+	"behaviors": [
+		{
+			"name": "HorizontalOrientable",
+			"properties": { "dropBlockFace": "east" }
+		},
+		
+	],
+	"variantgroups": [
+		{
+			"code": "side",
+			"loadFromProperties": "abstract/horizontalorientation"
+		}
+	],
+	"creativeinventory": {
+	
+		"qptech": [ "*-east" ]
+	},
+	"blockmaterial": "Metal",
+	"shape": { "base": "block/industrialcontroller" },
+	"shapeByType": {
+		"*-north": {
+			"base": "block/industrialcontroller",
+			"rotateY": 270
+		},
+		"*-east": {
+			"base": "block/industrialcontroller",
+			"rotateY": 180
+		},
+		"*-west": {
+			"base": "block/industrialcontroller",
+			"rotateY": 0
+		},
+		"*-south": {
+			"base": "block/industrialcontroller",
+			"rotateY": 90
+		}
+	},
+	"drawtype": "json",
+
+	"resistance": 1,
+	"sideopaque": {
+		"all": false
+	},
+	"sounds": {
+		"place": "game:block/anvil",
+		"walk": "game:walk/stone"
+	},
+	"guiTransform": {
+		"origin": {
+			"x": 0.5,
+			"y": 0.5,
+			"z": 0.5
+		},
+		"scale": 1
+	}
+
+}

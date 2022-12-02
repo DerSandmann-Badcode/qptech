@@ -119,6 +119,7 @@
     <None Include="qptech\assets\machines\blocktypes\metal\electric\wires\powerrod.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\electric\wires\wireplate-tin-electricjunction.json" />
     <None Include="qptech\assets\machines\blocktypes\dummyobjects\dummy.json" />
+    <None Include="qptech\assets\machines\blocktypes\metal\industrialcontroller.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\itemhatchcopper.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\itemhatch-steel.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\itemhatch-iron.json" />
@@ -170,6 +171,7 @@
     <None Include="qptech\assets\machines\shapes\block\cuttingmachineblade.obj" />
     <None Include="qptech\assets\machines\shapes\block\exportedtext.json" />
     <None Include="qptech\assets\machines\shapes\block\autocrafter.json" />
+    <None Include="qptech\assets\machines\shapes\block\industrialcontroller.json" />
     <None Include="qptech\assets\machines\shapes\block\itemscanner.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\autosmith.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\electric\charcoalkiln.json" />
