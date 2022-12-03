@@ -1,0 +1,37 @@
+{
+	ingredientPattern: "XGA	SC_",
+	ingredients: {
+		"X": {
+			"type": "item",
+			"code": "screw-steel",
+
+			"quantity": 8
+		},
+		"G": {
+			"type": "item",
+			"code": "industrialchannel-rubber",
+			"quantity": 2
+		},
+		
+		
+		"A": {
+			"type": "item",
+			"code": "circuitboard-*",
+			"quantity": 2
+		},
+		"S": {
+			"type": "block",
+			"code": "machineryblock-steel",
+			"quantity": 1
+		},
+		
+		"C": {
+			"type": "item",
+			"code": "cable-copper",
+			"quantity": 4
+		}
+	},
+	width: 3,
+	height: 2,
+	"output": { "type": "block", "code": "industrialcontroller-east", "quantity": 1  }
+}

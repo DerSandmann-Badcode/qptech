@@ -17,7 +17,7 @@
 	],
 	"creativeinventory": {
 	
-		"qptech": [ "*-east" ]
+		"qptech-parts": [ "*-east" ]
 	},
 	"blockmaterial": "Metal",
 	"shape": { "base": "block/industrialcontroller" },

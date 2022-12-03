@@ -3,3 +3,4 @@
 - adding Mining Rig which is an autominer
 - added recipe for solar panels
 - wash plant has chance to generate sulfur from gravel
+- added industrial controller (sub part)

@@ -285,6 +285,10 @@
 	"outputbottom": "Outputs to the BOTTOM.",
 	"outputright": "Outputs to the RIGHT Side.",
 	"block-autosmith-*": "Autosmith",
-	"blockdesc-autosmith-*": "Does the smithing so you don't have to. Crouch plus right click with an appropriate item to set the product output. The input container will need to require the appropriate amount of ingots heated to the metal's temperature"
+	"blockdesc-autosmith-*": "Does the smithing so you don't have to. Crouch plus right click with an appropriate item to set the product output. The input container will need to require the appropriate amount of ingots heated to the metal's temperature",
+	"block-miningrig": "Automated Mining Rig",
+	"blockdesc-miningrig": "Will sufficient power it will constantly mine a 5x5 column down to y=10, and place it into a chest above. Multiblock structure requires 24 Iron frames, 4 steel machine hulls, and 16 concrete (of any color). (Note if your chest gets full the mine will power off!)",
+	"block-industrialcontroller-*": "Industrial Controller",
+	"blockdesc-industrialcontroller-*": "An advanced intermediate part for building complicated machines (doesn't do anything on its own)'"
 
 }

@@ -20,7 +20,7 @@ namespace qptech.src.Electricity
     class BEMiningRig:BEElectric
     {
         BlockPos drillpos; //records the position being drilled
-        public virtual int drillstartyoffset=>-1; //how low to start drilling
+        public virtual int drillstartyoffset=>-3; //how low to start drilling
         BlockPos StartDrillPos => new BlockPos(Pos.X - range, Pos.Y + drillstartyoffset, Pos.Z - range);
         int skipcounter;
         bool surveyed = false;

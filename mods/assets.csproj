@@ -143,6 +143,8 @@
     <None Include="qptech\assets\machines\blocktypes\other\coalpilestoker.json" />
     <None Include="qptech\assets\machines\blocktypes\dummyobjects\vacuumtube.json" />
     <None Include="qptech\assets\machines\itemtypes\part\mv\vacuum.json" />
+    <None Include="qptech\assets\machines\recipes\grid\industrial\ev\miningrig.json" />
+    <None Include="qptech\assets\machines\recipes\grid\industrial\ev\industrialcontroller.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\hv\autosmith.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\lv\charcoalkiln.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\lv\clayformer_fromiron.json" />

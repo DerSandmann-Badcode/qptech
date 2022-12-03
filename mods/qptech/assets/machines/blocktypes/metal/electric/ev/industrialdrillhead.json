@@ -1,5 +1,5 @@
 {
-	"code": "industrialdrillhead",
+	"code": "miningrig",
 	"class": "BlockMiningRig",
 	"entityclass": "BEMiningRig",
 	"creativeinventory": {
@@ -12,12 +12,10 @@
 			"genFlux": 0,
 			"useFlux": 128,
 
-			"inputFace": "west",
-			"outputFace": "east",
 			"mboffset": [ 0, 0, 0 ],
 			"multiblockStructure": {
 				"blockNumbers": {
-					"machines:industrialdrillhead": 1,
+					"machines:miningrig": 1,
 					"machines:girder": 2,
 					"machines:concrete-*": 3,
 					"machines:machineryblock-steel": 4
