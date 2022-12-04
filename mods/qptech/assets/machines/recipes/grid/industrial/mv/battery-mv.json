@@ -1,0 +1,13 @@
+{
+	ingredientPattern: "TZ	_C	PF",
+	ingredients: {
+		"Z": { type: "block", code: "game:metalsheet-zinc-down", quantity: 3 },
+		"C": { type: "block", code: "game:metalsheet-copper-down", quantity: 3 },
+		"F": { type: "item", code: "industrialchannel-rubber", quantity: 3 },
+		"T": { type: "item", code: "screwdriver-*", isTool: true },
+		"P": { type: "item", code: "cable-copper", quantity: 1}
+	},
+	width: 2,
+	height: 3,
+	output: { type: "block", code: "battery-mv-east", quantity: 1  }
+}

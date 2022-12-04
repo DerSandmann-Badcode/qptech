@@ -3,13 +3,13 @@
 	"class": "ElectricalBlock",
 	"entityclass": "BEEWire",
 	"creativeinventory": {
-		"general": [ "*-lv-east" ],
-		"qptech": [ "*-lv-east" ]
+		"general": [ "*-east" ],
+		"qptech": [ "*-east" ]
 	},
 	"variantgroups": [
 		{
 			"code": "type",
-			"states": [ "lv" ]
+			"states": [ "lv","mv" ]
 		},
 		{
 			"code": "side",
@@ -27,6 +27,15 @@
 		"*-lv-*": {
 			
 			"fluxStorage": 10000,
+			
+			
+			
+			"showFluxDisplay": true,
+			"displayOffset": [ 10, 12, 11.5 ]
+		},
+		"*-mv-*": {
+			
+			"fluxStorage": 20000,
 			
 			
 			
@@ -55,12 +64,21 @@
 			"rotateY": 0
 		}
 	},
-	"textures": {
+	"texturesByType": {
+		"*-lv-*": {
 		"wires": { "base": "block/metal/wires/tin-wires" },
 		"shinybrass": { "base": "block/shinybrass" },
 		"machinery-border-small": { "base": "block/metal/metalpress/machinery-border-small" },
 		"machinery-back": { "base": "block/metal/generator/machinery-back" },
 		"castiron": { "base": "block/castiron" }
+		},
+		"*-mv-*": {
+		"wires": { "base": "block/metal/wires/tin-wires" },
+		"shinybrass": { "base": "block/rubber/cable" },
+		"machinery-border-small": { "base": "block/metal/metalpress/machinery-border-small" },
+		"machinery-back": { "base": "block/rubber/cable" },
+		"castiron": { "base": "block/castiron" }
+		},
 	},
 	"lightAbsorption": 0,
 	"resistance": 1,

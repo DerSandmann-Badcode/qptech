@@ -53,8 +53,10 @@
 	"block-blocklantern": "Encased Lantern",
 	"blockdesc-blocklantern": "Full Block lantern to add options to your builds",
 
-	"blockdesc-battery-*": "Batteries store power they can be connected on all sides",
+	"blockdesc-battery-lv-*": "Batteries store power they can be connected on all sides",
 	"block-battery-lv-*": "Electric Battery (LV)",
+	"block-battery-mv-*": "Improved Electric Battery (MV)",
+	"blockdesc-battery-mv-*": "Finer materials yield a cheaper, improved battery. Batteries store power they can be connected on all sides",
 	"block-electricforge-lv-*": "Primitive Electric Forge (LV)",
 	"blockdesc-electricforge-*": "When supplied with electricity electric forges will heat up one or more ingots or workpieces.",
 	"block-generator-primitive-*": "Primitive Electric Generator (LV)",

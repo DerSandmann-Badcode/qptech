@@ -157,6 +157,7 @@
     <None Include="qptech\assets\machines\recipes\grid\industrial\lv\metalpress-lvpunch from iron.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\lv\metalpress-lvpunch.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\lv\metalpress-lvhardscrew.json" />
+    <None Include="qptech\assets\machines\recipes\grid\industrial\mv\battery-mv.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\mv\solarplane-primitive-morning.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\mv\sawmill-mv.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\other\coalpilestoker-fromparts.json" />
