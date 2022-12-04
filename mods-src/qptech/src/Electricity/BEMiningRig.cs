@@ -74,7 +74,7 @@ namespace qptech.src.Electricity
                 skipcounter = 0;
                 if (drillpos == null) { drillpos=StartDrillPos;MarkDirty(true); }
 
-                if (drillpos.Y <= 10) { return; }
+                if (drillpos.Y <= 10) { TogglePower(); return; }
                 Block b = Api.World.BlockAccessor.GetBlock(drillpos);
                 if (b.BlockId == 0)
                 {
@@ -383,6 +383,10 @@ namespace qptech.src.Electricity
             {
                 dsc.AppendLine("No available storage!");
             }
+            if (IsPowered && !nostorage && structurecomplete)
+            {
+                if (drillpos.Y <= 10) { dsc.AppendLine("Mining Complete! Please move mine to new position!"); }
+                else { dsc.AppendLine("Mining at y=" + drillpos.Y); }
         }
     }
 }
