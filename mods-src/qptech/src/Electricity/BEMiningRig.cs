@@ -387,6 +387,7 @@ namespace qptech.src.Electricity
             {
                 if (drillpos.Y <= 10) { dsc.AppendLine("Mining Complete! Please move mine to new position!"); }
                 else { dsc.AppendLine("Mining at y=" + drillpos.Y); }
+            }
         }
     }
 }
