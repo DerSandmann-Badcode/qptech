@@ -23,6 +23,8 @@ namespace qptech.src.itemtransport
         {
             this.conveyor = conveyor;
             di = new DummyInventory(api,1);
+            di[0].MaxSlotStackSize = 0;
+            
             ElementBounds dialogBounds = ElementStdBounds.AutosizedMainDialog.WithAlignment(EnumDialogArea.CenterMiddle);
             ElementBounds allowTextBounds = ElementBounds.Fixed(21, 133, 325, 30);
             ElementBounds allowTextInputBounds = ElementBounds.Fixed(21, 171, 551, 37);            
@@ -35,7 +37,8 @@ namespace qptech.src.itemtransport
             ElementBounds toggleOnOffButtonBounds = ElementBounds.Fixed(21,68,152,39);
             ElementBounds transferSliderTextBounds = ElementBounds.Fixed(19, 314, 388, 30);
             ElementBounds transferSliderBounds = ElementBounds.Fixed(21, 353, 552, 34);
-            ElementBounds drandanddropBounds = ElementBounds.Fixed(21, 353 + 70);
+            //ElementBounds drandanddropBounds = ElementBounds.Fixed(21, 353 + 70);
+            ElementBounds draganddropBounds = ElementStdBounds.SlotGrid(EnumDialogArea.None, 21, 353+70, 1, 1);
             ElementBounds bgBounds = ElementBounds.Fill.WithFixedPadding(GuiStyle.ElementToDialogPadding);
 
             bgBounds.BothSizing = ElementSizing.FitToChildren;
@@ -59,7 +62,7 @@ namespace qptech.src.itemtransport
             SingleComposer = capi.Gui.CreateCompo(guicomponame, dialogBounds)
                 .AddShadedDialogBG(bgBounds)
                 .AddDialogTitleBar("Item Filter Setup", OnTitleBarCloseClicked)
-                .AddRichtext("Only allow objects with", CairoFont.WhiteDetailText(), allowTextBounds)
+                .AddRichtext("Only allow objects with", CairoFont.WhiteDetailText(), allowTextBounds,"allowtext")
                 .AddTextInput(allowTextInputBounds, OnChangeItemFilterInput, CairoFont.WhiteDetailText(), "allow")
                 .AddToggleButton("Match All", CairoFont.WhiteDetailText(), OnMatchAllToggle, mustMatchAllBoxBounds, "mustmatchall")
                 .AddRichtext("Block objects with", CairoFont.WhiteDetailText(), blockTextBounds)
@@ -68,7 +71,7 @@ namespace qptech.src.itemtransport
                 .AddButton("Cancel", TryClose, cancelButtonBounds)
                 .AddButton("Clear", OnClearButton, clearButtonBounds)
                 .AddToggleButton(onofftext, CairoFont.WhiteDetailText(), OnToggleOnOffButton, toggleOnOffButtonBounds, "onoff")
-                .AddItemSlotGrid(di,DoSendPacket,1,drandanddropBounds)
+                .AddItemSlotGrid(di,DragFilter,1,draganddropBounds,"filterslot")
                 
             ;
             SingleComposer.GetToggleButton("onoff").SetValue(itemfilter.isoff);
@@ -85,8 +88,16 @@ namespace qptech.src.itemtransport
 
         }
 
-        public void DoSendPacket(object p)
+        public void DragFilter(object p)
         {
+            //capi.Network.SendBlockEntityPacket(BlockEntityPosition.X, BlockEntityPosition.Y, BlockEntityPosition.Z, p);
+            if (di != null && !di.Empty)
+            {
+                itemfilter.allowonlymatch = di[0].Itemstack.Collectible.Code.ToString();
+                SingleComposer.GetRichtext("allowtext").SetNewText(di[0].Itemstack.Collectible.Code.ToString(), CairoFont.WhiteDetailText());
+            }
+            
+            OnApplyButton();
             return;
         }
         

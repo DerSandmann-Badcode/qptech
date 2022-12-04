@@ -1,6 +1,7 @@
 ﻿1.12.1
 - added some helpful text to rods, screws, autominer descriptions
 - new battery: mv version made with sheets & rubber
+- drag item to item filter in GUI to set filtered item
 1.12
 - creative generator now outputs 512 flux
 - adding Mining Rig which is an autominer

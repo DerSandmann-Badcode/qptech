@@ -437,7 +437,8 @@ namespace qptech.src.itemtransport
             SetFilter = 99991002,
             WrenchSwap = 99991003,
             ShowItemToggle = 99991004,
-            GenMesh= 99991005
+            GenMesh= 99991005,
+            DropFilterStack=99991006
         }
         
         public void OnNewFilter(ItemFilter newfilter)
@@ -447,9 +448,13 @@ namespace qptech.src.itemtransport
             byte[] filterasbytes = SerializerUtil.Serialize<ItemFilter>(itemfilter);
             (Api as ICoreClientAPI).Network.SendBlockEntityPacket(Pos.X, Pos.Y, Pos.Z, (int)enPacketIDs.SetFilter, filterasbytes);
         }
-        
+        public void ResetPlayerInventory()
+        {
+            (Api as ICoreClientAPI).Network.SendBlockEntityPacket(Pos.X, Pos.Y, Pos.Z, (int)enPacketIDs.DropFilterStack, null);
+        }
         public override void OnReceivedClientPacket(IPlayer fromPlayer, int packetid, byte[] data)
         {
+            
             if (packetid == (int)enPacketIDs.ClearFilter)
             {
                 if (itemfilter != null)
