@@ -267,6 +267,16 @@
 		}
 
 	],
+	"game:bonemeal": [
+
+		{
+			"outputmaterial": "game:lime",
+			"outputquantity": 1,
+			"odds": 50,
+			"type": "DIRECT",
+			"machinename": "washplant"
+		}
+	],
 	"game:bonysoil": [
 
 		{

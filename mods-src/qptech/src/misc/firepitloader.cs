@@ -66,6 +66,11 @@ namespace qptech.src
                 ItemSlot sourceSlot = inputContainer.Inventory.GetAutoPullFromSlot(BlockFacing.DOWN);
                 if (sourceSlot == null) { return; }
                 int quantity = 1;
+                if (sourceSlot.Itemstack.Item != null && sourceSlot.Itemstack.Item.Code.ToString() == "game:lime")
+                {
+                    if (sourceSlot.Itemstack.StackSize < 2) { return; }
+                    quantity = 2;
+                }
                 ItemStackMoveOperation op = new ItemStackMoveOperation(Api.World, EnumMouseButton.Left, 0, EnumMergePriority.DirectMerge, quantity);
 
                 int qmoved = sourceSlot.TryPutInto(firepit.inputSlot, ref op);
