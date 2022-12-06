@@ -8,7 +8,7 @@
   "attributesByType": {
     "*-temporalsteel-*": {
       "temporalCharge": 10000,
-      "temporalTransformTo": "machines:metalsheet-chargedtemporalsteel",
+      "temporalTransformTo": "machines:metalsheet-chargedtemporalsteel-down",
       "temporalTransformBlockOrItem": "block"
     }
   },

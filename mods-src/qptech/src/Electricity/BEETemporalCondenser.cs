@@ -58,7 +58,7 @@ namespace qptech.src
             base.OnTick(par);
             bool processing = false;
 
-            if (contents != null&&lastPower>=usePower) {
+            if (contents != null&& contents.Collectible != null && contents.StackSize>0&& lastPower>=usePower) {
                 float requiredcharge = contents.Collectible.Attributes[requiredTemporalChargeKey].AsFloat(0);
 
                 float currentcharge = contents.Attributes.GetFloat(requiredTemporalChargeKey, 0);
@@ -67,6 +67,7 @@ namespace qptech.src
                     processing = true;
                 }
             }
+            
             
             if (processing && Api is ICoreServerAPI)
             {
@@ -99,11 +100,11 @@ namespace qptech.src
             float stabbonus = (float)Math.Pow( Math.Min(1, (1 - (double)stability))*3,3);
             //TODO: add bonuses for nearby rifts? spawn rifts on transform?
             
-            if (contents==null|| contents.StackSize == 0) { return; }
+            if (contents==null||contents.Collectible==null| contents.StackSize == 0) { return; }
             float requiredcharge = contents.Collectible.Attributes[requiredTemporalChargeKey].AsFloat(0);
             //if this isn't a chargeable object return;
             if (requiredcharge == 0) { return; }
-            string temporalTransformBlockOrItem = contents.Attributes.GetString("temporalTransformBlockOrItem", "item");
+            string temporalTransformBlockOrItem = contents.Collectible.Attributes["temporalTransformBlockOrItem"].AsString("item");
             float currentcharge = contents.Attributes.GetFloat(requiredTemporalChargeKey, 0);
             string transformsto = contents.Collectible.Attributes["temporalTransformTo"].AsString("");
             currentcharge += stabbonus / (float)contents.StackSize;
