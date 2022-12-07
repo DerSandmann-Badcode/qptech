@@ -210,19 +210,20 @@ namespace qptech.src
 
             showFluxDisplay = false;
             bool dirty = false;
+            networkID = Guid.Empty;
             if (memberID == Guid.Empty && (api is ICoreServerAPI))
             {
                 memberID = Guid.NewGuid();
                 dirty = true;
             }
-            if (NetworkID != Guid.Empty&&(api is ICoreServerAPI))
-            {
-                FlexNetworkManager.RecreateNetwork(NetworkID,ProductID);
-                dirty = true;
-            }
-            if (dirty) { MarkDirty(true); }
+            //if (NetworkID != Guid.Empty&&(api is ICoreServerAPI))
+            //{
+            //    FlexNetworkManager.RecreateNetwork(NetworkID,ProductID);
+            //    dirty = true;
+            //}
+            MarkDirty(true);
         }
-
+        
         //attempt to load power distribution and reception faces from attributes, and orient them to this blocks face if necessary
         public virtual void SetupIOFaces()
         {

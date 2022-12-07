@@ -98,14 +98,16 @@ namespace qptech.src
                     if (container == null) { continue; }
                     if (container.Inventory == null) { continue; }
                     if (container.Inventory.Empty) { continue; }
-                    Block cblock = Api.World.BlockAccessor.GetBlock(checkpos);
                     
+                    Block cblock = Api.World.BlockAccessor.GetBlock(checkpos);
+                    if (cblock == null) { continue; }
                     float heatingefficiency = cblock.Attributes["heatingefficiency"].AsFloat(0);
                     if (heatingefficiency == 0) { continue; }
                     
                     foreach (ItemSlot slot in container.Inventory)
                     {
                         if (slot == null || slot.Empty) { continue; }
+                        if (slot.Itemstack == null || slot.Itemstack.Collectible == null) { continue; }
                         if (slot.Itemstack!=null&&slot.Itemstack.StackSize>0)
                         {
                             float temp = slot.Itemstack.Collectible.GetTemperature(Api.World, slot.Itemstack);
