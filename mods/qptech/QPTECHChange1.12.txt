@@ -1,7 +1,16 @@
 ﻿1.12.2
 
+Tweaks:
+- if an item pipe has a minsize set >1 it will now take only that size 
+- raw concrete renamed to uncolored concrete and now outputs 8 like the other recipes
+- concrete now has a link to the industrial mixer in help text
+- industrial glass now has a link to the industrial mixer in help text
+- new shape for steel item hatch
+
 Bug Fixes:
-- solar panels now insta break
+- solar panels now insta break (previously unbreakable in survival)
+
+
 
 1.12.1
 Additions:

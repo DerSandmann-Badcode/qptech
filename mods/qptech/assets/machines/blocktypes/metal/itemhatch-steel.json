@@ -35,31 +35,27 @@
 		"qptech": [ "*-east" ]
 	},
 	"blockmaterial": "Metal",
-	"shape": { "base": "block/metal/itemhatch" },
+	"shape": { "base": "block/metal/container/itemhatch-steel" },
 	"shapeByType": {
 		"*-north": {
-			"base": "block/metal/itemhatch",
+			"base": "block/metal/container/itemhatch-steel",
 			"rotateY": 0
 		},
 		"*-east": {
-			"base": "block/metal/itemhatch",
+			"base": "block/metal/container/itemhatch-steel",
 			"rotateY": 270
 		},
 		"*-west": {
-			"base": "block/metal/itemhatch",
+			"base": "block/metal/container/itemhatch-steel",
 			"rotateY": 90
 		},
 		"*-south": {
-			"base": "block/metal/itemhatch",
+			"base": "block/metal/container/itemhatch-steel",
 			"rotateY": 180
 		}
 	},
 	"drawtype": "json",
-	"texturesByType": {
-		"*": {
-			"all": { "base": "block/metal/bluepaintedwornsteelplate" }
-		}
-	},
+	
 	"resistance": 1,
 	"sideopaque": {
 		"all": false

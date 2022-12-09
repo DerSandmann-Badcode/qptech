@@ -80,7 +80,7 @@ namespace qptech.src.itemtransport
             SingleComposer.GetTextInput("block").SetValue(itemfilter.blockonlymatch);
             if (conveyor.StackSize != 1)
             {
-                SingleComposer.AddRichtext("Minimum Transfer Quantity", CairoFont.WhiteDetailText(), transferSliderTextBounds);
+                SingleComposer.AddRichtext("Fixed Transfer Quantity (if set >1)", CairoFont.WhiteDetailText(), transferSliderTextBounds);
                 SingleComposer.AddSlider(OnChangeTransferSlider, transferSliderBounds, "transferslider");
                 SingleComposer.GetSlider("transferslider").SetValues(itemfilter.minsize, 0, conveyor.StackSize, 1);
             }

@@ -113,11 +113,9 @@
     <Compile Include="src\misc\BEAnimator.cs" />
     <Compile Include="src\misc\BEBlockSeeker.cs" />
     <Compile Include="src\misc\BEBNamed.cs" />
-    <Compile Include="src\misc\BERiftStorageAccess.cs" />
     <Compile Include="src\misc\BlockPowerRod.cs" />
     <Compile Include="src\misc\BEBMultiDummy.cs" />
     <Compile Include="src\misc\BECoalPileStoker.cs" />
-    <Compile Include="src\misc\BlockRiftStorageAccess.cs" />
     <Compile Include="src\misc\CBTemporalChargeable.cs" />
     <Compile Include="src\misc\ItemWire.cs" />
     <Compile Include="src\misc\ItemMiningDrill.cs" />

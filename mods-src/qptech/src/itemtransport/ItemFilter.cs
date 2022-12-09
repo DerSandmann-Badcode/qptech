@@ -38,7 +38,9 @@ namespace qptech.src.itemtransport
         {
             if (isoff) { return 0; }
             int acceptcount = Math.Min(itemstack.StackSize, maxsize);
+            
             if (itemstack.StackSize < minsize) { return 0; }
+            if (minsize > 1) { acceptcount = minsize; }
             string code = itemstack.Collectible.Code.ToString().ToLower().Trim();
             if (filtercode != "")
             {
