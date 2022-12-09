@@ -1,4 +1,9 @@
-﻿1.12.1
+﻿1.12.2
+
+Bug Fixes:
+- solar panels now insta break
+
+1.12.1
 Additions:
 - new battery: mv version made with sheets & rubber
 - Completed bone->quicklime processing stack with two changes:

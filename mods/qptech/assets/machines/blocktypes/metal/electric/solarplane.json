@@ -40,7 +40,7 @@
 	},
 	"blockmaterial": "Metal",
 	"drawtype": "Json",
-	"resistance": 50,
+	"resistance": 0,
 	"sidesolid": {
 		"all": false
 	},
