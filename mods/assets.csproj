@@ -41,7 +41,10 @@
     <Content Include="qptech\assets\machines\textures\block\stone\concrete-orange.png" />
     <Content Include="qptech\assets\machines\textures\block\stone\concrete-pink.png" />
     <Content Include="qptech\assets\machines\textures\block\stone\concrete-purple.png" />
+    <Content Include="qptech\assets\machines\textures\block\stone\concrete-reinforced-top-uncolored.png" />
+    <Content Include="qptech\assets\machines\textures\block\stone\concrete-reinforced-side-uncolored.png" />
     <Content Include="qptech\assets\machines\textures\block\stone\concrete-white-tiles.png" />
+    <Content Include="qptech\assets\machines\textures\block\stone\concrete-yellow-tiles.png" />
     <Content Include="qptech\assets\machines\textures\item\temporalcircuitboard.png" />
     <Content Include="qptech\QPTECHChange1.12.txt" />
     <Content Include="qptech\QPTECHCHange1.11.txt" />
@@ -91,6 +94,7 @@
     <None Include="qptech\assets\game\shapes\block\can-full.json" />
     <None Include="qptech\assets\game\shapes\block\can-open.json" />
     <None Include="qptech\assets\game\shapes\block\can-sealed.json" />
+    <None Include="qptech\assets\machines\blocktypes\deco\concrete-reinforced.json" />
     <None Include="qptech\assets\machines\blocktypes\deco\concrete.json" />
     <None Include="qptech\assets\machines\blocktypes\deco\industrialglass.json" />
     <None Include="qptech\assets\machines\blocktypes\indev\enderchest.json" />
