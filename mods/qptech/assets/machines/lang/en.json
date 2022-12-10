@@ -228,6 +228,7 @@
 	"block-concrete-pink": "Concrete Block (Pink)",
 	"block-concrete-white": "Concrete Block (White)",
 	"block-concrete-internal": "Concrete Block (Uncolored)",
+	"block-concrete-*-tiles": "Concrete Tiles",
 	"blockdesc-concrete-*": "Concrete building block made in a <a href=\"handbook://block-machines:mixer-mv-east\">Industrial Mixer</a> from 1 sand, 1 quicklime, 8 stones, and either water or the appropriate dye. Outputs 8 concrete.",
 	"block-industrialglass-*": "Industrial Glass Block",
 	"blockdesc-industrialglass-*": "Purified glass block made with water and crushed quartz in a <a href=\"handbook://block-machines:mixer-mv-east\">Industrial Mixer</a>.",

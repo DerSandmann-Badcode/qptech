@@ -36,6 +36,12 @@
     <Content Include="modernblocks\assets\modernblocks\textures\block\connectedtextures\cobblewithcoppertrim.png" />
     <Content Include="qptech\assets\machines\textures\block\chevrons.png" />
     <Content Include="qptech\assets\machines\textures\block\shinyiron.png" />
+    <Content Include="qptech\assets\machines\textures\block\stone\concrete-blue-tiles.png" />
+    <Content Include="qptech\assets\machines\textures\block\stone\concrete-brown.png" />
+    <Content Include="qptech\assets\machines\textures\block\stone\concrete-orange.png" />
+    <Content Include="qptech\assets\machines\textures\block\stone\concrete-pink.png" />
+    <Content Include="qptech\assets\machines\textures\block\stone\concrete-purple.png" />
+    <Content Include="qptech\assets\machines\textures\block\stone\concrete-white-tiles.png" />
     <Content Include="qptech\assets\machines\textures\item\temporalcircuitboard.png" />
     <Content Include="qptech\QPTECHChange1.12.txt" />
     <Content Include="qptech\QPTECHCHange1.11.txt" />
@@ -143,6 +149,7 @@
     <None Include="qptech\assets\machines\blocktypes\other\coalpilestoker.json" />
     <None Include="qptech\assets\machines\blocktypes\dummyobjects\vacuumtube.json" />
     <None Include="qptech\assets\machines\itemtypes\part\mv\vacuum.json" />
+    <None Include="qptech\assets\machines\recipes\grid\decor\concrete-tiled.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\ev\miningrig.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\ev\industrialcontroller.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\hv\autosmith.json" />

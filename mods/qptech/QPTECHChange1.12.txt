@@ -1,5 +1,7 @@
 ﻿1.12.2
 
+Additions:
+- added concrete tiles block (made with hammer and chisel and concrete)
 Tweaks:
 - if an item pipe has a minsize set >1 it will now take only that size 
 - raw concrete renamed to uncolored concrete and now outputs 8 like the other recipes
