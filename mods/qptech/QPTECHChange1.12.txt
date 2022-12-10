@@ -8,6 +8,7 @@ Tweaks:
 - concrete now has a link to the industrial mixer in help text
 - industrial glass now has a link to the industrial mixer in help text
 - new shape for steel item hatch
+- soaker pipes should now irrigate a 7x7 area
 
 Bug Fixes:
 - solar panels now insta break (previously unbreakable in survival)

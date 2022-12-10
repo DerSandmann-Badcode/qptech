@@ -17,10 +17,10 @@ namespace qptech.src.pipes
     class BEIrrigator : BlockEntity, IFluidNetworkUser
     {
         
-        int waterUsage= 1;
+        int waterUsage= 1000;
         int internalwater = 0;
         int internaltank = 0;
-        int range = 1;
+        int range = 5;
         Item usefluid;
 
         public override void Initialize(ICoreAPI api)
@@ -116,7 +116,7 @@ namespace qptech.src.pipes
         public override void GetBlockInfo(IPlayer forPlayer, StringBuilder dsc)
         {
             base.GetBlockInfo(forPlayer, dsc);
-            dsc.Append("internal tank: " + internalwater + " L");
+            dsc.Append("internal tank: " + internalwater/100 + " L");
         }
     }
 }
