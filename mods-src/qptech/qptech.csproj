@@ -88,6 +88,7 @@
     <Compile Include="src\Electricity\BEEClayFormer.cs" />
     <Compile Include="src\Electricity\BEECrucible.cs" />
     <Compile Include="src\Electricity\BEEIndustrialGenerator.cs" />
+    <Compile Include="src\Electricity\BEEOven.cs" />
     <Compile Include="src\Electricity\BEESolarPlane.cs" />
     <Compile Include="src\Electricity\BEEMixer.cs" />
     <Compile Include="src\Electricity\BEEProcessingSupplier.cs" />

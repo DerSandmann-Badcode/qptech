@@ -199,6 +199,7 @@ namespace qptech.src
             api.RegisterBlockEntityClass("BEEAutocrafter", typeof(BEEAutocrafter));
             api.RegisterBlockEntityClass("BEItemScanner", typeof(BEItemScanner));
             api.RegisterBlockEntityClass("BEMiningRig", typeof(BEMiningRig));
+            api.RegisterBlockEntityClass("BEEOven", typeof(BEEOven));
         }
 
         private void RegisterDefaultItems()
