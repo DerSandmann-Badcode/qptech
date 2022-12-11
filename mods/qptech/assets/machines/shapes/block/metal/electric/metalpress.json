@@ -8,6 +8,7 @@
 	"textureSizes": {
 	},
 	"textures": {
+		"display-arrow": "block/display-arrow"
 	},
 	"elements": [
 		{
@@ -1003,6 +1004,20 @@
 					}
 				}
 			]
+		},
+		{
+			"name": "Cube66",
+			"from": [ 2.0, 2.0, 15.0 ], 
+			"to": [ 6.0, 6.0, 16.0 ], 
+			"rotationOrigin": [ 2.0, 2.0, 15.0 ],
+			"faces": {
+				"north": { "texture": "#display-arrow", "uv": [ 0.0, 0.0, 4.0, 4.0 ], "enabled": false },
+				"east": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 4.0 ], "enabled": false },
+				"south": { "texture": "#display-arrow", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "autoUv": false },
+				"west": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 4.0 ], "enabled": false },
+				"up": { "texture": "#null", "uv": [ 0.0, 0.0, 4.0, 1.0 ], "enabled": false },
+				"down": { "texture": "#null", "uv": [ 0.0, 0.0, 4.0, 1.0 ], "enabled": false }
+			}
 		}
 	],
 	"animations": [
