@@ -1,0 +1,18 @@
+{
+	ingredientPattern: "TC	PB	WE",
+	ingredients: {
+		"T": { type: "item", code: "screwdriver-*", isTool: true },
+		"P": { type: "block", code: "electricforge-lv-*", quantity: 1},
+		"B": {
+			"type": "block",
+			"code": "machineryblock-steel",
+			"quantity": 1
+		},
+		"C": { type: "item", code: "circuitboard-*", quantity: 1},
+		"E": { type: "item", code: "heatingcoil-copper", quantity: 2},
+		"W": { type: "item", code: "cable-copper", quantity: 1},
+	},
+	width: 2,
+	height: 3,
+	output: { type: "block", code: "electricoven-lv-east", quantity: 1  }
+}

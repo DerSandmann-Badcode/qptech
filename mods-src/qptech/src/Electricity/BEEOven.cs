@@ -19,10 +19,10 @@ namespace qptech.src
         
         protected double internalheat;
         protected double stackheat;
-        protected double restingheat = 30;
-        protected double heatPerTick = 5;
+        protected double restingheat = 100;
+        protected double heatPerTick = 1;
         protected double insulationFactor = 0.5;
-        protected double maxHeat = 1000;
+        protected double maxHeat = 300;
         protected double stackHeatFactor = 50; //averages up the heat over this factor
         public double StackHeatChange => (internalheat + stackheat * (stackHeatFactor - 1)) / stackHeatFactor;
         /// <summary>
@@ -192,6 +192,8 @@ namespace qptech.src
                 return;
             }
             deviceState = enDeviceState.IDLE;
+            stackheat = 0;
+            internalheat *= 0.5f;
             Api.World.PlaySoundAt(new AssetLocation("sounds/doorslide"), Pos.X, Pos.Y, Pos.Z, null, false, 8, 1);
             MarkDirty(true);
         }
