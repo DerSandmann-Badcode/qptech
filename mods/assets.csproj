@@ -188,6 +188,7 @@
     <None Include="qptech\assets\machines\shapes\block\industrialcontroller.json" />
     <None Include="qptech\assets\machines\shapes\block\itemscanner.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\autosmith.json" />
+    <None Include="qptech\assets\machines\shapes\block\metal\container\itemhatch-copper.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\container\itemhatch-steel.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\electric\charcoalkiln.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\industrialdrillhead.json" />

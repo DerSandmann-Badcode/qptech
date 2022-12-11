@@ -5,14 +5,14 @@
 		"partialAttachable": true,
 		"inventoryClassName": "chest",
 		"types": [ "normal-generic" ],
-		"quantitySlots": { "normal-generic": 1 },
+		"quantitySlots": { "normal-generic": 4 },
 		"storageType": { "normal-generic": 169 },
 		"dialogTitleLangCode": {
 			"normal-generic": "content"
 		},
 		"typedOpenSound": { "normal-generic": "game:sounds/block/cokeovendoor-open" },
 		"typedCloseSound": { "normal-generic": "game:sounds/block/cokeovendoor-close" },
-		"heatingefficiency": 0.6
+		"heatingefficiency": 1
 
 	},
 	"behaviors": [
@@ -35,31 +35,27 @@
 		"qptech": [ "*-east" ]
 	},
 	"blockmaterial": "Metal",
-	"shape": { "base": "block/metal/itemhatch" },
+	"shape": { "base": "block/metal/container/itemhatch-copper" },
 	"shapeByType": {
 		"*-north": {
-			"base": "block/metal/itemhatch",
+			"base": "block/metal/container/itemhatch-copper",
 			"rotateY": 0
 		},
 		"*-east": {
-			"base": "block/metal/itemhatch",
+			"base": "block/metal/container/itemhatch-copper",
 			"rotateY": 270
 		},
 		"*-west": {
-			"base": "block/metal/itemhatch",
+			"base": "block/metal/container/itemhatch-copper",
 			"rotateY": 90
 		},
 		"*-south": {
-			"base": "block/metal/itemhatch",
+			"base": "block/metal/container/itemhatch-copper",
 			"rotateY": 180
 		}
 	},
 	"drawtype": "json",
-	"texturesByType": {
-		"*": {
-			"all": { "base": "block/shinybrass" }
-		}
-	},
+
 	"resistance": 1,
 	"sideopaque": {
 		"all": false

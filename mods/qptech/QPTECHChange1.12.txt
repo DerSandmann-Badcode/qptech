@@ -1,5 +1,8 @@
 ﻿1.12.3
-- reinforced concrete
+? reinforced concrete
+- tweaked steel hatch model
+- added copper hatch model, changed copper hatch to have 4x slots and is very efficient at heating now
+- 
 
 Additions:
 - added concrete tiles block (made with hammer and chisel and concrete)
