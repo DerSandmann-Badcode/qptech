@@ -306,6 +306,8 @@
 	"block-autocrafter-*": "Auto Crafter",
 	"blockdesc-autocrafter-*": "This advanced device will craft items. Requires an <a href=\"handbook://block-machines:itemscanner\">Item Scanner</a> on the block above it to provide it a pattern.",
 	"block-machineryblock-temporalsteel": "Advanced Tech Hull",
-	"blockdesc-machineryblock-temporalsteel": "An advanced building block."
+	"blockdesc-machineryblock-temporalsteel": "An advanced building block.",
+	"item-robotarm-steel":"Robot Arm",
+	"itemdesc-robotarm-steel": "An advanced technological part...or a handy back scratcher?"
 
 }

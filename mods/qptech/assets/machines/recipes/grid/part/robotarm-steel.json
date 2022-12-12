@@ -1,0 +1,39 @@
+{
+	ingredientPattern: "SRW	CM_",
+	ingredients: {
+		"R": {
+			"type": "item",
+			"code": "rod-steel",
+
+			"quantity": 2
+		},
+
+		"S": {
+			"type": "item",
+			"code": "screwdriver-*",
+			"isTool": true
+		},
+		"W": {
+			"type": "item",
+			"code": "braidedwire-copper",
+
+			"quantity": 1
+		},
+		"C": {
+			"type": "item",
+			"code": "circuitboard-*",
+
+			"quantity": 1
+		},
+		"M": {
+			"type": "item",
+			"code": "metalchannel-steel",
+
+			"quantity": 1
+		}
+
+	},
+	width: 3,
+	height: 2,
+	output: { type: "item", code: "robotarm-steel", quantity: 1  }
+}

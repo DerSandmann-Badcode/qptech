@@ -154,8 +154,11 @@
     <None Include="qptech\assets\machines\blocktypes\itemfilterentrance.json" />
     <None Include="qptech\assets\machines\blocktypes\other\coalpilestoker.json" />
     <None Include="qptech\assets\machines\blocktypes\dummyobjects\vacuumtube.json" />
+    <None Include="qptech\assets\machines\itemtypes\part\ev\robotarm.json" />
     <None Include="qptech\assets\machines\itemtypes\part\mv\vacuum.json" />
     <None Include="qptech\assets\machines\recipes\grid\decor\concrete-tiled.json" />
+    <None Include="qptech\assets\machines\recipes\grid\industrial\ev\autocrafter.json" />
+    <None Include="qptech\assets\machines\recipes\grid\industrial\ev\itemscanner.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\ev\machineryblock-temporalsteel.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\ev\miningrig.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\ev\industrialcontroller.json" />
@@ -183,6 +186,7 @@
     <None Include="qptech\assets\machines\recipes\grid\industrial\other\tank-bluesteel - industrial.json" />
     <None Include="qptech\assets\machines\recipes\grid\part\circuitboard-temporal.json" />
     <None Include="qptech\assets\machines\recipes\grid\part\metal-parts.json" />
+    <None Include="qptech\assets\machines\recipes\grid\part\robotarm-steel.json" />
     <None Include="qptech\assets\machines\recipes\grid\part\vacuum-tube.json" />
     <None Include="qptech\assets\machines\recipes\grid\part\machineryblock-iron.json" />
     <None Include="qptech\assets\machines\shapes\block\cuttingmachine.obj" />
@@ -745,7 +749,6 @@
     <Folder Include="qptech\assets\game\blocktypes\" />
     <Folder Include="qptech\assets\game\sounds\block\" />
     <Folder Include="qptech\assets\machines\itemtypes\entity\" />
-    <Folder Include="qptech\assets\machines\itemtypes\part\ev\" />
     <Folder Include="qptech\assets\machines\shapes\block\glass\" />
     <Folder Include="qptech\assets\machines\shapes\block\indev\" />
     <Folder Include="qptech\assets\machines\shapes\block\liquid\" />

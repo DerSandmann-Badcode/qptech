@@ -1,0 +1,42 @@
+{
+	ingredientPattern: "XSA	RMC",
+	ingredients: {
+		"X": {
+			"type": "item",
+			"code": "screw-steel",
+
+			"quantity": 8
+		},
+		
+		
+		"A": {
+			"type": "item",
+			"code": "circuitboard-temporal",
+			"quantity": 1
+		},
+		"M": {
+			"type": "item",
+			"code": "motor-mv",
+			"quantity": 1
+		},
+		"S": {
+			"type": "block",
+			"code": "machineryblock-temporalsteel",
+			"quantity": 1
+		},
+		
+		"C": {
+			"type": "item",
+			"code": "cable-copper",
+			"quantity": 4
+		},
+		"R": {
+			"type": "item",
+			"code": "robotarm-steel",
+			"quantity": 2
+		},
+	},
+	width: 3,
+	height: 2,
+	"output": { "type": "block", "code": "autocrafter-steel-east", "quantity": 1  }
+}

@@ -1,0 +1,37 @@
+{
+	ingredientPattern: "XSA	_MC",
+	ingredients: {
+		"X": {
+			"type": "item",
+			"code": "screw-steel",
+
+			"quantity": 8
+		},
+		
+		
+		"A": {
+			"type": "item",
+			"code": "circuitboard-temporal",
+			"quantity": 1
+		},
+		"M": {
+			"type": "item",
+			"code": "motor-mv",
+			"quantity": 1
+		},
+		"S": {
+			"type": "block",
+			"code": "machineryblock-temporalsteel",
+			"quantity": 1
+		},
+		
+		"C": {
+			"type": "item",
+			"code": "cable-copper",
+			"quantity": 4
+		}
+	},
+	width: 3,
+	height: 2,
+	"output": { "type": "block", "code": "itemscanner", "quantity": 1  }
+}

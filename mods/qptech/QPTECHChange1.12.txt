@@ -4,8 +4,8 @@ Additions:
 ? reinforced concrete (for future expansion)
 - Item Scanner - provides patterns for the Auto Crafter
 - Auto Crafter - will craft items when supplied with a pattern
-- Advanced Tech Hull - advanced tech part
-
+- new part: Advanced Tech Hull - advanced tech part
+- new part: robot arm
 Tweaks:
 - tweaked steel hatch model
 - added copper hatch model, changed copper hatch to have 4x slots and is very efficient at heating now
