@@ -298,6 +298,14 @@
 	"block-miningrig": "Automated Mining Rig",
 	"blockdesc-miningrig": "Will sufficient power it will constantly mine a 5x5 column down to y=10. Multiblock structure requires 12 <a href=\"handbook://block-machines:girder\">Iron frames</a>, 4 <a href=\"handbook://block-machines:machineryblock-steel\">steel machine hulls</a>, and 16 <a href=\"handbook://block-machines:concrete-internal\">concrete</a> (of any color). (Note if your chest gets full the mine will power off!) You also will have to put a container of some sort on top of the miner. Note that the miner will power off if the container is full or missing, so you will have to turn it on again! You'll know it's running as long as you see smoke coming out.",
 	"block-industrialcontroller-*": "Industrial Controller",
-	"blockdesc-industrialcontroller-*": "An advanced intermediate part for building complicated machines (doesn't do anything on its own)'"
+	"blockdesc-industrialcontroller-*": "An advanced intermediate part for building complicated machines (doesn't do anything on its own)'",
+	"block-electricoven-*": "Industrial Oven",
+	"blockdesc-electricoven-*": "Will bake pies & bread. Note you will need to pass part baked items back into the oven somehow.",
+	"block-itemscanner": "Item Scanner",
+	"blockdesc-itemscanner": "This advanced device will provide instructions to an <a href=\"handbook://block-machines:autocrafter-steel-east\">Autocrafter</a> on how to build the item you place in its inventory",
+	"block-autocrafter-*": "Auto Crafter",
+	"blockdesc-autocrafter-*": "This advanced device will craft items. Requires an <a href=\"handbook://block-machines:itemscanner\">Item Scanner</a> on the block above it to provide it a pattern.",
+	"block-machineryblock-temporalsteel": "Advanced Tech Hull",
+	"blockdesc-machineryblock-temporalsteel": "An advanced building block."
 
 }

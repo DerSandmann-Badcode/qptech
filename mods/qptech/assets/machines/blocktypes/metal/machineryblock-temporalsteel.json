@@ -1,0 +1,19 @@
+{
+	"code": "machineryblock-temporalsteel",
+	"creativeinventory": {
+		"general": [ "*" ],
+		"qptech": [ "*" ]
+	},
+	"blockmaterial": "Metal",
+	"drawtype": "Cube",
+	"textures": {
+		"all": {
+			"base": "item/resource/temporalsteel"
+		}
+	},
+	"resistance": 1,
+	"sounds": {
+		"place": "game:block/anvil",
+		"walk": "game:walk/stone"
+	}
+}

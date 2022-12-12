@@ -30,7 +30,7 @@
 	],
 	"attributes": {
 		"genFlux": 0,
-		"useFlux": 32,
+		"useFlux": 128,
 		"processingTime": 0.1,
 		"inputFace": "west",
 			"outputFace": "east",

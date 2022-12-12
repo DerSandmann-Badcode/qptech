@@ -36,22 +36,22 @@
 	},
 	"blockmaterial": "Metal",
 	"drawtype": "json",
-	"shape": { "base": "block/metal/electric/electrickiln-lv" },
+	"shape": { "base": "block/metal/electric/electricoven" },
 	"shapeByType": {
 		"*-north": {
-			"base": "block/metal/electric/electrickiln-lv",
+			"base": "block/metal/electric/electricoven",
 			"rotateY": 0
 		},
 		"*-east": {
-			"base": "block/metal/electric/electrickiln-lv",
+			"base": "block/metal/electric/electricoven",
 			"rotateY": 270
 		},
 		"*-west": {
-			"base": "block/metal/electric/electrickiln-lv",
+			"base": "block/metal/electric/electricoven",
 			"rotateY": 90
 		},
 		"*-south": {
-			"base": "block/metal/electric/electrickiln-lv",
+			"base": "block/metal/electric/electricoven",
 			"rotateY": 180
 		}
 	},

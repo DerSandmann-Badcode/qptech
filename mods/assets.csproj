@@ -136,6 +136,7 @@
     <None Include="qptech\assets\machines\blocktypes\metal\itemhatch-iron.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\machineryblock-iron.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\electric\ev\industrialdrillhead.json" />
+    <None Include="qptech\assets\machines\blocktypes\metal\machineryblock-temporalsteel.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\temporalpocket.json" />
     <None Include="qptech\assets\machines\blocktypes\metal\sheet.json" />
     <None Include="qptech\assets\machines\blocktypes\other\door\slidingdoor.json" />
@@ -155,6 +156,7 @@
     <None Include="qptech\assets\machines\blocktypes\dummyobjects\vacuumtube.json" />
     <None Include="qptech\assets\machines\itemtypes\part\mv\vacuum.json" />
     <None Include="qptech\assets\machines\recipes\grid\decor\concrete-tiled.json" />
+    <None Include="qptech\assets\machines\recipes\grid\industrial\ev\machineryblock-temporalsteel.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\ev\miningrig.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\ev\industrialcontroller.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\hv\autosmith.json" />
@@ -193,6 +195,7 @@
     <None Include="qptech\assets\machines\shapes\block\metal\container\itemhatch-copper.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\container\itemhatch-steel.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\electric\charcoalkiln.json" />
+    <None Include="qptech\assets\machines\shapes\block\metal\electric\electricoven.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\industrialdrillhead.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\solarplane\evening.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\solarplane\midday.json" />
