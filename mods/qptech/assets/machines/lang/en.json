@@ -304,7 +304,7 @@
 	"block-itemscanner": "Item Scanner",
 	"blockdesc-itemscanner": "This advanced device will provide instructions to an <a href=\"handbook://block-machines:autocrafter-steel-east\">Autocrafter</a> on how to build the item you place in its inventory",
 	"block-autocrafter-*": "Auto Crafter",
-	"blockdesc-autocrafter-*": "This advanced device will craft items. Requires an <a href=\"handbook://block-machines:itemscanner\">Item Scanner</a> on the block above it to provide it a pattern.",
+	"blockdesc-autocrafter-*": "This advanced device will craft items. Requires an <a href=\"handbook://block-machines:itemscanner\">Item Scanner</a> on the block above it to provide it a pattern. To change recipe you will have to power machine on & off currently.",
 	"block-machineryblock-temporalsteel": "Advanced Tech Hull",
 	"blockdesc-machineryblock-temporalsteel": "An advanced building block.",
 	"item-robotarm-steel":"Robot Arm",
