@@ -67,6 +67,7 @@ namespace qptech.src
             if (container.Inventory == null) { return; }
             if (container.Inventory.Empty) { return; }
             List<ItemStack> stacks = new List<ItemStack>();
+            List<ItemSlot> dontclearslots = new List<ItemSlot>();
             List<string> materials = new List<string>();
             foreach (ItemSlot slot in container.Inventory)
             {
@@ -81,9 +82,16 @@ namespace qptech.src
                 float temp = slot.Itemstack.Collectible.GetTemperature(Api.World, slot.Itemstack);
                 if (!materials.Contains(mat.ToString())) { materials.Add(mat.ToString()); }
                 if (temp < slot.Itemstack.Item.CombustibleProps.MeltingPoint) { continue; }
-                
-                                
-                
+
+                //filter to first found ore if in single mode
+                if (processingMode == enMode.SINGLE&&stacks.Count>0)
+                {
+                    if (slot.Itemstack.Item != stacks[0].Item) {
+                        dontclearslots.Add(slot);
+                        continue;
+                    }
+                    
+                }
                 stacks.Add(slot.Itemstack);
             }
             
@@ -143,6 +151,7 @@ namespace qptech.src
                 {
                     //checks for valid items
                     if (slot == null || slot.Empty) { continue; }
+                    if (dontclearslots.Contains(slot)) { continue; }
                     if (slot.Itemstack == null || slot.Itemstack.StackSize <= 0) { continue; }
                     if (slot.Itemstack.Item == null) { continue; }
                     if (slot.Itemstack.Item.CombustibleProps == null) { continue; }

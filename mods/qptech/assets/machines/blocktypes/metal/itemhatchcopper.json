@@ -10,6 +10,7 @@
 		"dialogTitleLangCode": {
 			"normal-generic": "content"
 		},
+		
 		"typedOpenSound": { "normal-generic": "game:sounds/block/cokeovendoor-open" },
 		"typedCloseSound": { "normal-generic": "game:sounds/block/cokeovendoor-close" },
 		"heatingefficiency": 1
