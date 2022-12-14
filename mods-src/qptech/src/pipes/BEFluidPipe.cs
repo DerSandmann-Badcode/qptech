@@ -164,7 +164,8 @@ namespace qptech.src
         
         public void OnNeighborChange()
         {
-            MarkDirty(true);
+            
+            //MarkDirty(true);
         }
 
         
