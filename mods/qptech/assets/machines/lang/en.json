@@ -312,6 +312,8 @@
 	"block-machineryblock-temporalsteel": "Advanced Tech Hull",
 	"blockdesc-machineryblock-temporalsteel": "An advanced building block.",
 	"item-robotarm-steel":"Robot Arm",
-	"itemdesc-robotarm-steel": "An advanced technological part...or a handy back scratcher?"
+	"itemdesc-robotarm-steel": "An advanced technological part...or a handy back scratcher?",
+	"block-autosign-*": "Auto Sign",
+	"blockdesc-autosign-*": "Shows contents of adjacent containers, and maybe other things in the future!"
 
 }
