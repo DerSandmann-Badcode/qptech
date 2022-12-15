@@ -12,13 +12,13 @@
 		"*-ground-east": { base: "game:block/wood/sign", rotateY: 270 },
 		"*-ground-south": { base: "game:block/wood/sign", rotateY: 180 },
 		"*-ground-west": { base: "game:block/wood/sign", rotateY: 90 },
-		"*-wall-north": { base: "game:block/wood/signwall", rotateY: 0 },
-		"*-wall-east": { base: "game:block/wood/signwall", rotateY: 270 },
-		"*-wall-south": { base: "game:block/wood/signwall", rotateY: 180 },
-		"*-wall-west": { base: "game:block/wood/signwall", rotateY: 90 }
+		"*-wall-north": { base: "block/metal/autosignwall", rotateY: 0 },
+		"*-wall-east": { base: "block/metal/autosignwall", rotateY: 270 },
+		"*-wall-south": { base: "block/metal/autosignwall", rotateY: 180 },
+		"*-wall-west": { base: "block/metal/autosignwall", rotateY: 90 }
 	},
 	"texturesByType": {
-		"*": {
+		"*-ground-*": {
 			"all": { "base": "block/metal/bluepaintedwornsteelplate" }
 
 

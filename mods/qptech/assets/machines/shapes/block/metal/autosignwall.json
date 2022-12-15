@@ -1,0 +1,29 @@
+{
+	"editor": {
+		"allAngles": false,
+		"entityTextureMode": false
+	},
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textureSizes": {
+	},
+	"textures": {
+		"bluepaintedwornsteelplate": "block/metal/bluepaintedwornsteelplate",
+		"lightblock": "block/lightblock"
+	},
+	"elements": [
+		{
+			"name": "sign",
+			"from": [ 1.0, 5.0, 0.0 ], 
+			"to": [ 15.0, 13.0, 1.0 ], 
+			"rotationOrigin": [ 0.0, 0.0, -1.0 ],
+			"faces": {
+				"north": { "texture": "#bluepaintedwornsteelplate", "uv": [ 1.0, 3.5, 15.0, 11.5 ], "glow": 129 },
+				"east": { "texture": "#lightblock", "uv": [ 15.0, 3.5, 16.0, 11.5 ] },
+				"south": { "texture": "#lightblock", "uv": [ 1.0, 5.0, 15.0, 13.0 ] },
+				"west": { "texture": "#lightblock", "uv": [ 0.0, 0.5, 1.0, 8.5 ] },
+				"up": { "texture": "#lightblock", "uv": [ 1.0, 15.0, 15.0, 16.0 ], "rotation": 180 },
+				"down": { "texture": "#lightblock", "uv": [ 1.0, 0.0, 15.0, 1.0 ] }
+			}
+		}
+	]}
