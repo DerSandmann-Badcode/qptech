@@ -197,6 +197,7 @@
     <None Include="qptech\assets\machines\shapes\block\autocrafter.json" />
     <None Include="qptech\assets\machines\shapes\block\industrialcontroller.json" />
     <None Include="qptech\assets\machines\shapes\block\itemscanner.json" />
+    <None Include="qptech\assets\machines\shapes\block\metal\autosignground.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\autosignwall.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\autosmith.json" />
     <None Include="qptech\assets\machines\shapes\block\metal\container\itemhatch-copper.json" />

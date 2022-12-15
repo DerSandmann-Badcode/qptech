@@ -23,12 +23,12 @@ namespace qptech.src
     class BEAutoSign:BlockEntity
     {
         public string text = "";
-        BlockEntitySignRenderer signRenderer;
+        AutoSignRenderer signRenderer;
         int color;
         int tempColor;
         ItemStack tempStack;
         float angleRad;
-
+        public virtual int maxlines => 64;
         public Cuboidf[] colSelBox;
 
         public virtual float MeshAngleRad
@@ -61,7 +61,7 @@ namespace qptech.src
 
             if (api is ICoreClientAPI)
             {
-                signRenderer = new BlockEntitySignRenderer(Pos, (ICoreClientAPI)api);
+                signRenderer = new AutoSignRenderer(Pos, (ICoreClientAPI)api);
 
                 if (text.Length > 0) signRenderer.SetNewText(text, color);
 
@@ -72,12 +72,18 @@ namespace qptech.src
                     signRenderer.translateZ = 8f / 16f;
                     signRenderer.offsetZ = -1.51f / 16f;
                 }
-                RegisterGameTickListener(OnClientTick, 300);
+                RegisterGameTickListener(OnClientTick, 600);
             }
            
         }
-        public virtual void OnClientTick(float dt)
+        public virtual void OnClientTick(float df)
         {
+            UpdateText();
+        }
+
+        public virtual void UpdateText()
+        {
+            if (Api is ICoreServerAPI) { return; }
             if (signRenderer == null) { return; }
             BlockFacing bf = BlockFacing.FromCode(Block.Code.EndVariant().ToString());
             BlockPos checkpos = Pos.Copy().Offset(bf);
@@ -94,21 +100,21 @@ namespace qptech.src
                     text = "";
                     foreach (ItemSlot slot in checkcontainer.Inventory)
                     {
-                        if (slot == null || slot.Empty || slot.StackSize == 0) { continue; }
+                        if (slot == null || slot.Empty || slot.StackSize == 0||slot.Itemstack==null||slot.Itemstack.Collectible==null) { continue; }
                         string co = slot.Itemstack.Collectible.GetHeldItemName(slot.Itemstack);
                         int qty = slot.Itemstack.StackSize;
                         if (contentsummary.ContainsKey(co))
                         {
                             contentsummary[co] += qty;
                         }
-                        else if (contentsummary.Count < 4 && qty>0)
+                        else if (contentsummary.Count < maxlines && qty > 0)
                         {
                             contentsummary[co] = qty;
                         }
-                     }
+                    }
                     foreach (string co in contentsummary.Keys)
                     {
-                        text += co + ":" + contentsummary[co] + "\n";
+                        text += contentsummary[co] + "x " + co + "\n";
                     }
                 }
             }
@@ -116,6 +122,7 @@ namespace qptech.src
             else { text = checkbe.Block.GetPlacedBlockName(Api.World, checkpos); }
             signRenderer?.SetNewText(text, color);
         }
+
         public override void OnBlockRemoved()
         {
             signRenderer?.Dispose();

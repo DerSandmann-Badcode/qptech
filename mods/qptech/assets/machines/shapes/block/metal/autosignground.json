@@ -1,0 +1,45 @@
+{
+	"editor": {
+		"allAngles": false,
+		"entityTextureMode": false
+	},
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textureSizes": {
+	},
+	"textures": {
+		"bluepaintedwornsteelplate": "block/metal/bluepaintedwornsteelplate",
+		"lightblock": "block/lightblock"
+	},
+	"elements": [
+		{
+			"name": "sign2",
+			"from": [ 0.0, 0.0, 2.0 ], 
+			"to": [ 16.0, 16.0, 8.0 ], 
+			"rotationOrigin": [ -1.0, -5.0, 1.0 ],
+			"faces": {
+				"north": { "texture": "#bluepaintedwornsteelplate", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "glow": 129 },
+				"east": { "texture": "#bluepaintedwornsteelplate", "uv": [ 0.0, 0.0, 6.0, 16.0 ] },
+				"south": { "texture": "#bluepaintedwornsteelplate", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+				"west": { "texture": "#bluepaintedwornsteelplate", "uv": [ 0.5, 0.0, 6.5, 16.0 ] },
+				"up": { "texture": "#bluepaintedwornsteelplate", "uv": [ 0.0, 0.5, 16.0, 6.5 ], "rotation": 180 },
+				"down": { "texture": "#bluepaintedwornsteelplate", "uv": [ 0.0, 0.0, 16.0, 6.0 ] }
+			},
+			"children": [
+				{
+					"name": "sign",
+					"from": [ 1.0, 1.0, 6.0 ], 
+					"to": [ 15.0, 15.0, 7.0 ], 
+					"rotationOrigin": [ 0.0, -4.0, 5.0 ],
+					"faces": {
+						"north": { "texture": "#bluepaintedwornsteelplate", "uv": [ 2.0, 1.0, 16.0, 15.0 ], "glow": 129, "enabled": false },
+						"east": { "texture": "#lightblock", "uv": [ 15.0, 0.5, 16.0, 14.5 ] },
+						"south": { "texture": "#lightblock", "uv": [ 1.0, 1.0, 15.0, 15.0 ] },
+						"west": { "texture": "#lightblock", "uv": [ 0.5, 1.0, 1.5, 15.0 ] },
+						"up": { "texture": "#lightblock", "uv": [ 1.0, 15.0, 15.0, 16.0 ], "rotation": 180 },
+						"down": { "texture": "#lightblock", "uv": [ 1.0, 0.0, 15.0, 1.0 ] }
+					}
+				}
+			]
+		}
+	]}

@@ -27,7 +27,7 @@ namespace qptech.src
             if (entity is BEAutoSign)
             {
                 BEAutoSign besigh = (BEAutoSign)entity;
-                besigh.OnRightClick(byPlayer);
+                besigh.UpdateText();
                 return true;
             }
 
@@ -148,6 +148,12 @@ namespace qptech.src
         public override void OnNeighbourBlockChange(IWorldAccessor world, BlockPos pos, BlockPos neibpos)
         {
             base.OnNeighbourBlockChange(world, pos, neibpos);
+            
+            BEAutoSign bas = world.BlockAccessor.GetBlockEntity(pos) as BEAutoSign;
+            if (bas != null)
+            {
+                bas.UpdateText();
+            }
         }
 
         
