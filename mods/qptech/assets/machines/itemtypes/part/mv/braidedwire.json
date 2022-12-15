@@ -5,7 +5,7 @@
 	},
 	"drawtype": "json",
 	"shape": { "base": "item/part/braidedwire" },
-	"maxstacksize": 128,
+	"maxstacksize": 256,
 
 	"variantgroups": [
 		{

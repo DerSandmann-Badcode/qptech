@@ -5,7 +5,7 @@
 	},
 	"drawtype": "json",
 	"shape": { "base": "item/part/metalchannel" },
-	"maxstacksize": 64,
+	"maxstacksize": 128,
 	"variantgroups": [
 		{
 			"code": "material",

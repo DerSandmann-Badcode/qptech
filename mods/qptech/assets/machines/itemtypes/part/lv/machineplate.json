@@ -5,7 +5,7 @@
 	},
 	"drawtype": "json",
 	"shape": { "base": "item/part/machineplate" },
-	"maxstacksize": 8,
+	"maxstacksize": 16,
 
 	"variantgroups": [
 		{

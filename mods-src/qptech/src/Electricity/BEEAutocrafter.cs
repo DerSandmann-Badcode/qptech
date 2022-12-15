@@ -55,6 +55,7 @@ namespace qptech.src
             rmInputFace = OrientFace(Block.Code.ToString(), rmInputFace);
             fgOutputFace = OrientFace(Block.Code.ToString(), fgOutputFace);
         }
+        
         protected override void DoDeviceStart()
         {
             if (!IsPowered) { deviceState = enDeviceState.POWERHOLD; return; }

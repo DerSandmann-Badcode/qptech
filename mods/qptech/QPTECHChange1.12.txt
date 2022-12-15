@@ -11,6 +11,8 @@ Tweaks:
 - added copper hatch model, changed copper hatch to have 4x slots and is very efficient at heating now
 - add a small indicator arrow to the front of the press machines to show direction of processing
 - small changes to industrial crucible to make products in single mode if multiple materials present
+- optimized fluid pipes a bit, hopefully will help performance
+- increased the stack size of many parts
 
 1.12.2
 Additions:

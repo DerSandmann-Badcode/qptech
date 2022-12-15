@@ -47,7 +47,7 @@
 	],
 	"drawtype": "json",
 	"shape": { "base": "item/part/stator" },
-	"maxstacksize": 4,
+	"maxstacksize": 16,
 	"guiTransform": {
 		"translation": {
 			"x": 0,

@@ -46,7 +46,7 @@
 			}
 		}
 	],
-	"maxstacksize": 32,
+	"maxstacksize": 64,
 	"drawtype": "json",
 	"shape": { "base": "item/part/cable" },
 	"textures": {

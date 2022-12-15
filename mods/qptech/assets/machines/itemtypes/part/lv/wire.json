@@ -46,7 +46,7 @@
 			}
 		}
 	],
-	"maxstacksize": 32,
+	"maxstacksize": 128,
 	"drawtype": "json",
 	"shape": { "base": "item/part/wire" },
 	"textures": {

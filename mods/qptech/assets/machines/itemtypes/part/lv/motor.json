@@ -29,7 +29,7 @@
   ],
 	"drawtype": "json",
 	"shape": { "base": "item/part/motor-{tier}" },
-	"maxstacksize": 4,
+	"maxstacksize": 16,
 	"guiTransform": {
 		"translation": {
 			"x": 0,

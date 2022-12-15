@@ -14,7 +14,7 @@
 			"states": [ "casing","tube" ]
 		}
 	],
-	"maxstacksize": 64,
+	"maxstacksize": 128,
 	"sideopaque": {
 		"all": false
 	},

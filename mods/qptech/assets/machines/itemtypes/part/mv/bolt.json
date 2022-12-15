@@ -5,7 +5,7 @@
 	},
 	"drawtype": "json",
 	"shape": { "base": "item/part/bolt" },
-	"maxstacksize": 64,
+	"maxstacksize": 256,
 	"variantgroups": [
 		{
 			"code": "material",
