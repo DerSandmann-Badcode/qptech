@@ -17,7 +17,7 @@ using Vintagestory.API.Config;
 
 namespace qptech.src
 {
-    public class BEElectric : BlockEntity, IPowerNetworkMember, ITexPositionSource
+    public class BEElectric : BlockEntity, IPowerNetworkMember, ITexPositionSource, IAutoSignDataProvider
     {
         /*base class to handle electrical devices*/
         bool showextrainfo = false; //if true will show NetworkID and MemberID in block info
@@ -27,7 +27,11 @@ namespace qptech.src
         public virtual bool AcceptsDirectPower => acceptsdirectpower;
         public virtual bool showToggleButton => false;
         public virtual bool disableAnimations => true;
-
+        public virtual AutoSignType GetAutoSignType() { return AutoSignType.NORMAL; }
+        public virtual string GetAutoSignText()
+        {
+            return networkstatus;
+        }
         List<BlockPos> directlinks;
         public List<BlockPos> DirectLinks => directlinks;
         public virtual int AvailablePower() {

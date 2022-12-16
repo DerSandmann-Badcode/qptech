@@ -28,7 +28,10 @@ namespace qptech.src
         int tempColor;
         ItemStack tempStack;
         float angleRad;
-        public virtual int maxlines => 64;
+        public virtual int maxlines => 12;
+        public virtual int maxcolumns => 24;
+        int currentlinestart=0;
+        int lastlines = 0;
         public Cuboidf[] colSelBox;
 
         public virtual float MeshAngleRad
@@ -72,7 +75,7 @@ namespace qptech.src
                     signRenderer.translateZ = 8f / 16f;
                     signRenderer.offsetZ = -1.51f / 16f;
                 }
-                RegisterGameTickListener(OnClientTick, 600);
+                RegisterGameTickListener(OnClientTick, 750);
             }
            
         }
@@ -89,32 +92,57 @@ namespace qptech.src
             BlockPos checkpos = Pos.Copy().Offset(bf);
             BlockEntity checkbe = Api.World.BlockAccessor.GetBlockEntity(checkpos);
             if (checkbe == null) { return; }
+            if (checkbe is IAutoSignDataProvider)
+            {
+                IAutoSignDataProvider asdp = checkbe as IAutoSignDataProvider;
+                text = asdp.GetAutoSignText();
+                signRenderer?.SetNewText(text, color);
+                currentlinestart = 0;
+                return;
+            }
             var checkcontainer = checkbe as BlockEntityContainer;
             if (checkcontainer != null)
             {
                 text = "Empty";
-                int linec = 0;
+                //int linec = 0;
                 Dictionary<string, int> contentsummary = new Dictionary<string, int>();
                 if (!checkcontainer.Inventory.Empty)
                 {
                     text = "";
+
                     foreach (ItemSlot slot in checkcontainer.Inventory)
                     {
-                        if (slot == null || slot.Empty || slot.StackSize == 0||slot.Itemstack==null||slot.Itemstack.Collectible==null) { continue; }
+                        if (slot == null || slot.Empty || slot.StackSize == 0 || slot.Itemstack == null || slot.Itemstack.Collectible == null) { continue; }
                         string co = slot.Itemstack.Collectible.GetHeldItemName(slot.Itemstack);
                         int qty = slot.Itemstack.StackSize;
                         if (contentsummary.ContainsKey(co))
                         {
                             contentsummary[co] += qty;
                         }
-                        else if (contentsummary.Count < maxlines && qty > 0)
+                        else
                         {
                             contentsummary[co] = qty;
                         }
                     }
-                    foreach (string co in contentsummary.Keys)
+                    if (lastlines != contentsummary.Count) { currentlinestart = 0; }
+                    lastlines = contentsummary.Count;
+                    if (lastlines <= maxlines) { currentlinestart = 0; }
+                    List<string> contententries = contentsummary.Keys.ToList<string>();
+                    int templc = currentlinestart;
+                    for (int lc = currentlinestart; lc < Math.Min(currentlinestart+maxlines,contententries.Count); lc++) {
+                        string co = contententries[lc];
+                        int qty = contentsummary[co];
+                        string thistext= qty + "x " + co ;
+                        if (qty < 10) { thistext = " " + thistext; }                        
+                        if (qty < 100) { thistext = " " + thistext; }
+                        thistext = thistext.Substring(0, Math.Min(thistext.Length, maxcolumns));
+                        text += thistext+"\n";
+                        templc = lc;
+                    }
+                    currentlinestart ++;
+                    if (currentlinestart+maxlines/2 >= contentsummary.Count)
                     {
-                        text += contentsummary[co] + "x " + co + "\n";
+                        currentlinestart = 0;
                     }
                 }
             }
