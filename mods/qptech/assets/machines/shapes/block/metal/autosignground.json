@@ -9,6 +9,7 @@
 	},
 	"textures": {
 		"bluepaintedwornsteelplate": "block/metal/bluepaintedwornsteelplate",
+		"screen": "block/screen",
 		"lightblock": "block/lightblock"
 	},
 	"elements": [
@@ -34,7 +35,7 @@
 					"faces": {
 						"north": { "texture": "#bluepaintedwornsteelplate", "uv": [ 2.0, 1.0, 16.0, 15.0 ], "glow": 129, "enabled": false },
 						"east": { "texture": "#lightblock", "uv": [ 15.0, 0.5, 16.0, 14.5 ] },
-						"south": { "texture": "#lightblock", "uv": [ 1.0, 1.0, 15.0, 15.0 ] },
+						"south": { "texture": "#screen", "uv": [ 1.0, 1.0, 15.0, 15.0 ], "glow": 255 },
 						"west": { "texture": "#lightblock", "uv": [ 0.5, 1.0, 1.5, 15.0 ] },
 						"up": { "texture": "#lightblock", "uv": [ 1.0, 15.0, 15.0, 16.0 ], "rotation": 180 },
 						"down": { "texture": "#lightblock", "uv": [ 1.0, 0.0, 15.0, 1.0 ] }

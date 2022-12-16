@@ -106,7 +106,8 @@ namespace qptech.src
 
         public virtual void SetNewText(string text, int color)
         {
-            font.WithColor(ColorUtil.ToRGBADoubles(color)).WithOrientation(EnumTextOrientation.Left);
+            //font.WithColor(ColorUtil.ToRGBADoubles(color)).WithOrientation(EnumTextOrientation.Left);
+            font.WithColor(ColorUtil.ToRGBADoubles(ColorUtil.ColorFromRgba(0,255,0,255))).WithOrientation(EnumTextOrientation.Left);
             loadedTexture?.Dispose();
             loadedTexture = null;
 
