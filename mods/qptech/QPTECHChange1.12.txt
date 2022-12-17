@@ -1,11 +1,16 @@
-﻿1.12.3
+﻿1.12.4
+- fixed wiremill description
+
+1.12.3
 Additions:
 - Electric Oven - bake bread and pies on an industrial scale!
+- Auto Signs - will show the inventory of most containers, or other statuses (currently Electrical devices will show power network info, will be expanded in future)
 ? reinforced concrete (for future expansion)
 - Item Scanner - provides patterns for the Auto Crafter
 - Auto Crafter - will craft items when supplied with a patterned
 - new part: Advanced Tech Hull - advanced tech part
 - new part: robot arm
+
 Tweaks:
 - tweaked steel hatch model
 - added copper hatch model, changed copper hatch to have 4x slots and is very efficient at heating now

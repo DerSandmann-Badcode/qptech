@@ -174,7 +174,7 @@
 	"item-cable-copper": "Copper Cable",
 	"itemdesc-cable-copper": "Used in some recipes and to connect electrical devices! (Right click on the first item with cable, then on the second to connect them)",
 	"block-wiremill-*": "Wire Mill",
-	"blockdesc-wiremill-*": "At last, efficient and easy wiremaking! (From copper sheets)",
+	"blockdesc-wiremill-*": "At last, efficient and easy wiremaking! (1 rod = 4 wires, 1 sheet = 4 wires) Can also wind braided wire for you.",
 	"*liquidrubberportion*": "Liquid Rubber",
 	"block-crusher-*": "Crusher Module",
 	"blockdesc-crusher-*": "Provides industrial CRUSHING force to adjacent machines",

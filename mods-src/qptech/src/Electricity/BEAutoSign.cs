@@ -30,10 +30,12 @@ namespace qptech.src
         float angleRad;
         public virtual int maxlines => 12;
         public virtual int maxcolumns => 24;
+        public virtual float textyoffset =>0;
+        public virtual float textlinesforoffset => 14.25f;
         int currentlinestart=0;
         int lastlines = 0;
         public Cuboidf[] colSelBox;
-
+        bool haltupdates = false;
         public virtual float MeshAngleRad
         {
             get { return angleRad; }
@@ -88,6 +90,7 @@ namespace qptech.src
         {
             if (Api is ICoreServerAPI) { return; }
             if (signRenderer == null) { return; }
+            if (haltupdates) { return; }
             BlockFacing bf = BlockFacing.FromCode(Block.Code.EndVariant().ToString());
             BlockPos checkpos = Pos.Copy().Offset(bf);
             BlockEntity checkbe = Api.World.BlockAccessor.GetBlockEntity(checkpos);
@@ -157,7 +160,7 @@ namespace qptech.src
             signRenderer = null;
         }
 
-
+        
         public override void FromTreeAttributes(ITreeAttribute tree, IWorldAccessor worldForResolving)
         {
             base.FromTreeAttributes(tree, worldForResolving);
@@ -262,7 +265,7 @@ namespace qptech.src
 
                     if (signRenderer != null)
                     {
-                        signRenderer.SetNewText(text, color);
+                        signRenderer?.SetNewText(text, color);
                     }
                 }
             }
@@ -275,12 +278,12 @@ namespace qptech.src
         }
 
 
-        public void OnRightClick(IPlayer byPlayer)
+        public void OnRightClick(IPlayer byPlayer, BlockSelection blocksel)
         {
             if (byPlayer?.Entity?.Controls?.ShiftKey == true)
             {
                 ItemSlot hotbarSlot = byPlayer.InventoryManager.ActiveHotbarSlot;
-                if (hotbarSlot?.Itemstack?.ItemAttributes?["pigment"]?["color"].Exists == true)
+                /*if (hotbarSlot?.Itemstack?.ItemAttributes?["pigment"]?["color"].Exists == true)
                 {
                     JsonObject jobj = hotbarSlot.Itemstack.ItemAttributes["pigment"]["color"];
                     int r = jobj["red"].AsInt();
@@ -312,7 +315,23 @@ namespace qptech.src
                             data
                         );
                     }
+                }*/
+                if (signRenderer != null)
+                {
+
+                    int line = (int)(textyoffset+ ((1-blocksel.HitPosition.Y) * textlinesforoffset));
+                    text = "";
+                    for (int c = 1; c <= maxlines; c++)
+                    {
+                        if (c == line) { text += ">"; }
+                        text += c;
+                        
+                        text += "\n";
+                    }
+                    signRenderer?.SetNewText(text, color);
+                    
                 }
+
             }
         }
 

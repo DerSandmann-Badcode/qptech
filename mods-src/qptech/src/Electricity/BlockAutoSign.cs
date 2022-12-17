@@ -26,8 +26,11 @@ namespace qptech.src
 
             if (entity is BEAutoSign)
             {
+                
                 BEAutoSign besigh = (BEAutoSign)entity;
-                besigh.UpdateText();
+                //besigh.UpdateText();
+                besigh.OnRightClick(byPlayer, blockSel);
+                
                 return true;
             }
 

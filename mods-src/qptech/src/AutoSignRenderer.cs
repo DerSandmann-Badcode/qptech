@@ -11,11 +11,11 @@ namespace qptech.src
 {
     public class AutoSignRenderer : IRenderer
     {
-        protected static int TextWidth = 200;
-        protected static int TextHeight = 200;
+        public static int TextWidth = 200;
+        public static int TextHeight = 200;
 
-        protected static float QuadWidth = 0.9f;
-        protected static float QuadHeight = 0.9f;//default .45f
+        public static float QuadWidth = 0.9f;
+        public static float QuadHeight = 0.9f;//default .45f
 
 
         protected CairoFont font;
@@ -36,7 +36,8 @@ namespace qptech.src
         public float offsetZ;
 
         float fontSize = 15;//default 20
-
+        float fontLineSpacing = 0.9f;
+        
         public double RenderOrder
         {
             get { return 1.1; } // 11.11.2020 - this was 0.5 but that causes issues with signs + chest animation
@@ -52,8 +53,9 @@ namespace qptech.src
             this.api = api;
             this.pos = pos;
             font = new CairoFont(fontSize, GuiStyle.StandardFontName, new double[] { 0, 0, 0, 0.8 }) ;
-            font.LineHeightMultiplier = 0.9f;//will crush lines together if too low
+            font.LineHeightMultiplier = fontLineSpacing;//will crush lines together if too low
             font.Orientation = EnumTextOrientation.Left;
+            
             api.Event.RegisterRenderer(this, EnumRenderStage.Opaque, "sign");
 
             MeshData modeldata = QuadMeshUtil.GetQuad();
