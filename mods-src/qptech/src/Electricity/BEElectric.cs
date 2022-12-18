@@ -30,7 +30,20 @@ namespace qptech.src
         public virtual AutoSignType GetAutoSignType() { return AutoSignType.NORMAL; }
         public virtual string GetAutoSignText()
         {
-            return networkstatus;
+            PowerNetwork pn = FlexNetworkManager.GetNetworkWithID(NetworkID) as PowerNetwork;
+            if (pn == null) { return "NO POWER NETWORK\nIS DEVICE ON?"; }
+            if (Api == null) { return "WOW THIS IS REALLY BROKEN"; }
+            string text = "";
+            IFlexNetworkMember[] pnmembers = pn.GetMembers().ToArray();
+            foreach (IFlexNetworkMember member in pnmembers)
+            {
+                if (member == null) { continue; }
+                BlockEntity be = member as BlockEntity;
+                if (be == null) { continue; }
+                text += be.Block.GetPlacedBlockName(Api.World,be.Pos)+ "\n";
+
+            }
+            return text;
         }
         List<BlockPos> directlinks;
         public List<BlockPos> DirectLinks => directlinks;

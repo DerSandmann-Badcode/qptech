@@ -31,7 +31,7 @@ namespace qptech.src
         public virtual int maxlines => 12;
         public virtual int maxcolumns => 24;
         public virtual float textyoffset =>0;
-        public virtual float textlinesforoffset => 14.25f;
+        public virtual float textlinesforoffset => 14.5f;
         int currentlinestart=0;
         int lastlines = 0;
         public Cuboidf[] colSelBox;
