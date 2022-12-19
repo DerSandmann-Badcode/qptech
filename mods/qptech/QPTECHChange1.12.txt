@@ -1,5 +1,7 @@
 ﻿1.12.4
 - fixed wiremill description
+- removed glow from background of autosigns (too strong in dark)
+- adding lattice concrete pattern
 
 1.12.3
 Additions:

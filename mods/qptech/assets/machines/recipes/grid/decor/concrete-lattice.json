@@ -1,0 +1,12 @@
+{
+	ingredientPattern: "S",
+	ingredients: {
+		"S": { type: "block", code: "machines:concrete-*-tiles", name: "color", quantity: 1 },
+		"C": { type: "item", code: "game:chisel-*", isTool: true },
+		"H": { type: "item", code: "game:hammer-*", isTool: true }
+		
+	},
+	width: 1,
+	height: 1,
+	output: { type: "block", code: "machines:concrete-{color}-lattice", quantity: 1  }
+}

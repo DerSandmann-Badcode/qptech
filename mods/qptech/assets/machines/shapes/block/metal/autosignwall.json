@@ -19,7 +19,7 @@
 			"to": [ 15.0, 15.0, 1.0 ], 
 			"rotationOrigin": [ 0.0, -4.0, -1.0 ],
 			"faces": {
-				"north": { "texture": "#bluepaintedwornsteelplate", "uv": [ 2.0, 1.0, 16.0, 15.0 ], "glow": 129 },
+				"north": { "texture": "#bluepaintedwornsteelplate", "uv": [ 2.0, 1.0, 16.0, 15.0 ] },
 				"east": { "texture": "#lightblock", "uv": [ 15.0, 1.0, 16.0, 15.0 ] },
 				"south": { "texture": "#screen", "uv": [ 1.0, 1.0, 15.0, 15.0 ], "glow": 255 },
 				"west": { "texture": "#lightblock", "uv": [ 0.0, 1.0, 1.0, 15.0 ] },
