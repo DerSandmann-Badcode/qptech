@@ -7,7 +7,7 @@
 	"variantgroups": [
 		{
 			"code": "type",
-			"states": [ "blue","red","yellow","purple","brown","green","orange","black","gray","pink","white","internal","white-tiles","blue-tiles","red-tiles","yellow-tiles","purple-tiles","brown-tiles","green-tiles","orange-tiles","black-tiles","gray-tiles","pink-tiles","internal-tiles","internal-lattice","red-lattice","blue-lattice","yellow-lattice","purple-lattice","brown-lattice","green-lattice","orange-lattice","black-lattice","gray-lattice","pink-lattice","white-lattice" ]
+			"states": [ "blue","red","yellow","purple","brown","green","orange","black","gray","pink","white","internal","white-tiles","blue-tiles","red-tiles","yellow-tiles","purple-tiles","brown-tiles","green-tiles","orange-tiles","black-tiles","gray-tiles","pink-tiles","internal-tiles","internal-lattice","red-lattice","blue-lattice","yellow-lattice","purple-lattice","brown-lattice","green-lattice","orange-lattice","black-lattice","gray-lattice","pink-lattice","white-lattice","internal-path","red-path","blue-path","pink-path" ]
 		}
 
 	],

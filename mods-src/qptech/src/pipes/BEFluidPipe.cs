@@ -122,7 +122,7 @@ namespace qptech.src
         
         public BlockPos TankPos => Pos;
 
-        BlockFacing[] facechecker = new BlockFacing[] { BlockFacing.DOWN, BlockFacing.NORTH, BlockFacing.EAST, BlockFacing.SOUTH, BlockFacing.WEST };
+        
 
         bool firsttick = false;
         protected void OnFastTick(float dt)
