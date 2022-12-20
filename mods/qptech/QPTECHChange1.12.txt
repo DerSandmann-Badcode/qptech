@@ -1,7 +1,9 @@
 ﻿1.12.4
 - fixed wiremill description
 - removed glow from background of autosigns (too strong in dark)
-- adding lattice concrete pattern
+- adding lattice concrete pattern and path concrete pattern
+- concrete now gives a walk speed boost
+- concrete pattern no longer requires tools, you can craft each pattern in a cycle: plain->tiles->lattice->path->plain
 
 1.12.3
 Additions:

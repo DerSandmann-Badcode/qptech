@@ -1,12 +1,10 @@
 {
-	ingredientPattern: "HCS",
+	ingredientPattern: "S",
 	ingredients: {
-		"S": { type: "block", code: "machines:concrete-*", name: "color", quantity: 1 },
-		"C": { type: "item", code: "game:chisel-*", isTool: true },
-		"H": { type: "item", code: "game:hammer-*", isTool: true }
-		
+		"S": { type: "block", code: "machines:concrete-*", name: "color", "allowedVariants": ["blue","red","yellow","purple","brown","green","orange","black","gray","pink","white","internal"],"quantity": 1 },
+	
 	},
 	width: 1,
-	height: 3,
+	height: 1,
 	output: { type: "block", code: "machines:concrete-{color}-tiles", quantity: 1  }
 }

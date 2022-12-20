@@ -1,0 +1,10 @@
+{
+	ingredientPattern: "S",
+	ingredients: {
+		"S": { type: "block", code: "machines:concrete-*-lattice", name: "color", quantity: 1 },
+
+	},
+	width: 1,
+	height: 1,
+	output: { type: "block", code: "machines:concrete-{color}-path", quantity: 1  }
+}

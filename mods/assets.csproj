@@ -157,7 +157,8 @@
     <None Include="qptech\assets\machines\blocktypes\dummyobjects\vacuumtube.json" />
     <None Include="qptech\assets\machines\itemtypes\part\ev\robotarm.json" />
     <None Include="qptech\assets\machines\itemtypes\part\mv\vacuum.json" />
-    <None Include="qptech\assets\machines\recipes\grid\decor\concrete-tiles-lattice.json" />
+    <None Include="qptech\assets\machines\recipes\grid\decor\concretepath-lattice.json" />
+    <None Include="qptech\assets\machines\recipes\grid\decor\concrete-path.json" />
     <None Include="qptech\assets\machines\recipes\grid\decor\concrete-lattice.json" />
     <None Include="qptech\assets\machines\recipes\grid\decor\concrete-tiles.json" />
     <None Include="qptech\assets\machines\recipes\grid\industrial\ev\autocrafter.json" />
