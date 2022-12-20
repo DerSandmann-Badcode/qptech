@@ -2,7 +2,7 @@
 	ingredientPattern: "SW",
 	ingredients: {
 		"S": { type: "block", code: "machines:concrete-*", name: "color","allowedVariants": ["blue","red","yellow","purple","brown","green","orange","black","gray","pink","white","internal"], quantity: 1 },
-		"W": {"type": "item","code": "pipewrench"}
+		"W": {"type": "item","code": "pipewrench","isTool": true}
 	},
 	width: 2,
 	height: 1,

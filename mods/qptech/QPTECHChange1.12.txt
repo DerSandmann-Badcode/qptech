@@ -1,6 +1,5 @@
 ﻿1.12.25
 - fixed wiremill description
-- removed glow from background of autosigns (too strong in dark)
 - adding lattice concrete pattern and path concrete pattern
 - added Holiday Concrete pattern! Fashion with concrete and a wrench!
 - concrete now gives a walk speed boost
