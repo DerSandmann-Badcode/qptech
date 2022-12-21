@@ -1,4 +1,7 @@
-﻿1.5.0
+﻿1.7.2
+- pantograph no longer functions on reinforced blocks (technically this would let a creator copy protect their design too)
+
+1.5.0
 - tweak itempantograph snapshot (internal code stuff)
 - Pantograph - displays what block you are copying
 *Undo functions need to verify material lists!!

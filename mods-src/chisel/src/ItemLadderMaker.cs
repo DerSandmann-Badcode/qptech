@@ -35,6 +35,11 @@ namespace chisel.src
                 byPlayer.InventoryManager.ActiveHotbarSlot.MarkDirty();
                 return;
             }
+            if (api.ModLoader.GetModSystem<ModSystemBlockReinforcement>()?.IsReinforced(blockSel.Position) == true)
+            {
+                byPlayer.InventoryManager.ActiveHotbarSlot.MarkDirty();
+                return;
+            }
             if (!CanMakeLadder(byPlayer)) { return; }
             //TODO Add Survival Mode damage and ladder draw
             BlockChisel bc = api.World.BlockAccessor.GetBlock(blockSel.Position) as BlockChisel;

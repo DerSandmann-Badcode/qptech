@@ -40,7 +40,8 @@ namespace chisel.src
         ICoreClientAPI capi;
         List<BlockPos> flaggedblocks;
         bool showcopiedshape = false;
-        
+        public virtual int MaxDoorParts => 30;
+        public virtual int MaxDoorDistance => 100;
         public enum enModes {COPY,FULLPASTE,ADDPASTE,UNDO,CHANGEMAT,CLOSEDDOOR,OPENDOOR,DOORTOOL}
         public override void OnLoaded(ICoreAPI api)
         {
@@ -103,13 +104,18 @@ namespace chisel.src
         {
            
             if (blockSel == null) { return; }
+
             IPlayer byPlayer = (byEntity as EntityPlayer)?.Player;
             if (!byEntity.World.Claims.TryAccess(byPlayer, blockSel.Position, EnumBlockAccessFlags.BuildOrBreak))
             {
                 byPlayer.InventoryManager.ActiveHotbarSlot.MarkDirty();
                 return;
             }
-            
+            if (api.ModLoader.GetModSystem<ModSystemBlockReinforcement>()?.IsReinforced(blockSel.Position) == true)
+            {
+                byPlayer.InventoryManager.ActiveHotbarSlot.MarkDirty();
+                return;
+            }
             //for functional chiseled blocks this would set the targetted block as a control block
             if (slot.Itemstack.Attributes.GetInt("toolMode", (int)enModes.COPY) == (int)enModes.DOORTOOL){
                 //nothing selected
@@ -120,7 +126,7 @@ namespace chisel.src
                     handling = EnumHandHandling.PreventDefaultAction;
                     return;
                 }
-                if (flaggedblocks.Contains(blockSel.Position))
+                if (flaggedblocks!=null&&flaggedblocks.Contains(blockSel.Position))
                 {
                     flaggedblocks.Remove(blockSel.Position);
                 }
@@ -205,6 +211,11 @@ namespace chisel.src
 
             if (blockSel == null) { return; }
             IPlayer byPlayer = (byEntity as EntityPlayer)?.Player;
+            if (api.ModLoader.GetModSystem<ModSystemBlockReinforcement>()?.IsReinforced(blockSel.Position) == true)
+            {
+                byPlayer.InventoryManager.ActiveHotbarSlot.MarkDirty();
+                return;
+            }
             if (!byEntity.World.Claims.TryAccess(byPlayer, blockSel.Position, EnumBlockAccessFlags.BuildOrBreak))
             {
                 byPlayer.InventoryManager.ActiveHotbarSlot.MarkDirty();
@@ -249,14 +260,30 @@ namespace chisel.src
             //door tool
             else if (slot.Itemstack.Attributes.GetInt("toolMode", (int)enModes.COPY) == (int)enModes.DOORTOOL)
             {
-                
+                if (!(api is ICoreClientAPI)) { return; }
                 if (flaggedblocks == null||byPlayer.Entity.Controls.Sneak) { flaggedblocks = new List<BlockPos>(); }
                 
                 if (flaggedblocks.Contains(blockSel.Position))
                 {
                     flaggedblocks.Remove(blockSel.Position);
                 }
-                else { flaggedblocks.Add(blockSel.Position); }
+                //number of doorparts check
+                else if (flaggedblocks.Count<MaxDoorParts) {
+                    //distance check
+                    double distance = 0;
+                    if (flaggedblocks.Count > 0)
+                    {
+                        Vec3d origin = flaggedblocks[0].ToVec3d();
+                        distance = origin.DistanceTo(blockSel.Position.ToVec3d());
+                        
+                       
+                    }
+                    if (distance <= MaxDoorDistance)
+                    {
+                        flaggedblocks.Add(blockSel.Position);
+                    }
+
+                }
                 //api.World.HighlightBlocks(byPlayer, HighlightSlotId, blocks, colors);
                 
                 api.World.HighlightBlocks(byPlayer, 1, flaggedblocks);
@@ -268,11 +295,7 @@ namespace chisel.src
             
             if (copiedblockmaterials==null||copiedblockvoxels==null|| bmb == null || bmb.VoxelCuboids == null || bmb.VoxelCuboids.Count == 0) { base.OnHeldAttackStart(slot, byEntity, blockSel, entitySel, ref handling);handling =EnumHandHandling.NotHandled;  return; }
             int copiedblockmaterialcount = copiedblockmaterials.Count;
-            if (api.ModLoader.GetModSystem<ModSystemBlockReinforcement>()?.IsReinforced(blockSel.Position) == true)
-            {
-                byPlayer.InventoryManager.ActiveHotbarSlot.MarkDirty();
-                return;
-            }
+            
             List<uint> undovoxels = new List<uint>(bmb.VoxelCuboids);
             BlockPos undoposition = blockSel.Position;
             if (api is ICoreServerAPI)
@@ -403,7 +426,7 @@ namespace chisel.src
             // Otherwise if in creative mode, sure go ahead
             if (player?.WorldData.CurrentGameMode == EnumGameMode.Creative) return true;
 
-
+            
             // Lastly go by the config value
             if (mode == "stonewood")
             {
@@ -452,7 +475,7 @@ namespace chisel.src
                 undovoxels = null;
             }
         }
-
+        
         /// <summary>
         /// Returns a list of compressed cuboids all using the supplied material index
         /// </summary>

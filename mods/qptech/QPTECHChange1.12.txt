@@ -1,4 +1,5 @@
-﻿1.12.25
+﻿1.12.26
+- fixed holiday concrete to not consume wrench - sorry!
 - fixed wiremill description
 - adding lattice concrete pattern and path concrete pattern
 - added Holiday Concrete pattern! Fashion with concrete and a wrench!

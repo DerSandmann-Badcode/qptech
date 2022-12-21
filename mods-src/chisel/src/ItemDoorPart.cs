@@ -34,6 +34,7 @@ namespace chisel.src
                 byPlayer.InventoryManager.ActiveHotbarSlot.MarkDirty();
                 return;
             }
+
             Block placeblock = api.World.GetBlock(new AssetLocation("chiseltools:moveablechiseledblock"));
             BlockPos usepos = blockSel.Position.Copy().Offset(blockSel.Face);
             api.World.BlockAccessor.SetBlock(placeblock.BlockId, usepos);
