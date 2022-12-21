@@ -41,7 +41,7 @@ namespace chisel.src
         List<BlockPos> flaggedblocks;
         bool showcopiedshape = false;
         public virtual int MaxDoorParts => 30;
-        public virtual int MaxDoorDistance => 100;
+        public virtual int MaxDoorDistance => 50;
         public enum enModes {COPY,FULLPASTE,ADDPASTE,UNDO,CHANGEMAT,CLOSEDDOOR,OPENDOOR,DOORTOOL}
         public override void OnLoaded(ICoreAPI api)
         {
@@ -134,17 +134,33 @@ namespace chisel.src
                 //send flagged block list to the new contol block (via the server)
                 if (api is ICoreClientAPI)
                 {
+                    double distance = 0;
                     if (flaggedblocks == null || flaggedblocks.Count == 0)
                     {
                         (api as ICoreClientAPI).Network.SendBlockEntityPacket(blockSel.Position, (int)BEFunctionChiseled.enPacketCode.SETCONTROLLED, null);
                     }
-                    byte[] data = SerializerUtil.Serialize<List<BlockPos>>(flaggedblocks);
-                    (api as ICoreClientAPI).Network.SendBlockEntityPacket(blockSel.Position, (int)BEFunctionChiseled.enPacketCode.SETCONTROLLED, data);
+                    else
+                    {
+                        Vec3d origin = flaggedblocks[0].ToVec3d();
+                        distance = origin.DistanceTo(blockSel.Position.ToVec3d());
+
+                    }
+                    if (distance > MaxDoorDistance)
+                    {
+                        (ChiselToolLoader.loader.textnet as IClientNetworkChannel).SendPacket<string>("Block is too far to add to be Door Controller!");
+                    }
+                    else
+                    {
+                        byte[] data = SerializerUtil.Serialize<List<BlockPos>>(flaggedblocks);
+                        (api as ICoreClientAPI).Network.SendBlockEntityPacket(blockSel.Position, (int)BEFunctionChiseled.enPacketCode.SETCONTROLLED, data);
+                        flaggedblocks = new List<BlockPos>();
+                        api.World.HighlightBlocks(byPlayer, 1, flaggedblocks);
+                        api.World.PlaySoundAt(new AssetLocation("sounds/filtercopy"), blockSel.Position.X, blockSel.Position.Y, blockSel.Position.Z, byPlayer, true, 12, 1);
+                    }
                 }
-                flaggedblocks = new List<BlockPos>();
-                api.World.HighlightBlocks(byPlayer, 1, flaggedblocks);
+                
                 handling = EnumHandHandling.PreventDefaultAction;
-                api.World.PlaySoundAt(new AssetLocation("sounds/filtercopy"), blockSel.Position.X, blockSel.Position.Y, blockSel.Position.Z, byPlayer, true, 12, 1);
+                
                 return;
             }
             BlockEntityMicroBlock bmb = api.World.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityMicroBlock;
@@ -213,11 +229,13 @@ namespace chisel.src
             IPlayer byPlayer = (byEntity as EntityPlayer)?.Player;
             if (api.ModLoader.GetModSystem<ModSystemBlockReinforcement>()?.IsReinforced(blockSel.Position) == true)
             {
+                (ChiselToolLoader.loader.textnet as IClientNetworkChannel).SendPacket<string>("Cannot use pantograph, this block is reinforced!");
                 byPlayer.InventoryManager.ActiveHotbarSlot.MarkDirty();
                 return;
             }
             if (!byEntity.World.Claims.TryAccess(byPlayer, blockSel.Position, EnumBlockAccessFlags.BuildOrBreak))
             {
+                (ChiselToolLoader.loader.textnet as IClientNetworkChannel).SendPacket<string>("You do not have access to this block!");
                 byPlayer.InventoryManager.ActiveHotbarSlot.MarkDirty();
                 return;
             }
@@ -268,7 +286,7 @@ namespace chisel.src
                     flaggedblocks.Remove(blockSel.Position);
                 }
                 //number of doorparts check
-                else if (flaggedblocks.Count<MaxDoorParts) {
+                else if (flaggedblocks.Count<=MaxDoorParts) {
                     //distance check
                     double distance = 0;
                     if (flaggedblocks.Count > 0)
@@ -282,7 +300,15 @@ namespace chisel.src
                     {
                         flaggedblocks.Add(blockSel.Position);
                     }
+                    else
+                    {
+                        (ChiselToolLoader.loader.textnet as IClientNetworkChannel).SendPacket<string>("Block is too far to add to Door!");
+                    }
 
+                }
+                else
+                {
+                    (ChiselToolLoader.loader.textnet as IClientNetworkChannel).SendPacket<string>("Too many blocks selected for door!");
                 }
                 //api.World.HighlightBlocks(byPlayer, HighlightSlotId, blocks, colors);
                 

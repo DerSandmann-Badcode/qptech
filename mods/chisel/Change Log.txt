@@ -1,6 +1,7 @@
 ﻿1.7.2
 - pantograph no longer functions on reinforced blocks (technically this would let a creator copy protect their design too)
-
+   - chiseled door limits: 30 blocks, and 50 block distance (from the first block you tag)
+* I have not been able to test chunk claim protection. In theory the tools should do nothing if you don't have access, if it doesn't work please let me know!
 1.5.0
 - tweak itempantograph snapshot (internal code stuff)
 - Pantograph - displays what block you are copying

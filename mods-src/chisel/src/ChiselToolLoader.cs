@@ -22,6 +22,8 @@ namespace chisel.src
         string serverconfigfile = "qpchiseltoolserversettings.json";
         public static ChiselToolServerData serverconfig;
         public INetworkChannel chiselnet;
+        public INetworkChannel textnet;
+
         public override void StartPre(ICoreAPI api)
         {
             base.StartPre(api);
@@ -29,6 +31,7 @@ namespace chisel.src
             {
                 capi = api as ICoreClientAPI;
                 chiselnet= capi.Network.RegisterChannel("pantograph").RegisterMessageType(typeof(DoorData));
+                textnet = capi.Network.RegisterChannel("pantographtext").RegisterMessageType((typeof(string)));
             }
             else if (api is ICoreServerAPI)
             {
@@ -36,6 +39,9 @@ namespace chisel.src
                 chiselnet= sapi.Network.RegisterChannel("pantograph")
                     .RegisterMessageType(typeof(DoorData)).
                     SetMessageHandler<DoorData>(DoorDataHandler); 
+                textnet= sapi.Network.RegisterChannel("pantographtext")
+                    .RegisterMessageType((typeof(string))).
+                    SetMessageHandler<string>(TextMessageHandler);
                 ServerPreStart();
             }
             loader = this;
@@ -135,6 +141,13 @@ namespace chisel.src
 
         }
         int chiselblockid;
+
+        private void TextMessageHandler(IPlayer fromplayer, string message)
+        {
+            IServerPlayer splr = fromplayer as IServerPlayer;
+            if (splr == null) { return; }
+            splr.SendMessage(GlobalConstants.InfoLogChatGroup, Lang.GetL(splr.LanguageCode, message), EnumChatType.Notification);
+        }
         private void MakeNewChiseledBlock(DoorData data)
         {
             if (chiselblockid == 0)
