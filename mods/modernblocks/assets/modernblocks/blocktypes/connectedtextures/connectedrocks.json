@@ -1,5 +1,5 @@
 {
-	"code": "concretelargetile",
+	"code": "connectedrocks",
 	"class": "BlockConnectedTexture",
 	"entityclass": "BEConnectedTextures",
 
@@ -8,17 +8,17 @@
 		"connectedblocks": [ "*" ]
 	},
 	"blockmaterial": "Stone",
-
+	"attributes": {
+		"canChisel": false
+	},
 	"texturesByType": {
 		"*": {
-			"all": { "base": "block/connectedtextures/connectedlinedstone-gray" }
+			"all": { "base": "block/connectedtextures/connectedrocks" }
 
 
 		}
 	},
-	"attributes": {
-		"canChisel": false
-	},
+
 	"resistance": 1,
 	"sounds": {
 		"place": "game:block/stone",

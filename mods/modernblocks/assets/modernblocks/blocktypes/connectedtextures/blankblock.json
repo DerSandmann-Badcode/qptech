@@ -1,24 +1,26 @@
 {
-	"code": "concretelargetile-smoot",
-	"class": "BlockConnectedTexture",
-	"entityclass": "BEConnectedTextures",
+	"code": "blankblock",
+	
 
 	"creativeinventory": {
 
-		"connectedblocks": [ "*" ]
+		"modernblocks": [ "" ]
 	},
 	"blockmaterial": "Stone",
 	"attributes": {
 		"canChisel": false
 	},
+		renderPass: "Transparent",
 	"texturesByType": {
 		"*": {
-			"all": { "base": "block/connectedtextures/connectedsmoothstone-gray" }
+			"all": { "base": "block/connectedtextures/blank" }
 
 
 		}
 	},
-
+	sideopaque: {
+		all: false
+	},
 	"resistance": 1,
 	"sounds": {
 		"place": "game:block/stone",

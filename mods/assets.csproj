@@ -34,6 +34,7 @@
     <Content Include="chisel\assets\game\textures\icons\undo.svg" />
     <Content Include="chisel\Change Log.txt" />
     <Content Include="modernblocks\assets\modernblocks\textures\block\connectedtextures\cobblewithcoppertrim.png" />
+    <Content Include="modernblocks\assets\modernblocks\textures\block\connectedtextures\connectedrocks.png" />
     <Content Include="qptech\assets\machines\textures\block\chevrons.png" />
     <Content Include="qptech\assets\machines\textures\block\shinyiron.png" />
     <Content Include="qptech\assets\machines\textures\block\stone\concrete-blue-tiles.png" />
@@ -82,13 +83,17 @@
     <None Include="chisel\assets\chiseltools\shapes\item\tool\pantograph.json" />
     <None Include="chisel\assets\game\lang\en.json" />
     <None Include="chisel\modinfo.json" />
-    <None Include="modernblocks\assets\modernblocks\blocktypes\connectedtextures\ctslab.json" />
-    <None Include="modernblocks\assets\modernblocks\blocktypes\connectedtextures\testregularblock.json" />
+    <None Include="modernblocks\assets\modernblocks\blocktypes\connectedtextures\blankblock.json" />
+    <None Include="modernblocks\assets\modernblocks\blocktypes\connectedtextures\connectedrocks.json" />
+    <None Include="modernblocks\assets\modernblocks\blocktypes\connectedtextures\demo.json" />
+    <None Include="modernblocks\assets\modernblocks\blocktypes\connectedtextures\connectedglass.json" />
     <None Include="modernblocks\assets\modernblocks\blocktypes\connectedtextures\ctpolishedsandstone.json" />
     <None Include="modernblocks\assets\modernblocks\blocktypes\connectedtextures\concretetiles-smooth.json" />
-    <None Include="modernblocks\assets\modernblocks\blocktypes\connectedtextures\weirdcomputer.json" />
     <None Include="modernblocks\assets\modernblocks\blocktypes\connectedtextures\concretetiles.json" />
     <None Include="modernblocks\assets\modernblocks\shapes\block\tiledconcrete.json" />
+    <Content Include="modernblocks\modinfo.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="qptech\assets\game\lang\en.json" />
     <None Include="qptech\assets\game\lang\uk.json" />
     <None Include="qptech\assets\game\shapes\block\can-full.json" />

@@ -38,6 +38,7 @@ namespace modernblocks.src
         //MeshRef cubeModelRef;
         public List<FaceData> facedata;
         public AssetLocation TextureName = null;
+        public static MeshData blankblockmesh = null;
         public override void Initialize(ICoreAPI api)
         {
             base.Initialize(api);
@@ -111,7 +112,13 @@ namespace modernblocks.src
             
             if (facedata == null || facedata.Count == 0) { return; }
             //texid = capi.Render.GetOrLoadTexture(TextureName);
+            if (blankblockmesh == null)
+            {
+                blankblockmesh = new MeshData();
+                Block blankblock = Api.World.GetBlock(new AssetLocation("connectedblocks:blankblock"));
+                capi.Tesselator.TesselateBlock(blankblock, out blankblockmesh);
 
+            }
             m = new MeshData();
 
             capi.Tesselator.TesselateBlock(Block, out m);
@@ -156,24 +163,39 @@ namespace modernblocks.src
                 //This is remaps the UVs based on the calculated uv coordinates
                 if (c % 2 == 0) //V
                 {
-                    if (uvget == vend)
+                    //check for face that should be blank and use blank block uv
+                    if (voffset > FaceData.csz)
                     {
-                        uvget = vstart + uvsize +uvsize*voffset ;
+                        uvget = blankblockmesh.Uv[c];
                     }
                     else
                     {
-                        uvget = vstart +uvsize*voffset;
+                        if (uvget == vend)
+                        {
+                            uvget = vstart + uvsize + uvsize * voffset;
+                        }
+                        else
+                        {
+                            uvget = vstart + uvsize * voffset;
+                        }
                     }
                 }
                 else //U
                 {
-                    if (uvget == uend)
+                    if (voffset > FaceData.csz)
                     {
-                        uvget = ustart + uvsize + uvsize*uoffset;
+                        uvget = blankblockmesh.Uv[c];
                     }
                     else
                     {
-                        uvget = ustart + uvsize*uoffset;
+                        if (uvget == uend)
+                        {
+                            uvget = ustart + uvsize + uvsize * uoffset;
+                        }
+                        else
+                        {
+                            uvget = ustart + uvsize * uoffset;
+                        }
                     }
                 }
                 m.Uv[c] = uvget;

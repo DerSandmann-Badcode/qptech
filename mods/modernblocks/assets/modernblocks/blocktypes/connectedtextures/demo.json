@@ -1,24 +1,24 @@
 {
-	"code": "testregularblock",
+	"code": "demo",
 	"class": "BlockConnectedTexture",
 	"entityclass": "BEConnectedTextures",
 
 	"creativeinventory": {
 
-		"modernblocks": [ "" ]
+		"connectedblocks": [ "*" ]
 	},
 	"blockmaterial": "Stone",
-	"attributes": {
-		"canChisel": false
-	},
+
 	"texturesByType": {
 		"*": {
-			"all": { "base": "block/connectedtextures/ctpolishedsandstone" }
+			"all": { "base": "block/connectedtextures/demo" }
 
 
 		}
 	},
-	
+	"attributes": {
+		"canChisel": false
+	},
 	"resistance": 1,
 	"sounds": {
 		"place": "game:block/stone",

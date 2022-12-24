@@ -1,5 +1,5 @@
 {
-	"code": "concretelargetile",
+	"code": "connectedglass",
 	"class": "BlockConnectedTexture",
 	"entityclass": "BEConnectedTextures",
 
@@ -8,16 +8,19 @@
 		"connectedblocks": [ "*" ]
 	},
 	"blockmaterial": "Stone",
-
+	"attributes": {
+		"canChisel": false
+	},
+		renderPass: "Transparent",
 	"texturesByType": {
 		"*": {
-			"all": { "base": "block/connectedtextures/connectedlinedstone-gray" }
+			"all": { "base": "block/connectedtextures/blackframedglass" }
 
 
 		}
 	},
-	"attributes": {
-		"canChisel": false
+	sideopaque: {
+		all: false
 	},
 	"resistance": 1,
 	"sounds": {

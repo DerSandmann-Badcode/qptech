@@ -5,7 +5,7 @@
 
 	"creativeinventory": {
 
-		"modernblocks": [ "*" ]
+		"connectedblocks": [ "*" ]
 	},
 	"blockmaterial": "Stone",
 	"drawtype": "json",

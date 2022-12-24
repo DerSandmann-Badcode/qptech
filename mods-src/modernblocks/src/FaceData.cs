@@ -33,7 +33,7 @@ namespace modernblocks.src
         {
             this.facing = facing;
         }
-        const int csz = 4; //size of cells in graphic must be 4 for connected faces to work
+        public const int csz = 4; //size of cells in graphic must be 4 for connected faces to work
         //This wretched looking dictionary is just a cross reference tool for UV cells depending on what areas are open
         //  the "u" and "v" are packed into a single value based on a cell size of 4
         //  Note while this uses cardinal directions, it is not equal to world directions, and could be
@@ -67,8 +67,16 @@ namespace modernblocks.src
                 return;
             }
             int nhash = 0;
+            //We want transparency if the two connected faces are touching (for glass)
+            if (connectedneighbors.Contains(facing))
+            {
+                ucell = csz+1;
+                vcell = csz+1;
+                return;
+            }
             if (facing == BlockFacing.UP)
             {
+                
                 if (!connectedneighbors.Contains(BlockFacing.NORTH)) { nhash += (int)n_; }
                 if (!connectedneighbors.Contains(BlockFacing.EAST)) { nhash += (int)e_; }
                 if (!connectedneighbors.Contains(BlockFacing.SOUTH)) { nhash += (int)s_; }
