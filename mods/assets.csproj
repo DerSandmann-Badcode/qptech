@@ -34,7 +34,6 @@
     <Content Include="chisel\assets\game\textures\icons\undo.svg" />
     <Content Include="chisel\Change Log.txt" />
     <Content Include="modernblocks\assets\modernblocks\textures\block\connectedtextures\cobblewithcoppertrim.png" />
-    <Content Include="modernblocks\assets\modernblocks\textures\block\connectedtextures\connectedrocks.png" />
     <Content Include="qptech\assets\machines\textures\block\chevrons.png" />
     <Content Include="qptech\assets\machines\textures\block\shinyiron.png" />
     <Content Include="qptech\assets\machines\textures\block\stone\concrete-blue-tiles.png" />

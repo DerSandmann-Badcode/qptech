@@ -2,7 +2,13 @@
 	"code": "connectedrocks",
 	"class": "BlockConnectedTexture",
 	"entityclass": "BEConnectedTextures",
-
+	"variantgroups": [
+		{
+			"code": "color",
+			"states": [ "sandstone","bauxite" ]
+		}
+		
+	],
 	"creativeinventory": {
 
 		"connectedblocks": [ "*" ]
@@ -13,7 +19,7 @@
 	},
 	"texturesByType": {
 		"*": {
-			"all": { "base": "block/connectedtextures/connectedrocks" }
+			"all": { "base": "block/connectedtextures/connectedrocks-{color}" }
 
 
 		}
