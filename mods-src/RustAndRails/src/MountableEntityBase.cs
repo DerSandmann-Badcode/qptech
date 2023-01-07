@@ -10,7 +10,7 @@ namespace RustAndRails.src
     public class MountableEntityBase : Entity, IRenderer, IMountableSupplier
     {
         public EntitySeat Seat;
-        public float MountOffsetY = 0.10f;
+        public float MountOffsetY = 0.30f;
         public float MountOffsetDistFront = 0f;
 
         public MountableEntityBase()

@@ -317,6 +317,7 @@ namespace RustAndRails.src
             begin.Z = Math.Floor(begin.Z);
             pathstart = begin;
             FindPath();
+
         }
         public override void OnGameTick(float dt)
         {
@@ -327,21 +328,27 @@ namespace RustAndRails.src
                 {
                     TryStartPath();
                 }
-                Move();
+                Move(dt);
             }
         }
 
-        void Move()
+        void Move(float dt)
         {
             if (!moving || pathend == null) { return; }
             if (CheckOtherCart()) { return; }
+            //float timedrift = (dt - 0.047f) / 0.047f;
             pathprogress += pathdir * pathspeed;
+            //pathprogress += timedrift * pathdir * pathspeed;
 
+            //0.01333
+            //0.047
             if (pathprogress >= 1)
             {
+                double remainder = pathprogress - 1;
                 pathprogress = 1; pathstart = pathend;
 
                 FindPath();
+                pathprogress = remainder;
             }
             ServerPos.SetPos(pathpos);
 
@@ -464,7 +471,7 @@ namespace RustAndRails.src
                     pathYOffset = 0.0f;
                 }
 
-                MarkMovementDirty();
+                //rkMovementDirty();
             }
             else
             {
