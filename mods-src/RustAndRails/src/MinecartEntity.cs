@@ -29,7 +29,7 @@ namespace RustAndRails.src
     */
 
     /// </summary>
-    class MinecartEntity : Entity
+    class MinecartEntity : MountableEntityBase
     {
 
         //TODO: Collision checking needs fixing - make sure to use offset somehow
@@ -226,62 +226,88 @@ namespace RustAndRails.src
             IPlayer byPlayer = byEntity as IPlayer;
             if (Api.World.ElapsedMilliseconds + 200 < msinteract) { return; }
             msinteract = Api.World.ElapsedMilliseconds + 200;
-            if (Api is ICoreServerAPI)
-            {
-                if (mode == EnumInteractMode.Interact && Inventory != null)
-                {
-                    //allow right click with item stack to load cart
+			bool hasEmptyInventory = Inventory != null && Inventory.Empty;
 
+			if (mode != EnumInteractMode.Interact)
+			{
+				return;
+			}
 
-                    if (itemslot != null && !itemslot.Empty)
-                    {
-                        foreach (ItemSlot myslot in Inventory)
-                        {
-                            if (myslot.CanHold(itemslot))
-                            {
-                                itemslot.TryPutInto(Api.World, myslot, itemslot.StackSize);
-                                itemslot.MarkDirty();
-                                myslot.MarkDirty();
-                                TrySaveInventory();
+			if (Inventory != null && !byEntity.Controls.ShiftKey && !byEntity.Controls.CtrlKey)
+			{
+				if (Api is ICoreServerAPI)
+				{
+					if (Inventory != null)
+					{
+						if (itemslot != null && !itemslot.Empty)
+						{
+							foreach (ItemSlot myslot in Inventory)
+							{
+								if (myslot.CanHold(itemslot))
+								{
+									itemslot.TryPutInto(Api.World, myslot, itemslot.StackSize);
+									itemslot.MarkDirty();
+									myslot.MarkDirty();
+									TrySaveInventory();
 
-                                holding = myslot.Itemstack.Collectible.GetHeldItemName(myslot.Itemstack);
-                                WatchedAttributes.MarkPathDirty("holding");
-                                return;
-                            }
-                        }
-                    }
+									holding = myslot.Itemstack.Collectible.GetHeldItemName(myslot.Itemstack);
+									WatchedAttributes.MarkPathDirty("holding");
+									return;
+								}
+							}
+						}
 
-                    else if (itemslot != null && itemslot.Empty)
-                    {
-                        foreach (ItemSlot myslot in Inventory)
-                        {
-                            if (itemslot.CanHold(myslot))
-                            {
-                                myslot.TryPutInto(Api.World, itemslot, myslot.StackSize);
-                                itemslot.MarkDirty();
-                                myslot.MarkDirty();
-                                if (myslot.Empty)
-                                {
-                                    holding = "Empty";
-                                    WatchedAttributes.MarkPathDirty("holding");
-                                }
-                                TrySaveInventory();
-                                return;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (byEntity.Controls.Sneak)
-                    {
-                        Die(EnumDespawnReason.PickedUp);
-                    }
-                    if (moving) { Stop(); }
-                    else { Start(hitPosition); }
-                }
-            }
-        }
+						else if (itemslot != null && itemslot.Empty)
+						{
+							foreach (ItemSlot myslot in Inventory)
+							{
+								if (itemslot.CanHold(myslot))
+								{
+									myslot.TryPutInto(Api.World, itemslot, myslot.StackSize);
+									itemslot.MarkDirty();
+									myslot.MarkDirty();
+									if (myslot.Empty)
+									{
+										holding = "Empty";
+										WatchedAttributes.MarkPathDirty("holding");
+									}
+									TrySaveInventory();
+									return;
+								}
+							}
+						}
+					}
+					else
+					{
+						// Not sure how this even gets hit
+						if (moving) { Stop(); }
+						else { Start(hitPosition); }
+					}
+				}
+			}
+
+			if (byEntity.Controls.Sneak)
+			{
+				if (Api is ICoreServerAPI)
+				{
+					Die(EnumDespawnReason.PickedUp);
+				}
+			}
+
+			if (byEntity.Controls.CtrlKey)
+			{
+				if (Api is ICoreClientAPI)
+				{
+					double distance = byEntity.Pos.DistanceTo(this.Pos.XYZ);
+					// Limit interaction range
+					if (distance > rustandrailsloader.Config.MaximumInteractionBlockDistance)
+					{
+						return;
+					}
+					ModNetwork.Client.ClientSendMountPacket(this.EntityId);
+				}
+			}
+		}
         public virtual void TryStartPath()
         {
             Vec3d begin = ServerPos.XYZ;
@@ -734,7 +760,40 @@ namespace RustAndRails.src
             }
         }
 
+		public override WorldInteraction[] GetInteractionHelp(IClientWorldAccessor world, EntitySelection es, IClientPlayer player)
+		{
+			WorldInteraction[] interactions = new WorldInteraction[]
+			{
+				new WorldInteraction() { MouseButton = EnumMouseButton.Right, HotKeyCode = "ctrl", ActionLangCode = "Enter Minecart", 
+					ShouldApply = (WorldInteraction wi, BlockSelection blockSelection, EntitySelection entitySelection) => 
+					{
+						if (entitySelection.Entity is MountableEntityBase)
+						{
+							var mountableEntity = (MountableEntityBase)entitySelection.Entity;
+							if (!mountableEntity.IsMountedBy(player.Entity))
+							{
+								return true;
+							}
+						}
+						return false;
+					} },
+				new WorldInteraction() { MouseButton = EnumMouseButton.None, HotKeyCode = "shift", ActionLangCode = "Exit Minecart", ShouldApply = (WorldInteraction wi, BlockSelection blockSelection, EntitySelection entitySelection) =>
+				{
+					if (entitySelection.Entity is MountableEntityBase)
+					{
+						var mountableEntity = (MountableEntityBase)entitySelection.Entity;
+						if (mountableEntity.IsMountedBy(player.Entity))
+						{
+							return true;
+						}
+					}
+					return false;
+				} }
 
-    }
+			};
+			return base.GetInteractionHelp(world, es, player).Append(interactions);
+		}
+
+	}
 }
 

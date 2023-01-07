@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -35,18 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony">
-      <HintPath>$(AppData)\Vintagestory\Lib\0Harmony.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="cairo-sharp">
-      <HintPath>$(AppData)\Vintagestory\Lib\cairo-sharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="protobuf-net">
-      <HintPath>$(AppData)\Vintagestory\Lib\protobuf-net.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -56,27 +44,31 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>$(AppData)\Vintagestory\Lib\Newtonsoft.Json.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="VintagestoryAPI">
-      <HintPath>$(AppData)\Vintagestory\VintagestoryAPI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="VSCreativeMod">
-      <HintPath>$(AppData)\Vintagestory\Mods\VSCreativeMod.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="WindowsBase" />
+    <Reference Include="VSSurvivalMod">
+      <HintPath>..\..\..\..\Downloads\vs_archive_1.17.9\vintagestory\Mods\VSSurvivalMod.dll</HintPath>
     </Reference>
     <Reference Include="VSEssentials">
-      <HintPath>$(AppData)\Vintagestory\Mods\VSEssentials.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\Downloads\vs_archive_1.17.9\vintagestory\Mods\VSEssentials.dll</HintPath>
     </Reference>
-    <Reference Include="VSSurvivalMod">
-      <HintPath>$(AppData)\Vintagestory\Mods\VSSurvivalMod.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="VintagestoryAPI">
+      <HintPath>..\..\..\..\Downloads\vs_archive_1.17.9\vintagestory\VintagestoryAPI.dll</HintPath>
     </Reference>
-    <Reference Include="WindowsBase" />
+    <Reference Include="protobuf-net">
+      <HintPath>..\..\..\..\Downloads\vs_archive_1.17.9\vintagestory\Lib\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\Games\vintagestory\Lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\..\..\Downloads\vs_archive_1.17.9\vintagestory\Lib\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="cairo-sharp">
+      <HintPath>..\..\..\..\Downloads\vs_archive_1.17.9\vintagestory\Lib\cairo-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="VSCreativeMod">
+      <HintPath>..\..\..\..\Downloads\vs_archive_1.17.9\vintagestory\Mods\VSCreativeMod.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="modinfo.json" />
@@ -94,9 +86,15 @@
     <Compile Include="src\IRailwaySignalReceiver.cs" />
     <Compile Include="src\MinecartEntity.cs" />
     <Compile Include="src\rustandrailsloader.cs" />
+    <Compile Include="src\ModNetwork.cs" />
+    <Compile Include="src\EntitySeat.cs" />
+    <Compile Include="src\MountableEntityBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="launcherForLinux.sh" />
   </ItemGroup>
   <Target Name="CopyToBin" AfterTargets="AfterBuild">
-    <Copy SourceFiles="@(OutFiles)" DestinationFiles="@(OutFiles->'$(BinaryDir)/%(RecursiveDir)%(Filename)%(Extension)')" />
+    <Copy SourceFiles="@(OutFiles)" DestinationFiles="@(OutFiles-&gt;'$(BinaryDir)/%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

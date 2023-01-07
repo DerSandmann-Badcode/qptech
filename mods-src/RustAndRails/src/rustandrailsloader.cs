@@ -16,15 +16,31 @@ namespace RustAndRails.src
     class rustandrailsloader : ModSystem
     {
         public static rustandrailsloader loader;
+		public static Configuration Config = new Configuration();
 
-        public override void Start(ICoreAPI api)
+		public override void Start(ICoreAPI api)
         {
             base.Start(api);
             api.RegisterBlockClass("BlockSignalSwitch", typeof(BlockSignalSwitch));
             api.RegisterBlockClass("BlockDetectorRail", typeof(BlockDetectorRail));
             api.RegisterBlockClass("BlockRail", typeof(BlockRail));
             api.RegisterEntity("MinecartEntity", typeof(MinecartEntity));
-        }
+			api.RegisterMountable(typeof(EntitySeat).Name, EntitySeat.GetMountable);
+		}
 
-    }
+		public override void StartClientSide(ICoreClientAPI api)
+		{
+			ModNetwork.Client = new ClientChannel(api);
+		}
+
+		public override void StartServerSide(ICoreServerAPI api)
+		{
+			ModNetwork.Server = new ServerChannel(api);
+		}
+	}
+
+	public class Configuration
+	{
+		public double MaximumInteractionBlockDistance = 3;
+	}
 }
