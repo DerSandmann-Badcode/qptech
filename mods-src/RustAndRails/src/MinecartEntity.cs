@@ -55,7 +55,8 @@ namespace RustAndRails.src
         EntityPartitioning ep;
         BlockFacing heading = BlockFacing.NORTH;
         Vec3d pathoffset = new Vec3d(0.5, 0, 0.5);
-        Vec3d pathpos => new Vec3d(GameMath.Lerp(pathstart.X, pathend.X, pathprogress) + pathoffset.X, GameMath.Lerp(pathstart.Y, pathend.Y, pathprogress) + pathoffset.Y, GameMath.Lerp(pathstart.Z, pathend.Z, pathprogress) + pathoffset.Z);
+		double pathYOffset = 0;
+        Vec3d pathpos => new Vec3d(GameMath.Lerp(pathstart.X, pathend.X, pathprogress) + pathoffset.X, GameMath.Lerp(pathstart.Y, pathend.Y, pathprogress) + pathYOffset, GameMath.Lerp(pathstart.Z, pathend.Z, pathprogress) + pathoffset.Z);
 
         string pathcodecontains = "rails";
         string dropitem = "rustandrails:creature-minecart";
@@ -412,8 +413,10 @@ namespace RustAndRails.src
             //pick new destination based on block we are currently in, where we were headed, and if the possible destination blocks were rails
             moving = CheckExit(currentBlock, heading, currentP, out newheading, out outpos);
 
+			bool goingUp = currentP.Y < outpos.Y;
+			bool goingDown = currentP.Y > outpos.Y;
 
-            if (moving)
+			if (moving)
             {
 
                 startpathset = true;
@@ -444,7 +447,22 @@ namespace RustAndRails.src
                 {
                     ServerPos.SetYaw(90 * 0.0174533f);
                 }
-                MarkMovementDirty();
+				if (goingUp)
+				{
+					ServerPos.SetRoll(45 * 0.0174533f);
+					pathYOffset = 0.7f;
+				} else if (goingDown)
+				{
+					ServerPos.SetRoll(-45 * 0.0174533f);
+					pathYOffset = 0.7f;
+				}
+				else
+				{
+					ServerPos.SetRoll(0 * 0.0174533f);
+					pathYOffset = 0.0f;
+				}
+
+				MarkMovementDirty();
             }
             else
             {

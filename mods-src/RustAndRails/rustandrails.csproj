@@ -89,6 +89,7 @@
     <Compile Include="src\ModNetwork.cs" />
     <Compile Include="src\EntitySeat.cs" />
     <Compile Include="src\MountableEntityBase.cs" />
+    <Compile Include="src\EntityPosExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="launcherForLinux.sh" />
