@@ -88,16 +88,19 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="src\IRailwaySignalReceiver.cs" />
+    <Compile Include="src\rustandrailsloader.cs" />
+    <Compile Include="src\ModNetwork.cs" />
+    <Compile Include="src\EntityPosExtensions.cs" />
+    <Compile Include="src\Log.cs" />
+    <Compile Include="src\EntityCooldownStore.cs" />
+    <Compile Include="src\BlockActivatorRail.cs" />
     <Compile Include="src\BlockDetectorRail.cs" />
     <Compile Include="src\BlockRail.cs" />
     <Compile Include="src\BlockSignalSwitch.cs" />
-    <Compile Include="src\IRailwaySignalReceiver.cs" />
+    <Compile Include="src\AbstractMinecartEntity.cs" />
+    <Compile Include="src\MountableEntity.cs" />
     <Compile Include="src\MinecartEntity.cs" />
-    <Compile Include="src\rustandrailsloader.cs" />
-    <Compile Include="src\ModNetwork.cs" />
-    <Compile Include="src\EntitySeat.cs" />
-    <Compile Include="src\MountableEntityBase.cs" />
-    <Compile Include="src\EntityPosExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="launcherForLinux.sh" />

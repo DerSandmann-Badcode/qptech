@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 using Vintagestory.API.Server;
-using Vintagestory.API;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common.Entities;
-using Vintagestory.API.Config;
 using Vintagestory.API.Util;
-using Vintagestory.ServerMods;
-using System.Text.RegularExpressions;
 
 namespace RustAndRails.src
 {
@@ -29,9 +23,30 @@ namespace RustAndRails.src
     */
 
     /// </summary>
-    class MinecartEntity : MountableEntityBase
+    class MinecartEntity : AbstractMinecartEntity
     {
 
+        // Minecart Specific Display Settings
+        public override int MaximumPassengers => 1;
+        public override string SuggestedAnimation => "sitflooridle";
+        public override float? MountYaw => this.SidedPos.Yaw + 1.5f;
+        public override float MountOffsetY => 0.50f;
+        public override float MountOffsetDistFront => 0f;
+
+        public override Vec3d MountPosition => this.SidedPos.XYZ.AddCopy(
+                MountOffsetDistFront * -Math.Cos(this.SidedPos.Yaw),
+                MountOffsetY,
+                MountOffsetDistFront * Math.Sin(this.SidedPos.Yaw)
+            );
+
+        public override Vec3f GetMountOffset(Entity entity)
+        {
+            return new Vec3f(
+                MountOffsetDistFront * (float)-Math.Cos(Pos.Yaw),
+                MountOffsetY,
+                MountOffsetDistFront * (float)Math.Sin(Pos.Yaw)
+            );
+        }
         //TODO: Collision checking needs fixing - make sure to use offset somehow
 
         Vec3d pathstart;
@@ -330,6 +345,56 @@ namespace RustAndRails.src
                 }
                 Move(dt);
             }
+            HandleCollision();
+            DirtyHackToFixEntityMountBecauseIDontThinkTyronTriedThis();
+        }
+
+        public void DirtyHackToFixEntityMountBecauseIDontThinkTyronTriedThis()
+        {
+            if (this.World.Side.IsServer())
+            {
+                var pass = this.GetPassengers();
+                foreach (var passenger in pass.ToList())
+                {
+                    passenger.TryUnmount();
+                    passenger.TryMount(this);
+                }
+            }
+        }
+
+        public void HandleCollision()
+        {
+            var entities = this.World.GetEntitiesAround(SidedPos.XYZ, 1.0f, 1.0f);
+            if (entities.Any(e => e.EntityId != this.EntityId))
+            {
+                foreach (var entity in entities)
+                {
+                    if (!(entity is EntityPlayer) && entity is EntityAgent && this.MaximumPassengers > this.PassengerCount())
+                    {
+                        var entityAgent = (EntityAgent)entity;
+                        if (entityAgent.HasRidingCooldown())
+                        {
+                            return;
+                        }
+                        if (!rustandrailsloader.Config.CarryableEntities.Contains(entityAgent.Code.ToString()))
+                        {
+                            return;
+                        }
+                        if (!this.IsMountedBy(entity))
+                        {
+                            if (this.World.Side.IsServer())
+                            {
+                                var agent = (EntityAgent)entity;
+                                agent.TryMount(this);
+                                if (agent.hasRepulseBehavior)
+                                {
+                                    agent.RemoveBehavior(new Vintagestory.GameContent.EntityBehaviorRepulseAgents(agent));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         void Move(float dt)
@@ -434,6 +499,11 @@ namespace RustAndRails.src
                     IRailwaySignalReceiver dr = currentBlock as IRailwaySignalReceiver;
                     dr.ReceiveRailwaySignal(Api.World, currentP, SignalStrength(), "cart");
                 }
+                if (currentBlock is BlockActivatorRail)
+                {
+                    this.OnActivatorRail(0, 0, 0, true);
+                }
+
                 pathend = outpos.ToVec3d();
                 heading = newheading;
 
@@ -789,15 +859,14 @@ namespace RustAndRails.src
 
         public override WorldInteraction[] GetInteractionHelp(IClientWorldAccessor world, EntitySelection es, IClientPlayer player)
         {
-            WorldInteraction[] interactions = new WorldInteraction[]
-            {
+            WorldInteraction[] interactions = {
                 new WorldInteraction() { MouseButton = EnumMouseButton.Right, HotKeyCode = "ctrl", ActionLangCode = "Enter Minecart",
                     ShouldApply = (WorldInteraction wi, BlockSelection blockSelection, EntitySelection entitySelection) =>
                     {
-                        if (entitySelection.Entity is MountableEntityBase)
+                        if (entitySelection.Entity is MountableEntity)
                         {
-                            var mountableEntity = (MountableEntityBase)entitySelection.Entity;
-                            if (!mountableEntity.IsMountedBy(player.Entity))
+                            var mountableEntity = (MountableEntity)entitySelection.Entity;
+                            if (!mountableEntity.IsMountedBy(player.Entity) && mountableEntity.MaximumPassengers > mountableEntity.PassengerCount())
                             {
                                 return true;
                             }
@@ -806,9 +875,9 @@ namespace RustAndRails.src
                     } },
                 new WorldInteraction() { MouseButton = EnumMouseButton.None, HotKeyCode = "shift", ActionLangCode = "Exit Minecart", ShouldApply = (WorldInteraction wi, BlockSelection blockSelection, EntitySelection entitySelection) =>
                 {
-                    if (entitySelection.Entity is MountableEntityBase)
+                    if (entitySelection.Entity is MountableEntity)
                     {
-                        var mountableEntity = (MountableEntityBase)entitySelection.Entity;
+                        var mountableEntity = (MountableEntity)entitySelection.Entity;
                         if (mountableEntity.IsMountedBy(player.Entity))
                         {
                             return true;
@@ -821,6 +890,13 @@ namespace RustAndRails.src
             return base.GetInteractionHelp(world, es, player).Append(interactions);
         }
 
+        public override void OnActivatorRail(int x, int y, int z, bool powered)
+        {
+            if (powered)
+            {
+                this.RemoveAllPassengers();
+            }
+        }
     }
 }
 

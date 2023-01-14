@@ -1,31 +1,25 @@
-﻿using ProtoBuf;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vintagestory.API.Client;
+﻿using Vintagestory.API.Client;
 using Vintagestory.API.Common;
-using Vintagestory.API.Config;
-using Vintagestory.API.Datastructures;
 using Vintagestory.API.Server;
-using Vintagestory.API.Util;
 
 namespace RustAndRails.src
 {
     class rustandrailsloader : ModSystem
     {
-        public static rustandrailsloader loader;
         public static Configuration Config = new Configuration();
 
         public override void Start(ICoreAPI api)
         {
             base.Start(api);
+            Log.Logger = api.Logger;
             api.RegisterBlockClass("BlockSignalSwitch", typeof(BlockSignalSwitch));
             api.RegisterBlockClass("BlockDetectorRail", typeof(BlockDetectorRail));
             api.RegisterBlockClass("BlockRail", typeof(BlockRail));
+            api.RegisterBlockClass("BlockActivatorRail", typeof(BlockActivatorRail));
             api.RegisterEntity("MinecartEntity", typeof(MinecartEntity));
-            api.RegisterMountable(typeof(EntitySeat).Name, EntitySeat.GetMountable);
+
+            api.RegisterMountable("MinecartEntity", MountableEntity.GetMountable);
+
         }
 
         public override void StartClientSide(ICoreClientAPI api)
@@ -36,11 +30,18 @@ namespace RustAndRails.src
         public override void StartServerSide(ICoreServerAPI api)
         {
             ModNetwork.Server = new ServerChannel(api);
+            api.Event.Timer(OnInterval, 1);
+        }
+
+        private void OnInterval()
+        {
+            EntityCooldownStore.TickEntityCooldown();
         }
     }
 
     public class Configuration
     {
         public double MaximumInteractionBlockDistance = 3;
+        public string[] CarryableEntities = { "game:sheep-bighorn-male", "game:sheep-bighorn-lamb", "game:sheep-bighorn-female", "game:hare-baby", "game:hare-female", "game:hare-male" };
     }
 }

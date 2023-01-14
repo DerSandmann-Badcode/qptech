@@ -591,6 +591,9 @@
     <None Include="qptech\assets\qptech\config\orelookups.json" />
     <None Include="qptech\modinfo.json" />
     <None Include="rustandrails\assets\rustandrails\lang\en.json" />
+    <None Include="rustandrails\assets\rustandrails\blocktypes\activatorrails.json" />
+    <None Include="rustandrails\assets\rustandrails\shapes\block\rails\activatorrail-down-flat_ns.json" />
+    <None Include="rustandrails\assets\rustandrails\shapes\block\rails\activatorrail-up-flat_ns.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="modernblocks\assets\modernblocks\textures\block\connectedtextures\connectedlinedstone-gray.png" />

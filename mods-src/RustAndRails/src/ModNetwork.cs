@@ -1,5 +1,4 @@
-﻿using System;
-using ProtoBuf;
+﻿using ProtoBuf;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -52,11 +51,11 @@ namespace RustAndRails.src
         {
             Entity entity = capi.World.GetEntityById(packet.EntityId);
 
-            if (entity != null && entity is MountableEntityBase)
+            if (entity != null && entity is MountableEntity)
             {
-                MountableEntityBase mountableEntity = (MountableEntityBase)entity;
+                MountableEntity mountableEntity = (MountableEntity)entity;
                 IPlayer player = capi.World.Player;
-                player.Entity.TryMount(mountableEntity.Seat);
+                player.Entity.TryMount(mountableEntity);
             }
         }
     }
@@ -81,13 +80,10 @@ namespace RustAndRails.src
         private void ServerOnUnmountPacket(IPlayer fromPlayer, PacketClientToServerUnmountVehicle packet)
         {
             Entity entity = sapi.World.GetEntityById(packet.EntityId);
-            if (entity != null && entity is MountableEntityBase)
+            if (entity != null && entity is MountableEntity)
             {
-                MountableEntityBase mountableEntity = (MountableEntityBase)entity;
-                if (mountableEntity.Seat.MountingEntity != null || mountableEntity.Seat.MountingEntity?.EntityId == fromPlayer.Entity.EntityId)
-                {
-                    fromPlayer.Entity.TryUnmount();
-                }
+                MountableEntity mountableEntity = (MountableEntity)entity;
+                fromPlayer.Entity.TryUnmount();
             }
         }
 
@@ -95,12 +91,13 @@ namespace RustAndRails.src
         {
             Entity entity = sapi.World.GetEntityById(packet.EntityId);
 
-            if (entity != null && entity is MountableEntityBase)
+            if (entity != null && entity is MountableEntity)
             {
-                MountableEntityBase mountableEntity = (MountableEntityBase)entity;
+                MountableEntity mountableEntity = (MountableEntity)entity;
                 bool successfulMount = false;
 
-                successfulMount = fromPlayer.Entity.TryMount(mountableEntity.Seat);
+                var e = sapi.World.GetEntityById(fromPlayer.Entity.EntityId);
+                successfulMount = fromPlayer.Entity.TryMount(mountableEntity);
 
                 if (successfulMount)
                 {
@@ -123,7 +120,6 @@ namespace RustAndRails.src
     public class PacketClientToServerUnmountVehicle
     {
         public long EntityId;
-        public byte Seat;
     }
 
     [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]

@@ -2,6 +2,8 @@
 
 	"block-detectorrails-*": "Detector rail",
 	"blockdesc-detectorrails-*": "Sends a signal in all directions when a cart passes overhead. Will also receive and transmit other rail signals. Signal strength will depend on how full the cart is.",
+    "block-activatorrails-*": "Activator rail",
+    "blockdesc-activatorrails-*": "Activates a cart",
 	"block-switchedrails-*": "Switched rail",
 	"blockdesc-switchedrails-*": "Will change directions when a signal is received. Does not transmit signals.",
 	"block-stoprails-on-*": "Cart Stopping rail (ON)",
